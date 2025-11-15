@@ -68,7 +68,7 @@ export const members: Member[] = [
       en: "DSA Founder / Principal Designer",
       zh: "DSA 创始人 / 主持设计师"
     },
-    avatar: "/images/team/demi.jpg",
+    avatar: "/images/team/demi.png",
     bio: {
       zh: [
         "欧阳小平 DEMI YOUNG",
@@ -118,7 +118,7 @@ export const members: Member[] = [
     nameEn: "STONE",
     nameCn: "石祐嘉",
     role: { en: "Chief Architect", zh: "首席建筑师" },
-    avatar: "/images/team/stone.jpg",
+    avatar: "/images/team/adrian.png",
     bio: {
       en: [
         "Stone contributes general architectural support.",
@@ -137,7 +137,7 @@ export const members: Member[] = [
     nameEn: "ZHONG",
     nameCn: "钟鸣",
     role: { en: "Chief Lighting Designer", zh: "首席灯光设计师" },
-    avatar: "/images/team/zhong.jpg",
+    avatar: "/images/team/zhong.png",
     bio: {
       en: [
         "Zhong specialises in layered lighting systems.",
@@ -156,7 +156,7 @@ export const members: Member[] = [
     nameEn: "ADRIAN",
     nameCn: "陈旭佳",
     role: { en: "Project Director", zh: "项目总监" },
-    avatar: "/images/team/adrian.jpg",
+    avatar: "/images/team/adrian.png",
     bio: {
       en: [
         "Adrian manages timelines with clarity.",
@@ -175,7 +175,7 @@ export const members: Member[] = [
     nameEn: "LUNKER",
     nameCn: "王鹤宁",
     role: { en: "Project Director", zh: "项目总监" },
-    avatar: "/images/team/lunker.jpg",
+    avatar: "/images/team/lunker.png",
     bio: {
       en: [
         "Lunker works on waterfront cultural spaces.",
@@ -194,7 +194,7 @@ export const members: Member[] = [
     nameEn: "CHELSEA",
     nameCn: "吴贞",
     role: { en: "Project Director", zh: "项目总监" },
-    avatar: "/images/team/chelsea.jpg",
+    avatar: "/images/team/chelsea.png",
     bio: {
       en: [
         "Chelsea brings art direction.",
@@ -212,7 +212,7 @@ export const members: Member[] = [
     group: "international",
     nameEn: "JULIEN ALBERTINI",
     role: { en: "Director", zh: "设计总监" },
-    avatar: "/images/team/julien.jpg",
+    avatar: "/images/team/julien.png",
     bio: {
       en: [
         "Julien adds European perspective.",
@@ -230,7 +230,7 @@ export const members: Member[] = [
     group: "international",
     nameEn: "ALINA PIMKINA",
     role: { en: "Director", zh: "设计总监" },
-    avatar: "/images/team/alina.jpg",
+    avatar: "/images/team/alina.png",
     bio: {
       en: [
         "Alina applies theatre lighting logic.",

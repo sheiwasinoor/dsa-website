@@ -59,29 +59,24 @@
           :style="{ minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px' }"
         >
           <div
-            :class="[
-              locale === 'en'
-                ? 'columns-2'
-                : 'space-y-4'
-            ]"
-            class="text-[#ECEBC7]/85 text-justify"
-            :style="{
-              columnGap: ABOUT_LETTER_COLUMN_GAP + 'rem',
-              fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
-              lineHeight: ABOUT_LETTER_LINE_HEIGHT,
-              textAlign: 'justify',
-              textJustify: 'inter-word'
-            }"
-          >
-            <p
-              v-for="(p, i) in letterText[locale]"
-              :key="'letter-' + i"
-              class="break-inside-avoid-column"
-              :style="{ marginBottom: ABOUT_LETTER_PARAGRAPH_GAP + 'px' }"
-            >
-              {{ p }}
-            </p>
-          </div>
+  class="columns-2 text-[#ECEBC7]/85 text-justify"
+  :style="{
+    columnGap: ABOUT_LETTER_COLUMN_GAP + 'rem',
+    fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
+    lineHeight: ABOUT_LETTER_LINE_HEIGHT,
+    textAlign: 'justify',
+    textJustify: 'inter-word'
+  }"
+>
+  <p
+    v-for="(p, i) in letterText[locale]"
+    :key="'letter-' + i"
+    class="break-inside-avoid-column"
+    :style="{ marginBottom: ABOUT_LETTER_PARAGRAPH_GAP + 'px' }"
+  >
+    {{ p }}
+  </p>
+</div>
         </div>
 
         <!-- Signature -->
