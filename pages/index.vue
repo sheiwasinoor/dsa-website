@@ -1,11 +1,11 @@
 <template>
   <div
-    class="min-h-screen bg-[#000C05] text-[#ECEBC7] flex flex-col items-center justify-center relative overflow-hidden"
+    class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
+    :style="{ backgroundColor: LANDING_BG_COLOR, color: LANDING_TEXT_COLOR }"
   >
-    <!-- MAIN CONTENT -->
     <main class="flex flex-col items-center justify-center gap-10 px-4 z-30">
-
-      <!-- LANDING VIDEO -->
+      
+      <!-- VIDEO -->
       <video
         ref="videoEl"
         :src="LANDING_VIDEO_SRC"
@@ -24,10 +24,13 @@
         class="flex flex-col items-center"
         :style="{ width: LANDING_TEXT_CONTAINER_WIDTH + 'px' }"
       >
-        <!-- Chinese -->
+        <!-- CN Row -->
         <div
           class="flex justify-between w-full"
-          :style="{ fontSize: LANDING_TEXT_FONT_SIZE_CN + 'px' }"
+          :style="{ 
+            fontSize: LANDING_TEXT_FONT_SIZE_CN + 'px',
+            color: LANDING_TEXT_COLOR
+          }"
         >
           <span
             v-for="(char, i) in spacedCN"
@@ -38,10 +41,13 @@
           </span>
         </div>
 
-        <!-- English -->
+        <!-- EN Row -->
         <div
-          class="flex justify-between w-full mt-3 tracking-widest uppercase"
-          :style="{ fontSize: LANDING_TEXT_FONT_SIZE_EN + 'px' }"
+          class="flex justify-between w-full mt-3 uppercase tracking-widest"
+          :style="{ 
+            fontSize: LANDING_TEXT_FONT_SIZE_EN + 'px',
+            color: LANDING_TEXT_COLOR
+          }"
         >
           <span
             v-for="(char, i) in spacedEN"
@@ -52,16 +58,16 @@
           </span>
         </div>
       </div>
-    </main>
 
+    </main>
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
-import { useRouter } from "vue-router";
-
 import {
+  LANDING_BG_COLOR,
+  LANDING_TEXT_COLOR,
   LANDING_VIDEO_SRC,
   LANDING_VIDEO_WIDTH,
   LANDING_VIDEO_MAX_WIDTH,
@@ -74,26 +80,26 @@ import {
   landingCopy,
 } from "~/content/index";
 
-const router = useRouter();
+import { useGlobalFade } from "~/composables/useGlobalFade";
+
+const { navigateWithFade } = useGlobalFade();
+
 const videoEl = ref<HTMLVideoElement | null>(null);
 
-// Split characters for spacing
+// Split characters
 const spacedCN = computed(() => landingCopy.cn.split(""));
 const spacedEN = computed(() => landingCopy.en.split(""));
 
 onMounted(() => {
   if (!videoEl.value) return;
-
-  // ensure the video ALWAYS starts from the beginning
   videoEl.value.currentTime = 0;
 
   videoEl.value.onended = () => {
-    // No local fade – let global loader handle this transition
-    router.replace("/home");
+    navigateWithFade("/home");
   };
 });
 
-// Landing page uses the landing layout (with global loader, no navbar/footer)
+// Use landing layout
 definePageMeta({
   layout: "landing",
 });

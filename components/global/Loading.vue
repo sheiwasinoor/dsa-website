@@ -10,7 +10,6 @@
       }"
     >
       <img
-        v-if="showLogo"
         :src="LOADING_LOGO_SRC"
         alt="Loading"
         :style="{
@@ -23,8 +22,6 @@
 </template>
 
 <script setup lang="ts">
-import { defineProps } from "vue";
-
 /* ============================================================
    CONFIG VALUES — tweak loader UI here
    ============================================================ */
@@ -35,13 +32,12 @@ const LOADING_LOGO_SRC = "/images/navbar-logo.png";
 const LOADING_LOGO_WIDTH = 120;
 const LOADING_LOGO_OPACITY = 0.9;
 
-const LOADING_FADE_DURATION = 700; // ms (A1 choice)
+// ⚠ Keep this in sync with FADE_DURATION_MS in useGlobalFade.ts
+const LOADING_FADE_DURATION = 700; // ms
 const LOADING_FADE_CURVE = "cubic-bezier(0.25, 0.1, 0.25, 1)";
 
-/* Props controlled by global plugin */
-const props = defineProps<{
+defineProps<{
   visible: boolean;
-  showLogo: boolean;
 }>();
 </script>
 

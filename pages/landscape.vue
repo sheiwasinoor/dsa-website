@@ -26,40 +26,49 @@
       <div class="relative z-10 max-w-3xl mx-auto px-6 text-center text-[#ECEBC7]">
 
         <div
-          class="h-px bg-[#ECEBC7]/60 mx-auto"
+          class="h-px mx-auto"
           :style="{
             marginBottom: LANDSCAPE_HERO_LINE_SPACING + 'vh',
-            width: LANDSCAPE_HERO_LINE_WIDTH + '%'
+            width: LANDSCAPE_HERO_LINE_WIDTH + '%',
+            backgroundColor: LANDSCAPE_HERO_LINE_COLOR
           }"
         ></div>
 
         <h1
-          class="uppercase tracking-[0.28em]"
-          :style="{
-            fontSize: LANDSCAPE_HERO_TITLE_SIZE + 'rem',
-            marginBottom: LANDSCAPE_HERO_TITLE_SPACING + 'vh'
-          }"
+class="uppercase"
+  :style="{
+    fontSize: LANDSCAPE_HERO_TITLE_SIZE + 'rem',
+    marginBottom: LANDSCAPE_HERO_TITLE_SPACING + 'vh',
+    letterSpacing: LANDSCAPE_HERO_TITLE_TRACKING + 'em',
+    color: LANDSCAPE_HERO_TEXT_COLOR
+  }"
         >
           {{ heroCopy.title[locale] }}
         </h1>
 
-        <p
-          class="leading-relaxed text-[#ECEBC7]/85 mx-auto"
-          :style="{
-            fontSize: LANDSCAPE_HERO_PARAGRAPH_SIZE + 'rem',
-            maxWidth: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'rem'
-          }"
-        >
-          {{ heroCopy.body[locale] }}
-        </p>
+<p
+  class="leading-relaxed mx-auto text-justify"
+  :style="{
+    fontSize: LANDSCAPE_HERO_PARAGRAPH_SIZE + 'rem',
+    maxWidth: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'rem',
+    textAlign: 'justify',
+    textJustify: 'inter-word',
+    color: LANDSCAPE_HERO_TEXT_SOFT_COLOR,
+    paddingTop: LANDSCAPE_HERO_PARAGRAPH_TOP_PADDING + 'vh',
+    paddingBottom: LANDSCAPE_HERO_PARAGRAPH_BOTTOM_PADDING + 'vh'
+  }"
+>
+  {{ heroCopy.body[locale] }}
+</p>
 
-        <div
-          class="h-px bg-[#ECEBC7]/40 mx-auto"
-          :style="{
-            marginTop: LANDSCAPE_HERO_LINE_SPACING + 'vh',
-            width: LANDSCAPE_HERO_LINE_WIDTH + '%'
-          }"
-        ></div>
+<div
+  class="h-px mx-auto"
+  :style="{
+    marginTop: LANDSCAPE_HERO_BOTTOM_LINE_SPACING + 'vh',
+    width: LANDSCAPE_HERO_LINE_WIDTH + '%',
+    backgroundColor: LANDSCAPE_HERO_LINE_COLOR_BOTTOM
+  }"
+></div>
       </div>
     </section>
 
@@ -193,16 +202,30 @@ const { locale } = useLocale();
 // ============================================================
 //
 
+// HERO COLORS + LINES
+const LANDSCAPE_HERO_TEXT_COLOR = "#D8DCDD";          // main hero title + body color
+const LANDSCAPE_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
+const LANDSCAPE_HERO_LINE_COLOR = "#D8DCDD"; // top divider
+const LANDSCAPE_HERO_LINE_COLOR_BOTTOM = "#D8DCDD"; // bottom divider
+
 // HERO
 const LANDSCAPE_HERO_MIN_HEIGHT = 125;
 const LANDSCAPE_HERO_IMAGE_SCALE = 1.04;
 const LANDSCAPE_HERO_OVERLAY_OPACITY = 0.65;
-const LANDSCAPE_HERO_LINE_WIDTH = 78;
+const LANDSCAPE_HERO_LINE_WIDTH = 105;
 const LANDSCAPE_HERO_LINE_SPACING = 3;
-const LANDSCAPE_HERO_TITLE_SIZE = 2.2;
-const LANDSCAPE_HERO_TITLE_SPACING = 2;
+const LANDSCAPE_HERO_TITLE_SIZE = 2;
+const LANDSCAPE_HERO_TITLE_SPACING = 1;
+const LANDSCAPE_HERO_TITLE_TRACKING = 0.14; // em — adjust to taste
 const LANDSCAPE_HERO_PARAGRAPH_SIZE = 1.0;
-const LANDSCAPE_HERO_PARAGRAPH_WIDTH = 40;
+const LANDSCAPE_HERO_PARAGRAPH_WIDTH = 35;
+
+// HERO — EXTRA SPACING
+const LANDSCAPE_HERO_PARAGRAPH_TOP_PADDING = 1.5;   // vh
+const LANDSCAPE_HERO_PARAGRAPH_BOTTOM_PADDING = 1.5; // vh
+
+// HERO — BOTTOM LINE SPACING (separate control)
+const LANDSCAPE_HERO_BOTTOM_LINE_SPACING = 3; // vh
 
 // SEARCH BAR
 const LANDSCAPE_SEARCH_WIDTH = 260;

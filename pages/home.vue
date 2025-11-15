@@ -1,166 +1,156 @@
 <template>
   <div
-    class="min-h-screen bg-[#000C05] text-[#ECEBC7] flex flex-col items-center justify-center relative"
+    class="min-h-screen flex flex-col items-center justify-start px-6 text-center"
+    :style="{
+      backgroundColor: HOME_BG_COLOR,
+      color: HOME_TEXT_COLOR,
+      paddingTop: HOME_TOP_PADDING + 'px'
+    }"
   >
-    <!-- HERO WRAPPER -->
+    <!-- HERO IMAGE — CLICKABLE -->
     <div
-      ref="heroWrap"
-      class="relative flex flex-col items-center cursor-pointer group select-none"
+      class="cursor-pointer select-none transition-transform duration-500 ease-out"
       @mousemove="handleMouseMove"
-      @mouseenter="handleMouseEnter"
-      @mouseleave="handleMouseLeave"
+      @mouseleave="resetTilt"
       @click="goAbout"
+      :style="{ transform: tiltStyle }"
     >
-      <!-- Cursor Glow -->
-      <div
-        v-show="cursorActive"
-        ref="cursorGlow"
-        class="pointer-events-none absolute rounded-full mix-blend-screen"
-        :style="cursorGlowStyle"
-      ></div>
-
-      <!-- Timed Glow (shine visual only) -->
-      <div
-        class="absolute inset-0 opacity-0 pointer-events-none transition-opacity duration-700"
-        :class="{ 'opacity-100 animate-glow': showGlow }"
-      ></div>
-
-      <!-- HERO IMAGE -->
       <img
-        ref="heroImg"
-        src="/images/home-hero.png"
-        alt="DSA Hero"
-        class="w-[503px] max-w-full h-auto transition-transform duration-500 ease-out group-hover:scale-[1.04]"
-        :style="tiltStyle"
+        :src="HOME_HERO_SRC"
+        alt="DSA Home Hero"
+        class="h-auto"
+        :style="{
+          width: HOME_HERO_WIDTH + 'px',
+          maxWidth: HOME_HERO_MAX_WIDTH + 'px'
+        }"
       />
     </div>
 
-    <!-- CN Headline -->
+    <!-- HEADLINE CN -->
     <h2
-      class="mt-12 text-[28px] tracking-[0.12em] font-medium text-[#ECEBC7] text-center"
+      class="font-medium tracking-[0.12em]"
+      :style="{
+        fontSize: HOME_HEADLINE_CN_SIZE + 'px',
+        marginTop: HOME_HEADLINE_MARGIN_TOP + 'px'
+      }"
     >
-      打造未来的美学空间
+      {{ HOME_HEADLINE_CN }}
     </h2>
 
-    <!-- EN Line -->
+    <!-- HEADLINE EN -->
     <p
-      class="mt-4 text-sm text-[#ECEBC7]/80 max-w-xl mx-auto text-center leading-relaxed"
+      class="opacity-80"
+      :style="{
+        fontSize: HOME_HEADLINE_EN_SIZE + 'px',
+        marginTop: HOME_HEADLINE_EN_MARGIN_TOP + 'px'
+      }"
     >
-      Creating elevated spatial experiences with precision, emotion, and modern
-      design.
+      {{ HOME_HEADLINE_EN }}
     </p>
 
-    <!-- Secondary paragraph -->
-    <p
-      class="mt-4 text-xs text-[#ECEBC7]/70 max-w-xl mx-auto text-center leading-relaxed"
+    <!-- EN BODY TEXT -->
+    <div
+      class="mx-auto text-center"
+      :style="{
+        maxWidth: HOME_BODY_MAX_WIDTH + 'px',
+        fontSize: HOME_BODY_SIZE + 'px',
+        lineHeight: HOME_BODY_LINE_HEIGHT,
+        marginTop: HOME_BODY_EN_MARGIN_TOP + 'px',
+        color: HOME_TEXT_COLOR_SOFT
+      }"
     >
-      Based in Asia, our multidisciplinary team integrates landscape architecture,
-      lighting, and innovative design to transform environments across the globe.
-    </p>
+      <p
+        v-for="(p, i) in HOME_BODY_EN"
+        :key="'en-' + i"
+        class="text-justify"
+        :style="{ marginBottom: HOME_BODY_PARAGRAPH_GAP + 'px' }"
+      >
+        {{ p }}
+      </p>
+    </div>
+
+    <!-- CN BODY TEXT -->
+    <div
+      class="mx-auto text-center"
+      :style="{
+        maxWidth: HOME_BODY_MAX_WIDTH + 'px',
+        fontSize: HOME_BODY_SIZE + 'px',
+        lineHeight: HOME_BODY_LINE_HEIGHT,
+        marginTop: HOME_BODY_CN_MARGIN_TOP + 'px',
+        color: HOME_TEXT_COLOR_SOFT
+      }"
+    >
+      <p
+        v-for="(p, i) in HOME_BODY_CN"
+        :key="'cn-' + i"
+        class="text-justify"
+        :style="{ marginBottom: HOME_BODY_PARAGRAPH_GAP + 'px' }"
+      >
+        {{ p }}
+      </p>
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { ref } from "vue";
+import { useGlobalFade } from "~/composables/useGlobalFade";
+
+import {
+  HOME_BG_COLOR,
+  HOME_TEXT_COLOR,
+  HOME_TEXT_COLOR_SOFT,
+  HOME_TOP_PADDING,
+  HOME_HERO_SRC,
+  HOME_HERO_WIDTH,
+  HOME_HERO_MAX_WIDTH,
+  HOME_HERO_HOVER_SCALE,
+  HOME_HEADLINE_CN,
+  HOME_HEADLINE_EN,
+  HOME_HEADLINE_CN_SIZE,
+  HOME_HEADLINE_EN_SIZE,
+  HOME_HEADLINE_MARGIN_TOP,
+  HOME_HEADLINE_EN_MARGIN_TOP,
+  HOME_BODY_EN,
+  HOME_BODY_CN,
+  HOME_BODY_MAX_WIDTH,
+  HOME_BODY_SIZE,
+  HOME_BODY_LINE_HEIGHT,
+  HOME_BODY_PARAGRAPH_GAP,
+  HOME_BODY_EN_MARGIN_TOP,
+  HOME_BODY_CN_MARGIN_TOP
+} from "~/content/home";
 
 definePageMeta({
-  layout: 'landing'
+  layout: "landing",
 });
 
-const router = useRouter();
-const goAbout = () => router.push('/about');
+// Fade navigation → about page
+const { navigateWithFade } = useGlobalFade();
+const goAbout = () => navigateWithFade("/about");
 
 /* --------------------------------
-   STATE
+   PARALLAX HOVER
 -------------------------------- */
-const showGlow = ref(false);
-const cursorActive = ref(false);
+const tiltStyle = ref("rotateX(0deg) rotateY(0deg)");
 
-const heroWrap = ref<HTMLElement | null>(null);
-const heroImg = ref<HTMLElement | null>(null);
-const cursorGlow = ref<HTMLElement | null>(null);
-
-const tiltStyle = ref<Record<string, string>>({});
-const cursorGlowStyle = ref<Record<string, string>>({});
-
-const glowStarted = ref(false);
-
-/* --------------------------------
-   FIRST HOVER = TRIGGER GLOW
--------------------------------- */
-const handleMouseEnter = () => {
-  cursorActive.value = true;
-
-  // Shine animation triggered only once
-  if (!glowStarted.value) {
-    glowStarted.value = true;
-
-    setTimeout(() => {
-      showGlow.value = true;
-
-      setTimeout(() => {
-        showGlow.value = false;
-      }, 1200);
-    }, 2000); // 2 seconds delay
-  }
-};
-
-const handleMouseLeave = () => {
-  cursorActive.value = false;
-  tiltStyle.value = {
-    transform: 'rotateX(0deg) rotateY(0deg)'
-  };
-};
-
-/* --------------------------------
-   MOUSE MOVE (Parallax + Glow Follow)
--------------------------------- */
-const handleMouseMove = (e: MouseEvent) => {
-  if (!heroWrap.value || !heroImg.value) return;
-
-  const rect = heroWrap.value.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
-
-  const percentX = x / rect.width - 0.5;
-  const percentY = y / rect.height - 0.5;
-
+function handleMouseMove(e: MouseEvent) {
   const maxTilt = 3;
+  const el = e.currentTarget as HTMLElement;
+  const rect = el.getBoundingClientRect();
+
+  const percentX = (e.clientX - rect.left) / rect.width - 0.5;
+  const percentY = (e.clientY - rect.top) / rect.height - 0.5;
+
   const tiltX = maxTilt * percentY;
   const tiltY = -maxTilt * percentX;
 
-  tiltStyle.value = {
-    transform: `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(1.02)`
-  };
+  tiltStyle.value = `rotateX(${tiltX}deg) rotateY(${tiltY}deg) scale(${HOME_HERO_HOVER_SCALE})`;
+}
 
-  const glowSize = 180;
-  cursorGlowStyle.value = {
-    width: `${glowSize}px`,
-    height: `${glowSize}px`,
-    top: `${y - glowSize / 2}px`,
-    left: `${x - glowSize / 2}px`,
-    background:
-      'radial-gradient(circle, rgba(236,235,199,0.30) 0%, rgba(236,235,199,0.05) 60%, transparent 100%)',
-    transition: 'top 0.05s linear, left 0.05s linear'
-  };
-};
+function resetTilt() {
+  tiltStyle.value = "rotateX(0deg) rotateY(0deg) scale(1)";
+}
 </script>
 
-<style scoped>
-@keyframes glowPulse {
-  0% {
-    box-shadow: 0 0 0px rgba(236, 235, 199, 0);
-  }
-  50% {
-    box-shadow: 0 0 40px rgba(236, 235, 199, 0.6);
-  }
-  100% {
-    box-shadow: 0 0 0px rgba(236, 235, 199, 0);
-  }
-}
-
-.animate-glow {
-  animation: glowPulse 1.2s ease-out forwards;
-}
-</style>
+<style scoped></style>
