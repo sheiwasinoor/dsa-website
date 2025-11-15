@@ -11,22 +11,32 @@ export function useLocale() {
     if (isFading.value) return;
 
     isFading.value = true;
-
-    // Fade out
     await new Promise((r) => setTimeout(r, 800));
 
-    // Switch language ONLY while screen is black
     locale.value = locale.value === 'en' ? 'zh' : 'en';
 
-    // Fade in
+    await new Promise((r) => setTimeout(r, 800));
+    isFading.value = false;
+  }
+
+  /* 🔥 NEW FUNCTION — used by landing video fade-out */
+  async function triggerFadeOut() {
+    if (isFading.value) return;
+
+    isFading.value = true;
+
     await new Promise((r) => setTimeout(r, 800));
 
-    isFading.value = false;
+    // NOTE: do NOT switch languages
+    // this is ONLY a fade overlay
+
+    // fade stays active until next page loads
   }
 
   return {
     locale,
     isFading,
     startLocaleTransition,
+    triggerFadeOut, // 🔥 expose new function
   };
 }

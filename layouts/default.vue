@@ -2,11 +2,8 @@
 <template>
   <div class="min-h-screen flex flex-col bg-[#000C05] text-[#F1F5F7] relative">
 
-    <!-- GLOBAL BLACKOUT OVERLAY -->
-    <div
-      class="pointer-events-none fixed inset-0 bg-[#000C05] transition-opacity duration-700 z-50"
-      :class="isFading ? 'opacity-100' : 'opacity-0'"
-    ></div>
+    <!-- GLOBAL FADE LOADER -->
+    <Loading :visible="globalPageLoading" :showLogo="globalShowLogo" />
 
     <!-- NAVBAR -->
     <Navbar class="z-40" />
@@ -22,30 +19,29 @@
 </template>
 
 <script setup lang="ts">
-import Navbar from '~/components/layout/Navbar.vue';
-import Footer from '~/components/layout/Footer.vue';
-import { useLocale } from '~/composables/useLocale';
-import { useRoute } from 'vue-router';
-import { useTheme } from '~/composables/useTheme';
-import { watch } from 'vue';
+import Navbar from "~/components/layout/Navbar.vue";
+import Footer from "~/components/layout/Footer.vue";
+import Loading from "~/components/global/Loading.vue";
 
-const { isFading } = useLocale();
+import { globalPageLoading, globalShowLogo } from "~/plugins/page-loading.client";
+
+import { useRoute } from "vue-router";
+import { useTheme } from "~/composables/useTheme";
+import { watch } from "vue";
 
 const route = useRoute();
 const { setTheme } = useTheme();
 
-// Theme logic
-const updateThemeFromRoute = () => {
-  if (route.path.startsWith('/lighting')) {
-    setTheme('lighting');
-  } else {
-    setTheme('landscape');
-  }
-};
-
+// Theme assignment
 watch(
   () => route.path,
-  () => updateThemeFromRoute(),
+  () => {
+    if (route.path.startsWith("/lighting")) {
+      setTheme("lighting");
+    } else {
+      setTheme("landscape");
+    }
+  },
   { immediate: true }
 );
 </script>
