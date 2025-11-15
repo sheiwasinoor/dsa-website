@@ -2,34 +2,58 @@
 <template>
   <div class="bg-[#000C05] text-[#ECEBC7] min-h-screen">
 
+    <!-- =================================================== -->
     <!-- 1. HERO -->
+    <!-- =================================================== -->
     <section>
       <img
         src="/images/about-hero.png"
         alt="About Hero"
-        class="w-full h-auto object-cover"
+        class="w-full object-cover"
+        :style="{ height: ABOUT_HERO_IMAGE_HEIGHT + 'px' }"
       />
     </section>
 
-    <!-- 2. LETTER -->
+
+    <!-- =================================================== -->
+    <!-- 2. LETTER SECTION -->
+    <!-- =================================================== -->
     <section
-      class="w-full bg-cover bg-center px-6 py-24 relative"
-      style="background-image: url('/images/about-letter-bg.png');"
+      class="w-full bg-cover bg-center relative"
+      :style="{
+        backgroundImage: `url('/images/about-letter-bg.png')`,
+        paddingLeft: ABOUT_LETTER_PADDING_X + 'px',
+        paddingRight: ABOUT_LETTER_PADDING_X + 'px',
+        paddingTop: ABOUT_LETTER_PADDING_Y + 'px',
+        paddingBottom: ABOUT_LETTER_PADDING_Y + 'px'
+      }"
     >
-      <div class="max-w-4xl mx-auto transition-opacity duration-500">
-        <div class="w-full min-h-[600px] letter-columns-wrapper">
-          <div
-            :class="[
-              locale === 'en'
-                ? 'columns-2 gap-12 text-sm leading-relaxed'
-                : 'text-sm leading-relaxed space-y-4'
-            ]"
-            class="text-[#ECEBC7]/85"
-          >
+      <div class="mx-auto transition-opacity duration-500"
+           :style="{ maxWidth: ABOUT_LETTER_MAX_WIDTH + 'px' }">
+
+        <div class="w-full letter-columns-wrapper"
+             :style="{ minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px' }">
+
+<div
+  :class="[
+    locale === 'en'
+      ? 'columns-2'
+      : 'space-y-4'
+  ]"
+  class="text-[#ECEBC7]/85 text-justify"
+  :style="{
+    columnGap: ABOUT_LETTER_COLUMN_GAP + 'rem',
+    fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
+    lineHeight: ABOUT_LETTER_LINE_HEIGHT,
+    textAlign: 'justify',
+    textJustify: 'inter-word'
+  }"
+>
             <p
               v-for="(p, i) in letterText[locale]"
               :key="'letter-' + i"
-              class="break-inside-avoid-column mb-4"
+              class="break-inside-avoid-column"
+              :style="{ marginBottom: ABOUT_LETTER_PARAGRAPH_GAP + 'px' }"
             >
               {{ p }}
             </p>
@@ -37,33 +61,77 @@
         </div>
 
         <!-- Signature -->
-        <div class="flex justify-end mt-10 mb-2 signature-block">
+        <div class="flex justify-end signature-block"
+             :style="{ marginTop: ABOUT_SIGNATURE_TOP_MARGIN + 'px',
+                       marginBottom: ABOUT_SIGNATURE_BOTTOM_MARGIN + 'px' }">
           <img
             src="/images/signature.png"
             alt="Signature"
-            class="h-14 w-auto opacity-90"
+            :style="{
+              height: ABOUT_SIGNATURE_HEIGHT + 'px',
+              width: 'auto',
+              opacity: ABOUT_SIGNATURE_OPACITY
+            }"
           />
         </div>
 
-        <p class="text-right text-sm text-[#ECEBC7]/90 leading-relaxed mb-6">
-          Regards,<br />
-          <span class="font-semibold tracking-wide">Demi Young</span>
+        <p class="text-right text-[#ECEBC7]/90"
+          :style="{
+            fontSize: ABOUT_SIGNATURE_TEXT_SIZE + 'rem',
+            lineHeight: ABOUT_SIGNATURE_LINE_HEIGHT,
+            marginBottom: ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN + 'px'
+          }"
+        >
+          {{ ABOUT_FOOTER_TEXT[locale].regards }}<br />
+          <span class="font-semibold tracking-wide">
+            {{ ABOUT_FOOTER_TEXT[locale].name }}
+          </span><br />
+          {{ ABOUT_FOOTER_TEXT[locale].location }}
         </p>
       </div>
     </section>
 
+
+
+    <!-- =================================================== -->
     <!-- 3. MAIN CONTENT -->
-    <main class="max-w-6xl mx-auto px-6 pt-24 pb-32">
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-20">
+    <!-- =================================================== -->
+    <main class="mx-auto"
+          :style="{
+            maxWidth: ABOUT_MAIN_MAX_WIDTH + 'px',
+            paddingTop: ABOUT_MAIN_PADDING_TOP + 'px',
+            paddingBottom: ABOUT_MAIN_PADDING_BOTTOM + 'px',
+            paddingLeft: '1.5rem',
+            paddingRight: '1.5rem'
+          }">
+
+      <div class="grid grid-cols-1 lg:grid-cols-2"
+           :style="{ gap: ABOUT_MAIN_GRID_GAP + 'px' }">
+
+        <!-- =============================== -->
         <!-- LEFT COLUMN -->
-        <div class="space-y-20">
-          <!-- INTRO -->
+        <!-- =============================== -->
+        <div :style="{ rowGap: ABOUT_LEFT_COLUMN_SECTION_SPACING + 'px' }"
+             class="flex flex-col">
+
+          <!-- INTRO SECTION -->
           <div>
-            <p class="text-sm tracking-[0.22em] text-[#ECEBC7]/70 mb-6">
+            <p class="tracking-[0.22em] text-[#ECEBC7]/70"
+               :style="{ fontSize: ABOUT_INTRO_HEADING_SIZE + 'rem',
+                         marginBottom: ABOUT_INTRO_HEADING_SPACING + 'px' }">
               简介 | INTRODUCTION
             </p>
 
-            <div class="space-y-4 text-sm leading-relaxed text-[#ECEBC7]/80">
+            <div
+              class="text-[#ECEBC7]/80 flex flex-col text-justify"
+              :style="{
+                fontSize: ABOUT_INTRO_TEXT_SIZE + 'rem',
+                lineHeight: ABOUT_INTRO_LINE_HEIGHT,
+                rowGap: ABOUT_INTRO_PARAGRAPH_GAP + 'px',
+                textAlign: 'justify',
+                textJustify: 'inter-word'
+              }"
+            >
               <p
                 v-for="(p, i) in introText[locale]"
                 :key="'intro-' + i"
@@ -73,12 +141,21 @@
             </div>
           </div>
 
+
           <!-- BIO CARD -->
           <div
-            class="max-w-xl bg-[#111C14] rounded-2xl p-8 shadow-lg border border-[#ECEBC7]/10 overflow-hidden bio-card-transition"
+            class="bg-[#111C14] rounded-2xl shadow-lg border border-[#ECEBC7]/10 overflow-hidden bio-card-transition"
             :class="bioCardClass"
+            :style="{
+              maxWidth: ABOUT_BIO_MAX_WIDTH + 'px',
+              padding: ABOUT_BIO_PADDING + 'px'
+            }"
           >
-            <h2 class="text-lg font-semibold tracking-[0.16em] mb-2">
+            <h2 class="font-semibold tracking-[0.16em]"
+                :style="{
+                  fontSize: ABOUT_BIO_TITLE_SIZE + 'rem',
+                  marginBottom: ABOUT_BIO_TITLE_SPACING + 'px'
+                }">
               <span v-if="active.group === 'chinese'">
                 {{ active.nameEn }} | {{ active.nameCn }}
               </span>
@@ -87,13 +164,22 @@
               </span>
             </h2>
 
-            <p class="text-sm text-[#ECEBC7]/80 mb-4">
+            <p class="text-[#ECEBC7]/80"
+               :style="{
+                 fontSize: ABOUT_BIO_ROLE_SIZE + 'rem',
+                 marginBottom: ABOUT_BIO_ROLE_SPACING + 'px'
+               }">
               {{ active.role[locale] }}
             </p>
 
             <div
-              class="space-y-3 text-sm leading-relaxed text-[#ECEBC7]/80 transition-opacity duration-700"
+              class="text-[#ECEBC7]/80 transition-opacity duration-700 flex flex-col"
               :class="bioTextVisible ? 'opacity-100' : 'opacity-0'"
+              :style="{
+                fontSize: ABOUT_BIO_TEXT_SIZE + 'rem',
+                lineHeight: ABOUT_BIO_LINE_HEIGHT,
+                rowGap: ABOUT_BIO_PARAGRAPH_GAP + 'px'
+              }"
             >
               <p
                 v-for="(p, i) in active.bio[locale]"
@@ -105,19 +191,30 @@
           </div>
         </div>
 
-        <!-- RIGHT COLUMN (TEAM GRID) -->
-        <div class="space-y-10 lg:mt-[30%]">
-          <!-- Chinese Creativity -->
-          <div>
-            <p class="text-xs tracking-[0.56em] text-[#ECEBC7]/55">
-              李 亚 历 李 亚 历
-            </p>
-            <p class="text-sm tracking-[0.14em] text-[#ECEBC7]/80">
-              Chinese Creativity
-            </p>
-          </div>
 
-          <div class="grid grid-cols-2 md:grid-cols-3 gap-10">
+
+        <!-- =============================== -->
+        <!-- RIGHT COLUMN: TEAM GRID -->
+        <!-- =============================== -->
+        <div :style="{ rowGap: ABOUT_TEAM_SECTION_SPACING + 'px',
+                       marginTop: ABOUT_TEAM_TOP_OFFSET + 'px' }"
+             class="flex flex-col">
+
+          <!-- Chinese Creativity -->
+            <div class="flex justify-center text-center">
+              <p
+                class="tracking-[0.28em] text-[#ECEBC7]/80"
+                :style="{ fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem' }"
+              >
+                中国创意&nbsp;&nbsp;CHINESE CREATIVITY
+              </p>
+            </div>
+
+          <!-- TEAM GRID - CHINESE -->
+          <div
+            class="grid grid-cols-2 md:grid-cols-3"
+            :style="{ gap: ABOUT_TEAM_GRID_GAP + 'px' }"
+          >
             <button
               v-for="m in chineseMembers"
               :key="m.id"
@@ -125,8 +222,12 @@
               @click="selectMember(m.id)"
             >
               <div
-                class="relative rounded-full overflow-hidden w-28 h-28 border border-transparent transition-all duration-500 ease-out group-hover:border-[#ECEBC7]/60"
+                class="rounded-full overflow-hidden border border-transparent transition-all ease-out"
                 :class="avatarClass(m.id)"
+                :style="{
+                  width: ABOUT_AVATAR_SIZE + 'px',
+                  height: ABOUT_AVATAR_SIZE + 'px'
+                }"
               >
                 <img
                   :src="m.avatar"
@@ -136,32 +237,45 @@
               </div>
 
               <p
-                class="text-xs mt-3 tracking-[0.16em]"
+                class="tracking-[0.16em]"
                 :class="{
                   'text-[#ECEBC7] font-semibold': activeId === m.id,
                   'text-[#ECEBC7]/70': activeId !== m.id
+                }"
+                :style="{
+                  fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
+                  marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px'
                 }"
               >
                 {{ m.nameEn }} | {{ m.nameCn }}
               </p>
 
-              <p class="text-[11px] text-[#ECEBC7]/60">
+              <p class="text-[#ECEBC7]/60"
+                 :style="{ fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }">
                 {{ m.role[locale] }}
               </p>
             </button>
           </div>
 
-          <!-- International Perspective -->
-          <div class="pt-10">
-            <p class="text-xs tracking-[0.56em] text-[#ECEBC7]/55">
-              李 亚 历 李 亚 历
-            </p>
-            <p class="text-sm tracking-[0.14em] text-[#ECEBC7]/80">
-              International Perspective
-            </p>
-          </div>
 
-          <div class="grid grid-cols-2 gap-10">
+          <!-- International Perspective -->
+            <div
+              class="flex justify-center text-center"
+              :style="{ paddingTop: ABOUT_TEAM_SECOND_LABEL_TOP_PADDING + 'px' }"
+            >
+              <p
+                class="tracking-[0.28em] text-[#ECEBC7]/80"
+                :style="{ fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem' }"
+              >
+                国际视野&nbsp;&nbsp;INTERNATIONAL PERSPECTIVE
+              </p>
+            </div>
+
+          <!-- TEAM GRID - INTERNATIONAL -->
+          <div
+            class="grid grid-cols-2"
+            :style="{ gap: ABOUT_TEAM_GRID_GAP + 'px' }"
+          >
             <button
               v-for="m in internationalMembers"
               :key="m.id"
@@ -169,8 +283,12 @@
               @click="selectMember(m.id)"
             >
               <div
-                class="relative rounded-full overflow-hidden w-28 h-28 border border-transparent transition-all duration-500 ease-out group-hover:border-[#ECEBC7]/60"
+                class="rounded-full overflow-hidden border border-transparent transition-all duration-500 ease-out"
                 :class="avatarClass(m.id)"
+                :style="{
+                  width: ABOUT_AVATAR_SIZE + 'px',
+                  height: ABOUT_AVATAR_SIZE + 'px'
+                }"
               >
                 <img
                   :src="m.avatar"
@@ -180,27 +298,123 @@
               </div>
 
               <p
-                class="text-xs mt-3 tracking-[0.16em]"
+                class="tracking-[0.16em]"
                 :class="{
                   'text-[#ECEBC7] font-semibold': activeId === m.id,
                   'text-[#ECEBC7]/70': activeId !== m.id
+                }"
+                :style="{
+                  fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
+                  marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px'
                 }"
               >
                 {{ m.nameEn }}
               </p>
 
-              <p class="text-[11px] text-[#ECEBC7]/60">
+              <p class="text-[#ECEBC7]/60"
+                 :style="{ fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }">
                 {{ m.role[locale] }}
               </p>
             </button>
           </div>
+
         </div>
       </div>
     </main>
+
   </div>
 </template>
 
+
+
+
 <script setup lang="ts">
+/* =============================================================
+   ABOUT CONFIG — ALL VALUES CENTRALIZED
+   ============================================================= */
+
+// HERO
+const ABOUT_HERO_IMAGE_HEIGHT = 1000;
+
+// LETTER SECTION
+const ABOUT_LETTER_PADDING_Y = 96;
+const ABOUT_LETTER_PADDING_X = 24;
+const ABOUT_LETTER_MIN_HEIGHT = 800;
+const ABOUT_LETTER_MAX_WIDTH = 1000;
+const ABOUT_LETTER_COLUMN_GAP = 4;
+const ABOUT_LETTER_FONT_SIZE = 1.0;
+const ABOUT_LETTER_LINE_HEIGHT = 1.6;
+const ABOUT_LETTER_PARAGRAPH_GAP = 16;
+
+// LETTER FOOTER
+const ABOUT_FOOTER_TEXT = {
+  en: {
+    regards: "Regards,",
+    name: "Demi Young",
+    location: "Shenzhen, 2025"
+  },
+  zh: {
+    regards: "致敬，",
+    name: "Demi Young",
+    location: "深圳，2025"
+  }
+};
+
+// SIGNATURE
+const ABOUT_SIGNATURE_HEIGHT = 56;
+const ABOUT_SIGNATURE_OPACITY = 0.9;
+const ABOUT_SIGNATURE_TOP_MARGIN = 10;
+const ABOUT_SIGNATURE_BOTTOM_MARGIN = 8;
+const ABOUT_SIGNATURE_TEXT_SIZE = 0.9;
+const ABOUT_SIGNATURE_LINE_HEIGHT = 1.5;
+const ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN = 24;
+
+// MAIN CONTENT
+const ABOUT_MAIN_MAX_WIDTH = 1200;
+const ABOUT_MAIN_PADDING_TOP = 96;
+const ABOUT_MAIN_PADDING_BOTTOM = 128;
+const ABOUT_MAIN_GRID_GAP = 80;
+
+// LEFT COLUMN
+const ABOUT_LEFT_COLUMN_SECTION_SPACING = 80;
+
+// INTRO
+const ABOUT_INTRO_HEADING_SIZE = 0.85;
+const ABOUT_INTRO_HEADING_SPACING = 24;
+const ABOUT_INTRO_TEXT_SIZE = 0.9;
+const ABOUT_INTRO_LINE_HEIGHT = 1.6;
+const ABOUT_INTRO_PARAGRAPH_GAP = 16;
+
+// BIO CARD
+const ABOUT_BIO_MAX_WIDTH = 530;
+const ABOUT_BIO_PADDING = 32;
+const ABOUT_BIO_TITLE_SIZE = 1.1;
+const ABOUT_BIO_TITLE_SPACING = 8;
+const ABOUT_BIO_ROLE_SIZE = 0.9;
+const ABOUT_BIO_ROLE_SPACING = 16;
+const ABOUT_BIO_TEXT_SIZE = 0.8;
+const ABOUT_BIO_LINE_HEIGHT = 1.3;
+const ABOUT_BIO_PARAGRAPH_GAP = 10;
+
+// TEAM
+const ABOUT_TEAM_SECTION_SPACING = 40;
+const ABOUT_TEAM_TOP_OFFSET = 100;
+const ABOUT_TEAM_LABEL_CN_SIZE = 0.8;
+const ABOUT_TEAM_LABEL_EN_SIZE = 0.9;
+const ABOUT_TEAM_GRID_GAP = 10;
+const ABOUT_TEAM_SECOND_LABEL_TOP_PADDING = 20;
+
+// AVATARS
+const ABOUT_AVATAR_SIZE = 90;
+const ABOUT_AVATAR_NAME_SIZE = 0.75;
+const ABOUT_AVATAR_NAME_TOP_MARGIN = 12;
+const ABOUT_AVATAR_ROLE_SIZE = 0.68;
+
+
+
+/* =============================================================
+   LOGIC (UNCHANGED)
+   ============================================================= */
 import { ref, computed, nextTick } from 'vue';
 import { useLocale } from '~/composables/useLocale';
 import {
@@ -236,27 +450,19 @@ const bioCardClass = ref('scale-100 opacity-100');
 async function selectMember(id: string) {
   if (id === activeId.value) return;
 
-  // 1) Fade OUT old text
   bioTextVisible.value = false;
 
-  // Slight scale effect while fading
   bioCardClass.value =
     "scale-95 opacity-80 origin-top-left transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]";
 
-  // 2) Wait for fade-out to finish
   await new Promise(r => setTimeout(r, 350));
 
-  // 3) NOW swap to new member (after fade-out)
   activeId.value = id;
-
-  // 4) Wait for DOM to update before fade-in
   await nextTick();
 
-  // Fade IN new text + scale back
   bioCardClass.value =
     "scale-100 opacity-100 origin-top-left transition-all duration-[400ms] ease-[cubic-bezier(0.25,0.1,0.25,1)]";
 
-  // 5) Fade in new text after slight delay
   setTimeout(() => {
     bioTextVisible.value = true;
   }, 50);
@@ -278,6 +484,9 @@ function avatarClass(id: string) {
     : 'transition-all duration-500 ease-out';
 }
 </script>
+
+
+
 
 <style scoped>
 .letter-columns-wrapper {

@@ -24,8 +24,7 @@ export const letterText = {
 
 export const introText = {
   en: [
-    "DAYOUNG Creation is a public environment design platform guided by neo-ecological art aesthetics. We focus on building holistic landscape, lighting, and art compositions that respond to the emotional, cultural, and ecological needs of contemporary public space.",
-    "Our approach integrates ecological sensitivity with creative technology, merging narrative thinking with spatial expression to shape atmospheric public environments."
+    "DDAYOUNG Creation is a public environment design platform guided by neo-ecological art aesthetics, integrating three specialized brands—DA Landscape, TS Lighting, and Young ART—to deliver interdisciplinary solutions through landscape, lighting, and artistic collaboration. Focused on eco-sustainable public space design, it bridges Chinese craftsmanship and global innovation to holistically redefine spatial value.",
   ],
   zh: [
     "DAYOUNG Creation 是一个以新生态艺术美学为导向的公共环境设计平台，致力于从景观、光影与艺术整体塑造空间氛围，回应当代公共空间的情绪、文化与生态需求。",
