@@ -6,20 +6,20 @@
     <!-- ======================================= -->
     <section
       class="relative w-full flex items-center justify-center overflow-hidden"
-      :style="{ minHeight: LANDSCAPE_HERO_MIN_HEIGHT + 'vh' }"
+      :style="{ minHeight: YOUNGART_HERO_MIN_HEIGHT + 'vh' }"
     >
       <!-- Background -->
       <img
-        src="/images/landscape-hero.jpg"
-        alt="Landscape Architecture"
+        src="/images/youngArt-hero.jpg"
+        alt="Young Art Architecture"
         class="absolute inset-0 w-full h-full object-cover object-center"
-        :style="{ transform: `scale(${LANDSCAPE_HERO_IMAGE_SCALE})` }"
+        :style="{ transform: `scale(${YOUNGART_HERO_IMAGE_SCALE})` }"
       />
 
       <!-- Overlay -->
       <div
         class="absolute inset-0 w-full h-full"
-        :style="{ backgroundColor: `rgba(0,0,0,${LANDSCAPE_HERO_OVERLAY_OPACITY})` }"
+        :style="{ backgroundColor: `rgba(0,0,0,${YOUNGART_HERO_OVERLAY_OPACITY})` }"
       ></div>
 
       <!-- HERO CONTENT -->
@@ -28,19 +28,19 @@
         <div
           class="h-px mx-auto"
           :style="{
-            marginBottom: LANDSCAPE_HERO_LINE_SPACING + 'vh',
-            width: LANDSCAPE_HERO_LINE_WIDTH + '%',
-            backgroundColor: LANDSCAPE_HERO_LINE_COLOR
+            marginBottom: YOUNGART_HERO_LINE_SPACING + 'vh',
+            width: YOUNGART_HERO_LINE_WIDTH + '%',
+            backgroundColor: YOUNGART_HERO_LINE_COLOR
           }"
         ></div>
 
         <h1
 class="uppercase"
   :style="{
-    fontSize: LANDSCAPE_HERO_TITLE_SIZE + 'rem',
-    marginBottom: LANDSCAPE_HERO_TITLE_SPACING + 'vh',
-    letterSpacing: LANDSCAPE_HERO_TITLE_TRACKING + 'em',
-    color: LANDSCAPE_HERO_TEXT_COLOR
+    fontSize: YOUNGART_HERO_TITLE_SIZE + 'rem',
+    marginBottom: YOUNGART_HERO_TITLE_SPACING + 'vh',
+    letterSpacing: YOUNGART_HERO_TITLE_TRACKING + 'em',
+    color: YOUNGART_HERO_TEXT_COLOR
   }"
         >
           {{ heroCopy.title[locale] }}
@@ -49,13 +49,13 @@ class="uppercase"
 <p
   class="leading-relaxed mx-auto text-justify"
   :style="{
-    fontSize: LANDSCAPE_HERO_PARAGRAPH_SIZE + 'rem',
-    maxWidth: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'rem',
+    fontSize: YOUNGART_HERO_PARAGRAPH_SIZE + 'rem',
+    maxWidth: YOUNGART_HERO_PARAGRAPH_WIDTH + 'rem',
     textAlign: 'justify',
     textJustify: 'inter-word',
-    color: LANDSCAPE_HERO_TEXT_SOFT_COLOR,
-    paddingTop: LANDSCAPE_HERO_PARAGRAPH_TOP_PADDING + 'vh',
-    paddingBottom: LANDSCAPE_HERO_PARAGRAPH_BOTTOM_PADDING + 'vh'
+    color: YOUNGART_HERO_TEXT_SOFT_COLOR,
+    paddingTop: YOUNGART_HERO_PARAGRAPH_TOP_PADDING + 'vh',
+    paddingBottom: YOUNGART_HERO_PARAGRAPH_BOTTOM_PADDING + 'vh'
   }"
 >
   {{ heroCopy.body[locale] }}
@@ -64,9 +64,9 @@ class="uppercase"
 <div
   class="h-px mx-auto"
   :style="{
-    marginTop: LANDSCAPE_HERO_BOTTOM_LINE_SPACING + 'vh',
-    width: LANDSCAPE_HERO_LINE_WIDTH + '%',
-    backgroundColor: LANDSCAPE_HERO_LINE_COLOR_BOTTOM
+    marginTop: YOUNGART_HERO_BOTTOM_LINE_SPACING + 'vh',
+    width: YOUNGART_HERO_LINE_WIDTH + '%',
+    backgroundColor: YOUNGART_HERO_LINE_COLOR_BOTTOM
   }"
 ></div>
       </div>
@@ -80,8 +80,8 @@ class="uppercase"
     <div
       class="max-w-6xl mx-auto flex justify-end"
       :style="{
-        paddingTop: LANDSCAPE_SEARCH_TOP_PADDING + 'vh',
-        paddingBottom: LANDSCAPE_SEARCH_BOTTOM_PADDING + 'vh',
+        paddingTop: YOUNGART_SEARCH_TOP_PADDING + 'vh',
+        paddingBottom: YOUNGART_SEARCH_BOTTOM_PADDING + 'vh',
         paddingLeft: '1.5rem',
         paddingRight: '1.5rem'
       }"
@@ -89,8 +89,8 @@ class="uppercase"
       <div
         class="relative group transition-all duration-500 border-b"
         :style="{
-          width: LANDSCAPE_SEARCH_WIDTH + 'px',
-          borderColor: LANDSCAPE_SEARCH_BORDER_COLOR
+          width: YOUNGART_SEARCH_WIDTH + 'px',
+          borderColor: YOUNGART_SEARCH_BORDER_COLOR
         }"
       >
         <input
@@ -107,8 +107,8 @@ class="uppercase"
           fill="none"
           viewBox="0 0 24 24"
           :style="{
-            width: LANDSCAPE_SEARCH_ICON_SIZE + 'px',
-            height: LANDSCAPE_SEARCH_ICON_SIZE + 'px'
+            width: YOUNGART_SEARCH_ICON_SIZE + 'px',
+            height: YOUNGART_SEARCH_ICON_SIZE + 'px'
           }"
         >
           <circle cx="11" cy="11" r="7" stroke-width="2"></circle>
@@ -125,26 +125,27 @@ class="uppercase"
     <div
       class="max-w-6xl mx-auto"
       :style="{
-        paddingTop: LANDSCAPE_GRID_TOP_PADDING + 'vh',
-        paddingBottom: LANDSCAPE_GRID_BOTTOM_PADDING + 'vh',
+        paddingTop: YOUNGART_GRID_TOP_PADDING + 'vh',
+        paddingBottom: YOUNGART_GRID_BOTTOM_PADDING + 'vh',
         paddingLeft: '1.5rem',
         paddingRight: '1.5rem'
       }"
     >
       <TransitionGroup
-        name="landscape-grid"
+        name="youngArt-grid"
         tag="div"
         class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2"
         :style="{
-          gap: LANDSCAPE_GRID_GAP + 'px',
-          '--filter-duration': LANDSCAPE_GRID_FILTER_ANIMATION_DURATION + 'ms'
+          gap: YOUNGART_GRID_GAP + 'px',
+          '--filter-duration': YOUNGART_GRID_FILTER_ANIMATION_DURATION + 'ms'
         }"
       >
         <article
+          @click="goTo(p.slug)"
           v-for="p in filteredProjects"
           :key="p.id"
           class="relative group overflow-hidden bg-[#101A14] rounded-md cursor-pointer"
-          :style="{ height: LANDSCAPE_GRID_CARD_HEIGHT + 'px' }"
+          :style="{ height: YOUNGART_GRID_CARD_HEIGHT + 'px' }"
         >
           <!-- Thumbnail -->
           <img
@@ -152,7 +153,7 @@ class="uppercase"
             :alt="p.title[locale]"
             class="w-full h-full object-cover transition-transform"
             :style="{
-              transitionDuration: LANDSCAPE_GRID_IMAGE_ZOOM_DURATION + 'ms',
+              transitionDuration: YOUNGART_GRID_IMAGE_ZOOM_DURATION + 'ms',
               transitionTimingFunction: 'cubic-bezier(0.33,1,0.68,1)'
             }"
           />
@@ -161,20 +162,20 @@ class="uppercase"
           <div
             class="absolute inset-x-0 bottom-0 bg-black/55 project-overlay"
             :style="{
-              '--overlay-height': LANDSCAPE_GRID_HOVER_OVERLAY_HEIGHT + '%',
-              '--overlay-duration': LANDSCAPE_GRID_HOVER_OVERLAY_DURATION + 'ms'
+              '--overlay-height': YOUNGART_GRID_HOVER_OVERLAY_HEIGHT + '%',
+              '--overlay-duration': YOUNGART_GRID_HOVER_OVERLAY_DURATION + 'ms'
             }"
           >
             <!-- Project Title (INSIDE overlay, top-left) -->
             <div
               class="absolute left-0 top-0 p-5 z-10 project-title text-left"
               :style="{
-                '--text-fade-duration': LANDSCAPE_GRID_TEXT_FADE_DURATION + 'ms'
+                '--text-fade-duration': YOUNGART_GRID_TEXT_FADE_DURATION + 'ms'
               }"
             >
               <p
                 class="font-semibold text-white"
-                :style="{ fontSize: LANDSCAPE_GRID_TITLE_SIZE + 'rem' }"
+                :style="{ fontSize: YOUNGART_GRID_TITLE_SIZE + 'rem' }"
               >
                 {{ p.title[locale] }}
               </p>
@@ -190,11 +191,16 @@ class="uppercase"
 
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { useLocale } from '~/composables/useLocale';
-import { heroCopy, projects } from '~/content/landscape';
+import { heroCopy } from '~/content/youngArt';
 
 const { locale } = useLocale();
+const projects = ref([]);
+
+onMounted(async () => {
+  projects.value = await $fetch("/api/projects/list?destination=youngArt");
+});
 
 //
 // ============================================================
@@ -203,63 +209,69 @@ const { locale } = useLocale();
 //
 
 // HERO COLORS + LINES
-const LANDSCAPE_HERO_TEXT_COLOR = "#D8DCDD";          // main hero title + body color
-const LANDSCAPE_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
-const LANDSCAPE_HERO_LINE_COLOR = "#D8DCDD"; // top divider
-const LANDSCAPE_HERO_LINE_COLOR_BOTTOM = "#D8DCDD"; // bottom divider
+const YOUNGART_HERO_TEXT_COLOR = "#D8DCDD";          // main hero title + body color
+const YOUNGART_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
+const YOUNGART_HERO_LINE_COLOR = "#D8DCDD"; // top divider
+const YOUNGART_HERO_LINE_COLOR_BOTTOM = "#D8DCDD"; // bottom divider
 
 // HERO
-const LANDSCAPE_HERO_MIN_HEIGHT = 125;
-const LANDSCAPE_HERO_IMAGE_SCALE = 1.04;
-const LANDSCAPE_HERO_OVERLAY_OPACITY = 0.65;
-const LANDSCAPE_HERO_LINE_WIDTH = 105;
-const LANDSCAPE_HERO_LINE_SPACING = 3;
-const LANDSCAPE_HERO_TITLE_SIZE = 2;
-const LANDSCAPE_HERO_TITLE_SPACING = 1;
-const LANDSCAPE_HERO_TITLE_TRACKING = 0.14; // em — adjust to taste
-const LANDSCAPE_HERO_PARAGRAPH_SIZE = 1.0;
-const LANDSCAPE_HERO_PARAGRAPH_WIDTH = 35;
+const YOUNGART_HERO_MIN_HEIGHT = 125;
+const YOUNGART_HERO_IMAGE_SCALE = 1.04;
+const YOUNGART_HERO_OVERLAY_OPACITY = 0.65;
+const YOUNGART_HERO_LINE_WIDTH = 105;
+const YOUNGART_HERO_LINE_SPACING = 3;
+const YOUNGART_HERO_TITLE_SIZE = 2;
+const YOUNGART_HERO_TITLE_SPACING = 1;
+const YOUNGART_HERO_TITLE_TRACKING = 0.14; // em — adjust to taste
+const YOUNGART_HERO_PARAGRAPH_SIZE = 1.0;
+const YOUNGART_HERO_PARAGRAPH_WIDTH = 35;
 
 // HERO — EXTRA SPACING
-const LANDSCAPE_HERO_PARAGRAPH_TOP_PADDING = 1.5;   // vh
-const LANDSCAPE_HERO_PARAGRAPH_BOTTOM_PADDING = 1.5; // vh
+const YOUNGART_HERO_PARAGRAPH_TOP_PADDING = 1.5;   // vh
+const YOUNGART_HERO_PARAGRAPH_BOTTOM_PADDING = 1.5; // vh
 
 // HERO — BOTTOM LINE SPACING (separate control)
-const LANDSCAPE_HERO_BOTTOM_LINE_SPACING = 3; // vh
+const YOUNGART_HERO_BOTTOM_LINE_SPACING = 3; // vh
 
 // SEARCH BAR
-const LANDSCAPE_SEARCH_WIDTH = 260;
-const LANDSCAPE_SEARCH_ICON_SIZE = 16;
-const LANDSCAPE_SEARCH_TOP_PADDING = 6;
-const LANDSCAPE_SEARCH_BOTTOM_PADDING = 1;
-const LANDSCAPE_SEARCH_BORDER_COLOR = '#336341';
+const YOUNGART_SEARCH_WIDTH = 260;
+const YOUNGART_SEARCH_ICON_SIZE = 16;
+const YOUNGART_SEARCH_TOP_PADDING = 6;
+const YOUNGART_SEARCH_BOTTOM_PADDING = 1;
+const YOUNGART_SEARCH_BORDER_COLOR = '#336341';
 
 // GRID
-const LANDSCAPE_GRID_TOP_PADDING = 1;
-const LANDSCAPE_GRID_BOTTOM_PADDING = 14;
-const LANDSCAPE_GRID_GAP = 32; // Increased from 28 → 32
-const LANDSCAPE_GRID_CARD_HEIGHT = 336; // 20% bigger (old 280)
-const LANDSCAPE_GRID_IMAGE_ZOOM_DURATION = 500;
-const LANDSCAPE_GRID_HOVER_OVERLAY_DURATION = 450;
-const LANDSCAPE_GRID_HOVER_OVERLAY_HEIGHT = 45;
-const LANDSCAPE_GRID_TEXT_FADE_DURATION = 320;
-const LANDSCAPE_GRID_FILTER_ANIMATION_DURATION = 400;
-const LANDSCAPE_GRID_TITLE_SIZE = 1.32; // Increased 15% from 1.15
+const YOUNGART_GRID_TOP_PADDING = 1;
+const YOUNGART_GRID_BOTTOM_PADDING = 14;
+const YOUNGART_GRID_GAP = 32; // Increased from 28 → 32
+const YOUNGART_GRID_CARD_HEIGHT = 336; // 20% bigger (old 280)
+const YOUNGART_GRID_IMAGE_ZOOM_DURATION = 500;
+const YOUNGART_GRID_HOVER_OVERLAY_DURATION = 450;
+const YOUNGART_GRID_HOVER_OVERLAY_HEIGHT = 45;
+const YOUNGART_GRID_TEXT_FADE_DURATION = 320;
+const YOUNGART_GRID_FILTER_ANIMATION_DURATION = 400;
+const YOUNGART_GRID_TITLE_SIZE = 1.32; // Increased 15% from 1.15
 
 // SEARCH FILTER
 const searchQuery = ref('');
 
 const filteredProjects = computed(() => {
-  if (!searchQuery.value.trim()) return projects;
+  if (!searchQuery.value.trim()) return projects.value;
 
   const q = searchQuery.value.toLowerCase();
-  return projects.filter(
+
+  return projects.value.filter(
     (p) =>
       p.title.en.toLowerCase().includes(q) ||
       p.title.zh.includes(q) ||
-      p.keywords.some((kw) => kw.toLowerCase().includes(q))
+      p.keywords.some((kw: string) => kw.toLowerCase().includes(q))
   );
 });
+
+//GoTO Function to go to slug
+function goTo(slug: string) {
+  navigateTo(`/youngArt/${slug}`);
+}
 </script>
 
 
@@ -286,13 +298,13 @@ const filteredProjects = computed(() => {
   transform: translateY(0);
 }
 
-.landscape-grid-enter-active,
-.landscape-grid-leave-active,
-.landscape-grid-move {
+.youngArt-grid-enter-active,
+.youngArt-grid-leave-active,
+.youngArt-grid-move {
   transition: all var(--filter-duration) ease-out;
 }
-.landscape-grid-enter-from,
-.landscape-grid-leave-to {
+.youngArt-grid-enter-from,
+.youngArt-grid-leave-to {
   opacity: 0;
   transform: translateY(10px);
 }

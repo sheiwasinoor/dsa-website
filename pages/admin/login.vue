@@ -58,7 +58,7 @@ async function handleLogin() {
       credentials: "include",
     });
 
-    await navigateTo("/admin/projects/new");
+    await navigateTo("/admin/create");
   } catch (err: any) {
     errorMessage.value = err?.data?.statusMessage || "Login failed.";
   }

@@ -68,3 +68,18 @@ model NewsPost {
   updatedAt DateTime @updatedAt
   published Boolean  @default(true)
 }
+
+model ContactSubmission {
+  id          String   @id @default(cuid())
+  firstName   String
+  lastName    String
+  mobile      String
+  email       String
+  status      String
+  location    String
+  position    String
+  message     String
+  resumeUrl   String?
+  portfolioUrl String?
+  createdAt   DateTime @default(now())
+}
