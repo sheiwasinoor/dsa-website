@@ -10,11 +10,7 @@
       paddingRight: UI.PAGE_PADDING_X + 'rem',
     }"
   >
-    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-20">
-
-      <!-- ============================= -->
-      <!-- LEFT SIDE — CONTACT COPY -->
-      <!-- ============================= -->
+    <section class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-28 mb-32">
       <div>
         <h1
           class="font-semibold mb-6"
@@ -26,30 +22,118 @@
           {{ contactSectionCopy.contactHeading }}
         </h1>
 
-        <p class="leading-relaxed mb-4" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-          {{ contactSectionCopy.business.title }} — {{ contactSectionCopy.business.email }}
-        </p>
-        <p v-for="(line, i) in contactSectionCopy.business.phoneLines" :key="'b' + i" class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-          {{ line }}
-        </p>
+        <template v-if="locale === 'en'">
+          <p class="leading-relaxed mb-4" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            {{ contactSectionCopy.business.title }} — {{ contactSectionCopy.business.email }}
+          </p>
+          <p v-for="(line, i) in contactSectionCopy.business.phoneLines" :key="'b' + i" class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            {{ line }}
+          </p>
 
-        <p class="leading-relaxed mt-6 mb-4 font-medium" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-          {{ contactSectionCopy.career.title }} — {{ contactSectionCopy.career.email }}
-        </p>
-        <p v-for="(line, i) in contactSectionCopy.career.phoneLines" :key="'c' + i" class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-          {{ line }}
-        </p>
+          <p class="leading-relaxed mt-6 mb-4 font-medium" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            {{ contactSectionCopy.career.title }} — {{ contactSectionCopy.career.email }}
+          </p>
+          <p v-for="(line, i) in contactSectionCopy.career.phoneLines" :key="'c' + i" class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            {{ line }}
+          </p>
+        </template>
+        <template v-else>
+          <p class="leading-relaxed mb-4" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            业务合作 — dayoung@dayoung.work
+          </p>
+          <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            +86 177 2268 4557
+          </p>
+          <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            +86 755 88878571
+          </p>
 
-        <p
-          class="mt-8 font-medium"
-          :style="{ fontSize: UI.SUBHEADER_SIZE }"
-        >
-          Please submit your resume and portfolio.
-        </p>
+          <p class="leading-relaxed mt-6 mb-4 font-medium" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            招聘联系 — Job@dayoung.work
+          </p>
+          <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+            +86 177 2784 7995
+          </p>
+        </template>
 
-        <p class="opacity-70 mb-6">
-          Each file should not exceed 50mb.
-        </p>
+      </div>
+  <div>
+    <h1 class="font-semibold mb-6" :style="{ fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
+      Address
+    </h1>
+
+    <p class="uppercase tracking-[0.22em] mb-6 text-sm opacity-80">
+      SHENZHEN | SHANGHAI | SINGAPORE | PARIS
+    </p>
+
+    <div class="space-y-8 text-sm leading-relaxed opacity-85">
+      <template v-if="locale === 'en'">
+        <div>
+          <p class="font-semibold mb-1">Shenzhen</p>
+          <p>13A Floor, Cultural and Sports Industry HQ Tower, Futian Sports Park, Futian District, Shenzhen, China</p>
+        </div>
+
+        <div>
+          <p class="font-semibold mb-1">Shanghai</p>
+          <p>270-1bZhongYi Building, Nanjin East Road, Huang Pu District, Shanghai, China</p>
+        </div>
+
+        <div>
+          <p class="font-semibold mb-1">Singapore</p>
+          <p>73 Holland Grove View, Singapore 276230</p>
+        </div>
+      </template>
+      <template v-else>
+        <div>
+          <p class="font-semibold mb-1">Shenzhen</p>
+          <p>深圳市福田区福田体育公园文化体育产业总部大厦-十三A层</p>
+          <p>（中国深圳新媒体广告产业园内）</p>
+        </div>
+
+        <div>
+          <p class="font-semibold mb-1">Shanghai</p>
+          <p>上海市黄浦区北京东路270-1号中一大楼7层</p>
+        </div>
+
+        <div>
+          <p class="font-semibold mb-1">Singapore</p>
+          <p>73 Holland Grove View, Singapore 276230</p>
+        </div>
+      </template>
+    </div>
+  </div>
+</section>
+
+    <section class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-28">
+      <div>
+        <h1 class="font-semibold mb-6" :style="{ fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
+          Join Us
+        </h1>
+
+        <template v-if="locale === 'en'">
+          <p class="leading-relaxed mb-4 opacity-80">
+            Our company is constantly seeking designers who are passionate about the aesthetic design of new ecological art, love landscape, light and shadow, public art, have graduated from relevant design majors, possess high artistic accomplishment and aesthetic sense, and have working experience in high-quality design companies to join the DSA team.
+          </p>
+
+          <p class="leading-relaxed mb-6 opacity-80">
+            We offer job opportunities for project manager, environmental update designer, assistant designer and intern positions.
+          </p>
+
+          <p class="font-medium mb-1">Please submit your resume and portfolio.</p>
+          <p class="opacity-70 mb-6">Each file should not exceed 50mb.</p>
+        </template>
+        <template v-else>
+          <p class="leading-relaxed mb-4 opacity-80">
+            我司长期寻找对跨学科设计充满热诚，热爱景观、光影、艺术设计的相关设计专业毕业、有较高的艺术修养和审美，有高品质设计公司工作经验的设计师加入我们。
+          </p>
+
+          <p class="leading-relaxed mb-6 opacity-80">
+            长期提供项目经理、环境更新设计师、助理设计师、实习生岗位的工作机会。
+          </p>
+
+          <p class="font-medium mb-1">请提交你的履历和作品集。</p>
+          <p class="opacity-70 mb-6">每个档案大小不得超过50MB。</p>
+        </template>
 
         <!-- FILE BUTTONS -->
         <div class="flex gap-4">
@@ -74,12 +158,6 @@
             <input type="file" class="hidden" @change="onPortfolioUpload" />
             <span>🗂 Portfolio</span>
           </label>
-        </div>
-
-        <!-- FILE PREVIEW -->
-        <div class="mt-4 space-y-1 opacity-75 text-sm">
-          <p v-if="resumeName">Resume: {{ resumeName }}</p>
-          <p v-if="portfolioName">Portfolio: {{ portfolioName }}</p>
         </div>
       </div>
 
@@ -141,8 +219,7 @@
           Submit
         </button>
       </form>
-
-    </div>
+    </section>
 
     <!-- ERROR MODAL -->
     <SubmissionError
@@ -154,6 +231,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
+import { useLocale } from "~/composables/useLocale";
 import TextField from "~/components/admin/TextField.vue";
 import TextArea from "~/components/admin/TextArea.vue";
 import DSADropdown from "~/components/DSADropdown.vue";
@@ -167,6 +245,8 @@ import {
   CONTACT_COLORS,
   DSA_PURPLE
 } from "~/content/contact";
+
+const { locale } = useLocale();
 
 //
 // ======================================

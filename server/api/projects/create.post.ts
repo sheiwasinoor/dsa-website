@@ -46,6 +46,14 @@ export default defineEventHandler(async (event) => {
     }
   }
 
+  // Validate theme/destination
+  if (!fields.theme || !["landscape", "lighting", "youngArt"].includes(fields.theme)) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid or missing theme (landscape / lighting / youngArt)",
+    });
+  }
+
   // Create project entry
   const project = await prisma.project.create({
     data: {
@@ -61,6 +69,7 @@ export default defineEventHandler(async (event) => {
       status: fields.status || null,
       service: fields.service || null,
       keywords: fields.keywords || null,
+      theme: fields.theme || "landscape",
     },
   });
 

@@ -270,7 +270,7 @@ const filteredProjects = computed(() => {
 
 //GoTO Function to go to slug
 function goTo(slug: string) {
-  navigateTo(`/landscape/${slug}`);
+  navigateTo(`/${slug}`);
 }
 </script>
 

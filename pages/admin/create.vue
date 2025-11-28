@@ -104,7 +104,7 @@
                 color: UI.CARD_LINK_COLOR,
                 letterSpacing: '0.12em'
               }"
-              @click="goTo('/admin/projects/new?destination=young_art')"
+              @click="goTo('/admin/projects/new?destination=youngArt')"
               @mouseover="(e)=>{ e.currentTarget.style.color = UI.CARD_LINK_HOVER; }"
               @mouseleave="(e)=>{ e.currentTarget.style.color = UI.CARD_LINK_COLOR; }"
             >

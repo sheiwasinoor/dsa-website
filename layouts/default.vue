@@ -1,6 +1,5 @@
-<!-- layouts/default.vue -->
 <template>
-  <div class="min-h-screen flex flex-col bg-[#000C05] text-[#F1F5F7]">
+  <div :class="['min-h-screen flex flex-col', pageThemeClass]">
     <!-- NAVBAR -->
     <Navbar class="z-40" />
 
@@ -21,20 +20,56 @@ import Footer from "~/components/layout/Footer.vue";
 import { useRoute } from "vue-router";
 import { useTheme } from "~/composables/useTheme";
 import { watch } from "vue";
+import { computed } from 'vue';
+
+const pageThemeClass = computed(() => {
+  return 'page-theme'; // placeholder class
+});
 
 const route = useRoute();
 const { setTheme } = useTheme();
 
-// Theme assignment (unchanged logic)
+// Theme assignment (updated logic)
 watch(
   () => route.path,
   () => {
+    // Ignore theme switching on Landing ("/") and Home ("/home")
+    if (route.path === "/" || route.path.startsWith("/home")) {
+      return; // Do NOT setTheme here
+    }
+
+    // Lighting cluster
     if (route.path.startsWith("/lighting")) {
       setTheme("lighting");
-    } else {
-      setTheme("landscape");
+      return;
     }
+
+    // Young Art — uses its own purple theme
+    if (route.path.startsWith("/youngArt")) {
+      setTheme("youngArt");
+      return;
+    }
+
+    // Young News – ALSO uses youngArt theme
+    if (route.path.startsWith("/young-news")) {
+      setTheme("youngArt");
+      return;
+    }
+
+    // Default for all Landscape/About/etc.
+    setTheme("landscape");
   },
   { immediate: true }
 );
 </script>
+
+<style>
+.page-theme {
+  background-color: var(--page-bg);
+  color: var(--page-text);
+  padding-top: var(--page-padding-top);
+  padding-bottom: var(--page-padding-bottom);
+  padding-left: var(--page-padding-x);
+  padding-right: var(--page-padding-x);
+}
+</style>

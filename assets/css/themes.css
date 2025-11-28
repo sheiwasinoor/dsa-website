@@ -1,0 +1,217 @@
+/* ===========================================================
+   DSA DESIGN — GLOBAL THEME + TYPOGRAPHY VARIABLES
+   — Complete system for Landscape / Lighting / Young News
+   — Colors, fonts, spacing, typography, links
+   =========================================================== */
+
+
+/* ===========================================================
+   GLOBAL BASE TOKENS (root) — DO NOT OVERRIDE BY THEME
+   =========================================================== */
+
+:root {
+
+  /* -----------------------------
+     BRAND COLORS (from Figma)
+     ----------------------------- */
+  --dsa-yellow: #ECEBC7;
+  --dsa-yellow-dark: #DDDD61;
+
+  --dsa-eucalyptus: #6E8C7C;
+  --dsa-eucalyptus-dark: #617D6E;
+
+  --dsa-green: #336341;
+  --dsa-green-dark: #02331B;
+
+  --dsa-purple: #40327E;
+  --dsa-purple-dark: #301F60;
+
+  --dsa-neutral-gray: #D9D9D9;
+  --dsa-neutral-gray-dark: #8C8C8C;
+
+  --dsa-white: #F1F5F7;
+  --dsa-white-dark: #D8DCDD;
+
+  --dsa-green-black: #5D6762;
+  --dsa-deep-black: #000C05;
+
+
+  /* -----------------------------
+     GLOBAL FONT FAMILIES
+     (controlled in fonts.css)
+     ----------------------------- */
+  --font-en: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-cn: "HeitiSC", "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
+  --font-meta: "Roboto", "Inter", sans-serif;
+
+
+  /* ===========================================================
+     TYPOGRAPHY SCALE — ENGLISH (Inter)
+     (from girlfriend's Figma)
+     =========================================================== */
+
+  /* Headings EN */
+  --h1-size: 40px;        /* Inter SemiBold */
+  --h1-weight: 600;
+  --h1-tracking: 0px;
+
+  --h2-size: 33px;        /* Inter Regular */
+  --h2-weight: 400;
+  --h2-tracking: 0.25px;
+
+  --h3-size: 24px;        /* Inter Medium */
+  --h3-weight: 500;
+  --h3-tracking: 0px;
+
+  /* Subtitles EN */
+  --subtitle1-size: 24px; /* Inter Medium */
+  --subtitle1-weight: 500;
+  --subtitle1-tracking: -0.3px;
+
+  --subtitle2-size: 18px; /* Inter Medium */
+  --subtitle2-weight: 500;
+  --subtitle2-tracking: -0.3px;
+
+  --subtitle3-size: 15px; /* Inter SemiBold */
+  --subtitle3-weight: 600;
+  --subtitle3-tracking: 0px;
+
+  /* Menu */
+  --menu-size: 16px;      /* Inter Regular */
+  --menu-weight: 400;
+  --menu-tracking: 0px;
+
+
+  /* ===========================================================
+     TYPOGRAPHY SCALE — CHINESE (Heiti SC)
+     =========================================================== */
+
+  --cn-h1-size: 40px;
+  --cn-h1-weight: 500;
+  --cn-h1-tracking: 3px;
+
+  --cn-h2-size: 29px;
+  --cn-h2-weight: 500;
+  --cn-h2-tracking: -0.3px;
+
+  --cn-h3-size: 22px;
+  --cn-h3-weight: 500;
+  --cn-h3-tracking: -0.3px;
+
+  --cn-sub1-size: 19px;   /* Heiti SC Light */
+  --cn-sub1-weight: 300;
+  --cn-sub1-tracking: -0.3px;
+
+  --cn-sub2-size: 16px;   /* Heiti SC Medium */
+  --cn-sub2-weight: 500;
+  --cn-sub2-tracking: 1.5px;
+
+
+  /* ===========================================================
+     PARAGRAPH / BODY TEXT
+     =========================================================== */
+
+  /* English Body Text */
+  --body1-size: 18px;           /* Inter Light */
+  --body1-weight: 300;
+  --body1-lineheight: 28px;
+  --body1-tracking: 0px;
+
+  --body2-size: 16px;           /* Inter Light */
+  --body2-weight: 300;
+  --body2-lineheight: 26px;
+  --body2-tracking: 0px;
+
+  /* Chinese Body Text */
+  --cn-body1-size: 16px;        /* Heiti SC Light? (per Figma) */
+  --cn-body1-weight: 300;
+  --cn-body1-lineheight: 30px;
+  --cn-body1-tracking: -0.05px;
+
+  --cn-body2-size: 14px;        /* Heiti SC Medium */
+  --cn-body2-weight: 500;
+  --cn-body2-lineheight: 26px;
+  --cn-body2-tracking: -0.05px;
+
+
+  /* ===========================================================
+     LINK COLORS (DEFAULT = DSA Yellow)
+     =========================================================== */
+
+  --link-color: var(--dsa-yellow);
+  --link-hover-color: var(--dsa-white);
+
+
+  /* ===========================================================
+     NAVBAR / FOOTER BASE COLORS
+     =========================================================== */
+
+  --nav-bg: var(--dsa-deep-black);
+  --nav-text: var(--dsa-white);
+
+  /* default, overridden by theme */
+  --nav-active: var(--dsa-yellow);
+  --nav-inactive: var(--dsa-green);
+
+  --nav-divider: rgba(93, 103, 98, 0.40);
+
+  --footer-bg: var(--dsa-deep-black);
+  --footer-text: var(--dsa-white);
+  --footer-border: rgba(93, 103, 98, 0.40);
+
+  /* ===========================================================
+     LANDING PAGE COLOR / TEXT TOKENS
+     (spacing remains local in landing.vue)
+     =========================================================== */
+
+  --landing-bg: var(--dsa-deep-black);
+  --landing-text: var(--dsa-white);
+}
+
+
+
+/* ===========================================================
+   THEME: LANDSCAPE (DSA GREEN)
+   =========================================================== */
+
+[data-theme="landscape"] {
+  --accent: var(--dsa-green);
+  --accent-dark: var(--dsa-green-dark);
+
+  --nav-active: var(--dsa-yellow);
+  --nav-inactive: var(--dsa-green);
+
+  --link-color: var(--dsa-yellow);
+}
+
+
+
+/* ===========================================================
+   THEME: LIGHTING (DSA YELLOW)
+   =========================================================== */
+
+[data-theme="lighting"] {
+  --accent: var(--dsa-yellow);
+  --accent-dark: var(--dsa-yellow-dark);
+
+  --nav-active: var(--dsa-yellow-dark);
+  --nav-inactive: var(--dsa-eucalyptus);
+
+  --link-color: var(--dsa-yellow);
+}
+
+
+
+/* ===========================================================
+   THEME: YOUNG NEWS / YOUNG ART (DSA PURPLE)
+   =========================================================== */
+
+[data-theme="youngArt"] {
+  --accent: var(--dsa-purple);
+  --accent-dark: var(--dsa-purple-dark);
+
+  --nav-active: var(--dsa-purple);
+  --nav-inactive: var(--dsa-purple-dark);
+
+  --link-color: var(--dsa-purple);
+}

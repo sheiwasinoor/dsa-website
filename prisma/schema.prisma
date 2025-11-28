@@ -19,7 +19,7 @@ model User {
 enum Destination {
   landscape
   lighting
-  young_art
+  youngArt
 }
 
 model Project {
@@ -36,6 +36,8 @@ model Project {
   status         String?
   service        String?
   keywords       String?
+
+  theme Destination @default(landscape)
 
   // 🔥 Protected controlled dropdown
   destination    Destination @default(landscape)

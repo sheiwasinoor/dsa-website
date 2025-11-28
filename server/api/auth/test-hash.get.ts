@@ -2,7 +2,7 @@
 import { hashPassword, verifyPassword } from "~/server/utils/hash";
 
 export default defineEventHandler(async () => {
-  const plain = "WasiLovesSu";
+  const plain = "iLoveSu";
 
   // 1) Generate a hash for this exact password in *your* environment
   const hashed = await hashPassword(plain);

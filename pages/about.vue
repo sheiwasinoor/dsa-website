@@ -468,7 +468,10 @@ import {
   members as membersData,
 } from "~/content/about";
 
-definePageMeta({ layout: "default" });
+definePageMeta({
+  layout: "default",
+  themeName: "landscape"
+});
 
 const { locale } = useLocale();
 

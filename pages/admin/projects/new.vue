@@ -25,6 +25,12 @@
           <TextField label="Status" v-model="form.status" />
           <TextField label="Service" v-model="form.service" />
           <TextField label="Keywords (comma separated)" v-model="form.keywords" />
+          <TextField
+            label="Theme (Auto‑filled)"
+            v-model="form.theme"
+            :readonly="true"
+            :disabled="true"
+          />
         </div>
 
         <!-- DESCRIPTIONS -->
@@ -140,6 +146,11 @@
 definePageMeta({
   middleware: "auth",
 });
+import { useRoute } from 'vue-router';
+const route = useRoute();
+
+// If ?destination=lighting was clicked
+const preselectedDestination = route.query.destination ?? "";
 import { ref, watch } from "vue";
 import TextField from "~/components/admin/TextField.vue";
 import TextArea from "~/components/admin/TextArea.vue";
@@ -155,6 +166,7 @@ const form = ref({
   status: "",
   service: "",
   keywords: "",
+  theme: preselectedDestination || "landscape",
   descriptionEn: "",
   descriptionZh: "",
 });
@@ -234,6 +246,12 @@ function handleFiles(event: Event) {
 
 async function submitForm() {
   const fd = new FormData();
+
+    // 🌟 VALIDATE THEME BEFORE SUBMITTING
+  if (!["landscape", "lighting", "youngArt"].includes(form.value.theme)) {
+    alert("Please choose a project destination.");
+    return;
+  }
 
   // append all fields
   Object.entries(form.value).forEach(([key, value]) => {
