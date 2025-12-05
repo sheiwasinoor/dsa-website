@@ -28,10 +28,12 @@
 
     <!-- HEADLINE CN -->
     <h2
-      class="font-medium tracking-[0.12em]"
       :style="{
+        fontFamily: HOME_TYPO.HEADLINE_CN_FONT,
+        fontWeight: HOME_TYPO.HEADLINE_CN_WEIGHT,
         fontSize: HOME_HEADLINE_CN_SIZE + 'px',
-        marginTop: HOME_HEADLINE_MARGIN_TOP + 'px'
+        marginTop: HOME_HEADLINE_MARGIN_TOP + 'px',
+        letterSpacing: HOME_HEADLINE_CN_SPACING + 'em',
       }"
     >
       {{ HOME_HEADLINE_CN }}
@@ -39,10 +41,13 @@
 
     <!-- HEADLINE EN -->
     <p
-      class="opacity-80"
       :style="{
+        fontFamily: HOME_TYPO.HEADLINE_EN_FONT,
+        fontWeight: HOME_TYPO.HEADLINE_EN_WEIGHT,
         fontSize: HOME_HEADLINE_EN_SIZE + 'px',
-        marginTop: HOME_HEADLINE_EN_MARGIN_TOP + 'px'
+        marginTop: HOME_HEADLINE_EN_MARGIN_TOP + 'px',
+        letterSpacing: HOME_HEADLINE_EN_SPACING + 'em',
+        marginBottom: '45px',
       }"
     >
       {{ HOME_HEADLINE_EN }}
@@ -63,7 +68,7 @@
         v-for="(p, i) in HOME_BODY_EN"
         :key="'en-' + i"
         class="text-justify"
-        :style="{ marginBottom: HOME_BODY_PARAGRAPH_GAP + 'px' }"
+        :style="{ marginBottom: HOME_BODY_PARAGRAPH_GAP + 'px', fontWeight: HOME_BODY_WEIGHT, }"
       >
         {{ p }}
       </p>
@@ -84,7 +89,7 @@
         v-for="(p, i) in HOME_BODY_CN"
         :key="'cn-' + i"
         class="text-justify"
-        :style="{ marginBottom: HOME_BODY_PARAGRAPH_GAP + 'px' }"
+        :style="{ marginBottom: HOME_BODY_PARAGRAPH_GAP + 'px' , fontWeight: HOME_BODY_WEIGHT_CN}"
       >
         {{ p }}
       </p>
@@ -118,8 +123,23 @@ import {
   HOME_BODY_LINE_HEIGHT,
   HOME_BODY_PARAGRAPH_GAP,
   HOME_BODY_EN_MARGIN_TOP,
-  HOME_BODY_CN_MARGIN_TOP
+  HOME_BODY_CN_MARGIN_TOP,
+  HOME_HEADLINE_EN_SPACING,
+  HOME_HEADLINE_CN_SPACING,
+  HOME_BODY_WEIGHT,
+  HOME_BODY_WEIGHT_CN
 } from "~/content/home";
+
+const HOME_TYPO = { HEADLINE_EN_FONT: "Inter",
+HEADLINE_EN_WEIGHT: 200,
+HEADLINE_CN_FONT: "Heiti SC",
+HEADLINE_CN_WEIGHT: 500,
+  BODY_EN_FONT: "Inter",
+  BODY_CN_FONT: "Heiti SC",
+
+};
+
+
 
 definePageMeta({
   layout: "landing",
@@ -127,7 +147,7 @@ definePageMeta({
 
 // Fade navigation → about page
 const { navigateWithFade } = useGlobalFade();
-const goAbout = () => navigateWithFade("/about");
+const goAbout = () => navigateWithFade("/home");
 
 /* --------------------------------
    PARALLAX HOVER

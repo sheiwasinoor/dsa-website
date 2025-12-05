@@ -1,6 +1,6 @@
 // nuxt.config.ts
 export default defineNuxtConfig({
-  css: ["~/assets/css/tailwind.css", "~/assets/css/themes.css"],
+  css: ["~/assets/css/tailwind.css", "~/assets/css/themes.css", "~/assets/css/fonts.css"],
 
   modules: ["@nuxt/content"],
 

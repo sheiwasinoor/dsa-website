@@ -49,7 +49,8 @@
     fontSize: ABOUT_LETTER_TITLE_SIZE + 'rem',
     fontWeight: ABOUT_LETTER_TITLE_WEIGHT,
     opacity: ABOUT_LETTER_TITLE_OPACITY,
-    marginBottom: ABOUT_LETTER_TITLE_MARGIN_BOTTOM + 'px'
+    marginBottom: ABOUT_LETTER_TITLE_MARGIN_BOTTOM + 'px',
+    color: ABOUT_TEXT_COLORS.letterTitle[locale]
   }"
 >
   {{ locale === 'en' ? ABOUT_LETTER_TITLE_EN : ABOUT_LETTER_TITLE_ZH }}
@@ -59,13 +60,14 @@
           :style="{ minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px' }"
         >
           <div
-  class="columns-2 text-[#ECEBC7]/85 text-justify"
+  class="columns-2 text-justify"
   :style="{
     columnGap: ABOUT_LETTER_COLUMN_GAP + 'rem',
     fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
     lineHeight: ABOUT_LETTER_LINE_HEIGHT,
     textAlign: 'justify',
-    textJustify: 'inter-word'
+    textJustify: 'inter-word',
+    color: ABOUT_TEXT_COLORS.letterBody[locale]
   }"
 >
   <p
@@ -99,12 +101,12 @@
         </div>
 
         <p
-          class="text-right text-[#ECEBC7]/90"
-          :style="{
-            fontSize: ABOUT_SIGNATURE_TEXT_SIZE + 'rem',
-            lineHeight: ABOUT_SIGNATURE_LINE_HEIGHT,
-            marginBottom: ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN + 'px'
-          }"
+            :style="{
+              fontSize: ABOUT_SIGNATURE_TEXT_SIZE + 'rem',
+              lineHeight: ABOUT_SIGNATURE_LINE_HEIGHT,
+              marginBottom: ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN + 'px',
+              color: ABOUT_TEXT_COLORS.signatureText[locale]
+            }"
         >
           {{ ABOUT_FOOTER_TEXT[locale].regards }}<br />
           <span class="font-semibold tracking-wide">
@@ -184,6 +186,7 @@
               :style="{
                 fontSize: ABOUT_BIO_TITLE_SIZE + 'rem',
                 marginBottom: ABOUT_BIO_TITLE_SPACING + 'px'
+                
               }"
             >
               <span v-if="active.group === 'chinese'">
@@ -365,8 +368,8 @@
    ============================================================= */
 
 /* ---------- HERO ---------- */
-const ABOUT_HERO_SECTION_MIN_HEIGHT = 950; // px: overall hero "length"
-const ABOUT_HERO_SECTION_PADDING_TOP = 80;  // px: space above PNG
+const ABOUT_HERO_SECTION_MIN_HEIGHT = 750; // px: overall hero "length"
+const ABOUT_HERO_SECTION_PADDING_TOP = 10;  // px: space above PNG
 const ABOUT_HERO_SECTION_PADDING_BOTTOM = 20; // px: space below PNG
 
 const ABOUT_HERO_IMAGE_WIDTH = 1150;        // px: visual width of PNG
@@ -456,6 +459,25 @@ const ABOUT_AVATAR_SIZE = 90;
 const ABOUT_AVATAR_NAME_SIZE = 0.75;
 const ABOUT_AVATAR_NAME_TOP_MARGIN = 12;
 const ABOUT_AVATAR_ROLE_SIZE = 0.68;
+
+/* ---------- TEXT COLOR MAP (EN vs ZH, per section) ---------- */
+const ABOUT_TEXT_COLORS = {
+  letterTitle:    { en: "#ECEBC7", zh: "#ECEBC7" },
+  letterBody:     { en: "#ECEBC7", zh: "#ECEBC7" },
+  signatureText:  { en: "#ECEBC7", zh: "#ECEBC7" },
+
+  introHeading:   { en: "#ECEBC7", zh: "#ECEBC7" },
+  introBody:      { en: "#ECEBC7", zh: "#ECEBC7" },
+
+  bioTitle:       { en: "#ECEBC7", zh: "#ECEBC7" },
+  bioRole:        { en: "#ECEBC7", zh: "#ECEBC7" },
+  bioBody:        { en: "#ECEBC7", zh: "#ECEBC7" },
+
+  teamLabel:      { en: "#ECEBC7", zh: "#ECEBC7" },
+  avatarName:     { en: "#ECEBC7", zh: "#ECEBC7" },
+  avatarRole:     { en: "#ECEBC7", zh: "#ECEBC7" },
+} as const;
+
 
 /* =============================================================
    LOGIC (UNCHANGED)
