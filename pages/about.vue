@@ -85,7 +85,7 @@
         <div
           class="flex justify-end signature-block"
           :style="{
-            marginTop: ABOUT_SIGNATURE_TOP_MARGIN + 'px',
+            marginTop: ABOUT_SIGNATURE_TOP_MARGIN[locale] + 'px',
             marginBottom: ABOUT_SIGNATURE_BOTTOM_MARGIN + 'px'
           }"
         >
@@ -101,6 +101,7 @@
         </div>
 
         <p
+            class="text-right"
             :style="{
               fontSize: ABOUT_SIGNATURE_TEXT_SIZE + 'rem',
               lineHeight: ABOUT_SIGNATURE_LINE_HEIGHT,
@@ -144,20 +145,22 @@
           <!-- INTRO SECTION -->
           <div>
             <p
-              class="tracking-[0.22em] text-[#ECEBC7]/70"
+              class="tracking-[0.22em]"
               :style="{
                 fontSize: ABOUT_INTRO_HEADING_SIZE + 'rem',
-                marginBottom: ABOUT_INTRO_HEADING_SPACING + 'px'
+                marginBottom: ABOUT_INTRO_HEADING_SPACING + 'px',
+                color: ABOUT_TEXT_COLORS.introHeading[locale]
               }"
             >
               简介 | INTRODUCTION
             </p>
 
             <div
-              class="text-[#ECEBC7]/80 flex flex-col text-justify"
+              class="flex flex-col text-justify"
               :style="{
                 fontSize: ABOUT_INTRO_TEXT_SIZE + 'rem',
                 lineHeight: ABOUT_INTRO_LINE_HEIGHT,
+                color: ABOUT_TEXT_COLORS.introHeading[locale],
                 rowGap: ABOUT_INTRO_PARAGRAPH_GAP + 'px',
                 textAlign: 'justify',
                 textJustify: 'inter-word'
@@ -185,8 +188,8 @@
               class="font-semibold tracking-[0.16em]"
               :style="{
                 fontSize: ABOUT_BIO_TITLE_SIZE + 'rem',
-                marginBottom: ABOUT_BIO_TITLE_SPACING + 'px'
-                
+                marginBottom: ABOUT_BIO_TITLE_SPACING + 'px',
+                color: ABOUT_TEXT_COLORS.bioTitle[locale]
               }"
             >
               <span v-if="active.group === 'chinese'">
@@ -201,19 +204,21 @@
               class="text-[#ECEBC7]/80"
               :style="{
                 fontSize: ABOUT_BIO_ROLE_SIZE + 'rem',
-                marginBottom: ABOUT_BIO_ROLE_SPACING + 'px'
+                marginBottom: ABOUT_BIO_ROLE_SPACING + 'px',
+                color: ABOUT_TEXT_COLORS.bioRole[locale]
               }"
             >
               {{ active.role[locale] }}
             </p>
 
             <div
-              class="text-[#ECEBC7]/80 transition-opacity duration-700 flex flex-col"
+              class="transition-opacity duration-700 flex flex-col"
               :class="bioTextVisible ? 'opacity-100' : 'opacity-0'"
               :style="{
                 fontSize: ABOUT_BIO_TEXT_SIZE + 'rem',
                 lineHeight: ABOUT_BIO_LINE_HEIGHT,
-                rowGap: ABOUT_BIO_PARAGRAPH_GAP + 'px'
+                rowGap: ABOUT_BIO_PARAGRAPH_GAP + 'px',
+                color: ABOUT_TEXT_COLORS.bioRole[locale]
               }"
             >
               <p
@@ -239,8 +244,10 @@
           <!-- Chinese Creativity -->
           <div class="flex justify-center text-center">
             <p
-              class="tracking-[0.28em] text-[#ECEBC7]/80"
-              :style="{ fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem' }"
+              class="tracking-[0.28em]"
+              :style="{ fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem',
+              color: ABOUT_TEXT_COLORS.bioRole[locale]
+               }"
             >
               中国创意&nbsp;&nbsp;CHINESE CREATIVITY
             </p>
@@ -275,12 +282,13 @@
               <p
                 class="tracking-[0.16em]"
                 :class="{
-                  'text-[#ECEBC7] font-semibold': activeId === m.id,
-                  'text-[#ECEBC7]/70': activeId !== m.id
+                  'font-semibold opacity-100': activeId === m.id,
+                  'opacity-70': activeId !== m.id
                 }"
                 :style="{
                   fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
-                  marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px'
+                  marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
+                  color: ABOUT_TEXT_COLORS.avatarName[locale]
                 }"
               >
                 {{ m.nameEn }} | {{ m.nameCn }}
@@ -301,8 +309,10 @@
             :style="{ paddingTop: ABOUT_TEAM_SECOND_LABEL_TOP_PADDING + 'px' }"
           >
             <p
-              class="tracking-[0.28em] text-[#ECEBC7]/80"
-              :style="{ fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem' }"
+              class="tracking-[0.28em]"
+              :style="{ fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem',
+                color: ABOUT_TEXT_COLORS.bioRole[locale]
+               }"
             >
               国际视野&nbsp;&nbsp;INTERNATIONAL PERSPECTIVE
             </p>
@@ -337,12 +347,13 @@
               <p
                 class="tracking-[0.16em]"
                 :class="{
-                  'text-[#ECEBC7] font-semibold': activeId === m.id,
-                  'text-[#ECEBC7]/70': activeId !== m.id
+                  'font-semibold opacity-100': activeId === m.id,
+                  'opacity-70': activeId !== m.id
                 }"
                 :style="{
                   fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
-                  marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px'
+                  marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
+                  color: ABOUT_TEXT_COLORS.avatarName[locale]
                 }"
               >
                 {{ m.nameEn }}
@@ -350,7 +361,9 @@
 
               <p
                 class="text-[#ECEBC7]/60"
-                :style="{ fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
+                :style="{ fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem',
+                color: ABOUT_TEXT_COLORS.avatarRole[locale]
+                }"
               >
                 {{ m.role[locale] }}
               </p>
@@ -413,7 +426,7 @@ const ABOUT_FOOTER_TEXT = {
 /* ---------- SIGNATURE ---------- */
 const ABOUT_SIGNATURE_HEIGHT = 56;
 const ABOUT_SIGNATURE_OPACITY = 0.9;
-const ABOUT_SIGNATURE_TOP_MARGIN = -200;
+const ABOUT_SIGNATURE_TOP_MARGIN = {en:-200 , zh:-350};
 const ABOUT_SIGNATURE_BOTTOM_MARGIN = 8;
 const ABOUT_SIGNATURE_TEXT_SIZE = 0.9;
 const ABOUT_SIGNATURE_LINE_HEIGHT = 1.5;
@@ -462,20 +475,20 @@ const ABOUT_AVATAR_ROLE_SIZE = 0.68;
 
 /* ---------- TEXT COLOR MAP (EN vs ZH, per section) ---------- */
 const ABOUT_TEXT_COLORS = {
-  letterTitle:    { en: "#ECEBC7", zh: "#ECEBC7" },
-  letterBody:     { en: "#ECEBC7", zh: "#ECEBC7" },
-  signatureText:  { en: "#ECEBC7", zh: "#ECEBC7" },
+  letterTitle:    { en: "#8C8C8C", zh: "#ECEBC7" },
+  letterBody:     { en: "#8C8C8C", zh: "#ECEBC7" },
+  signatureText:  { en: "#8C8C8C", zh: "#ECEBC7" },
 
-  introHeading:   { en: "#ECEBC7", zh: "#ECEBC7" },
-  introBody:      { en: "#ECEBC7", zh: "#ECEBC7" },
+  introHeading:   { en: "#8C8C8C", zh: "#8C8C8C" },
+  introBody:      { en: "#8C8C8C", zh: "#8C8C8C" },
 
-  bioTitle:       { en: "#ECEBC7", zh: "#ECEBC7" },
-  bioRole:        { en: "#ECEBC7", zh: "#ECEBC7" },
-  bioBody:        { en: "#ECEBC7", zh: "#ECEBC7" },
+  bioTitle:       { en: "#D9D9D9", zh: "#D9D9D9" },
+  bioRole:        { en: "#D9D9D9", zh: "#D9D9D9" },
+  bioBody:        { en: "#D9D9D9", zh: "#D9D9D9" },
 
-  teamLabel:      { en: "#ECEBC7", zh: "#ECEBC7" },
-  avatarName:     { en: "#ECEBC7", zh: "#ECEBC7" },
-  avatarRole:     { en: "#ECEBC7", zh: "#ECEBC7" },
+  teamLabel:      { en: "#D9D9D9", zh: "#D9D9D9" },
+  avatarName:     { en: "#D9D9D9", zh: "#D9D9D9" },
+  avatarRole:     { en: "#D9D9D9", zh: "#D9D9D9" },
 } as const;
 
 

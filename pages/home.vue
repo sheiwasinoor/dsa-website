@@ -142,12 +142,12 @@ HEADLINE_CN_WEIGHT: 500,
 
 
 definePageMeta({
-  layout: "landing",
+  layout: "default",
 });
 
 // Fade navigation → about page
 const { navigateWithFade } = useGlobalFade();
-const goAbout = () => navigateWithFade("/home");
+const goAbout = () => navigateWithFade("/about");
 
 /* --------------------------------
    PARALLAX HOVER

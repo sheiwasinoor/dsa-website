@@ -151,7 +151,7 @@
 
   /* default, overridden by theme */
   --nav-active: var(--dsa-yellow);
-  --nav-inactive: var(--dsa-green);
+  --nav-inactive: var(--dsa-eucalyptus);
 
   --nav-divider: rgba(93, 103, 98, 0.40);
 
@@ -179,7 +179,7 @@
   --accent-dark: var(--dsa-green-dark);
 
   --nav-active: var(--dsa-yellow);
-  --nav-inactive: var(--dsa-green);
+  --nav-inactive: var(--dsa-eucalyptus);
 
   --link-color: var(--dsa-yellow);
 }
@@ -194,7 +194,7 @@
   --accent: var(--dsa-yellow);
   --accent-dark: var(--dsa-yellow-dark);
 
-  --nav-active: var(--dsa-yellow-dark);
+  --nav-active: var(--dsa-yellow);
   --nav-inactive: var(--dsa-eucalyptus);
 
   --link-color: var(--dsa-yellow);
@@ -210,8 +210,8 @@
   --accent: var(--dsa-purple);
   --accent-dark: var(--dsa-purple-dark);
 
-  --nav-active: var(--dsa-purple);
-  --nav-inactive: var(--dsa-purple-dark);
+  --nav-active: var(--dsa-yellow);
+  --nav-inactive: var(--dsa-eucalyptus);
 
   --link-color: var(--dsa-purple);
 }

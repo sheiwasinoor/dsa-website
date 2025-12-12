@@ -211,11 +211,11 @@ onMounted(async () => {
 // HERO COLORS + LINES
 const LIGHTING_HERO_TEXT_COLOR = "#D8DCDD";          // main hero title + body color
 const LIGHTING_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
-const LIGHTING_HERO_LINE_COLOR = "#D8DCDD"; // top divider
-const LIGHTING_HERO_LINE_COLOR_BOTTOM = "#D8DCDD"; // bottom divider
+const LIGHTING_HERO_LINE_COLOR = "#ECEBC7"; // top divider
+const LIGHTING_HERO_LINE_COLOR_BOTTOM = "#ECEBC7"; // bottom divider
 
 // HERO
-const LIGHTING_HERO_MIN_HEIGHT = 125;
+const LIGHTING_HERO_MIN_HEIGHT = 100;
 const LIGHTING_HERO_IMAGE_SCALE = 1.04;
 const LIGHTING_HERO_OVERLAY_OPACITY = 0.65;
 const LIGHTING_HERO_LINE_WIDTH = 105;

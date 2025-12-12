@@ -249,12 +249,12 @@ const designItems = [
   {
     key: "lighting",
     to: "/lighting",
-    label: { en: "LIGHTING", zh: "灯光设计" },
+    label: { en: "LIGHTING SHOW", zh: "灯光设计" },
   },
   {
     key: "youngArt",
-    to: "/youngArt",
-    label: { en: "YOUNG ART", zh: "YOUNG 艺术" },
+    to: "/publicArt",
+    label: { en: "PUBLIC ART", zh: "PUBLIC 艺术" },
   },
 ];
 

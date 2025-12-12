@@ -211,11 +211,11 @@ onMounted(async () => {
 // HERO COLORS + LINES
 const LANDSCAPE_HERO_TEXT_COLOR = "#D8DCDD";          // main hero title + body color
 const LANDSCAPE_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
-const LANDSCAPE_HERO_LINE_COLOR = "#D8DCDD"; // top divider
-const LANDSCAPE_HERO_LINE_COLOR_BOTTOM = "#D8DCDD"; // bottom divider
+const LANDSCAPE_HERO_LINE_COLOR = "#6E8C7C"; // top divider
+const LANDSCAPE_HERO_LINE_COLOR_BOTTOM = "#6E8C7C"; // bottom divider
 
 // HERO
-const LANDSCAPE_HERO_MIN_HEIGHT = 125;
+const LANDSCAPE_HERO_MIN_HEIGHT = 100;
 const LANDSCAPE_HERO_IMAGE_SCALE = 1.04;
 const LANDSCAPE_HERO_OVERLAY_OPACITY = 0.65;
 const LANDSCAPE_HERO_LINE_WIDTH = 105;

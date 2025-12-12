@@ -45,7 +45,7 @@ watch(
     }
 
     // Young Art — uses its own purple theme
-    if (route.path.startsWith("/youngArt")) {
+    if (route.path.startsWith("/publicArt")) {
       setTheme("youngArt");
       return;
     }
