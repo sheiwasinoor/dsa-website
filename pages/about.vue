@@ -5,7 +5,12 @@
     <!-- 1. HERO (TRANSPARENT PNG, FULL-HEIGHT SECTION)      -->
     <!-- =================================================== -->
     <section
-      class="bg-[#000A04] w-full flex items-center justify-center relative"
+      ref="heroSection"
+      :class="[
+        'bg-[#000A04] w-full flex items-center justify-center relative',
+        'reveal-block',
+        { 'reveal-visible': reveals.hero }
+      ]"
       :style="{
         minHeight: ABOUT_HERO_SECTION_MIN_HEIGHT + 'px',
         paddingTop: ABOUT_HERO_SECTION_PADDING_TOP + 'px',
@@ -23,7 +28,7 @@
       >
         <!-- LEFT: HERO TEXT IMAGE -->
         <div
-          class="flex justify-center md:justify-end"
+          class="flex justify-center md:justify-end hero-text-float"
           :style="{
             paddingRight: ABOUT_HERO_TEXT_PADDING_RIGHT + 'px',
           }"
@@ -63,7 +68,12 @@
     <!-- 2. LETTER SECTION                                   -->
     <!-- =================================================== -->
     <section
-      class="w-full bg-cover bg-center relative"
+      ref="letterSection"
+      :class="[
+        'w-full bg-cover bg-center relative',
+        'reveal-block',
+        { 'reveal-visible': reveals.letter }
+      ]"
       :style="{
         backgroundImage: `url('/images/about-letter-bg.png')`,
         paddingLeft: ABOUT_LETTER_PADDING_X + 'px',
@@ -90,7 +100,7 @@
   {{ locale === 'en' ? ABOUT_LETTER_TITLE_EN : ABOUT_LETTER_TITLE_ZH }}
 </h2>
         <div
-          class="w-full"
+          class="w-full stagger-parent"
           :style="{ minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px' }"
         >
           <div
@@ -104,7 +114,13 @@
             }"
           >
             <!-- LEFT COLUMN -->
-            <div class="flex flex-col text-justify">
+            <div
+              :class="[
+                'flex flex-col text-justify stagger-item reveal-block',
+                { 'reveal-visible': reveals.letter }
+              ]"
+              style="--reveal-delay: 120ms;"
+            >
               <p
                 v-for="(p, i) in letterParagraphs[locale].left"
                 :key="'letter-left-' + i"
@@ -115,7 +131,13 @@
             </div>
 
             <!-- RIGHT COLUMN -->
-            <div class="flex flex-col text-justify">
+            <div
+              :class="[
+                'flex flex-col text-justify stagger-item reveal-block',
+                { 'reveal-visible': reveals.letter }
+              ]"
+              style="--reveal-delay: 220ms;"
+            >
               <p
                 v-for="(p, i) in letterParagraphs[locale].right"
                 :key="'letter-right-' + i"
@@ -168,6 +190,7 @@
     <!-- 3. MAIN CONTENT                                     -->
     <!-- =================================================== -->
     <main
+      ref="mainSection"
       class="mx-auto"
       :style="{
         maxWidth: ABOUT_MAIN_MAX_WIDTH + 'px',
@@ -177,15 +200,19 @@
         paddingRight: ABOUT_MAIN_PADDING_X_REM + 'rem'
       }"
     >
-      <div
-        class="grid grid-cols-1 lg:grid-cols-2"
-        :style="{ gap: ABOUT_MAIN_GRID_GAP + 'px',  }"
-      >
+        <div
+          class="grid grid-cols-1 lg:grid-cols-2"
+          :style="{ gap: ABOUT_MAIN_GRID_GAP + 'px',  }"
+        >
         <!-- =============================== -->
         <!-- LEFT COLUMN                     -->
         <!-- =============================== -->
         <div
-          class="flex flex-col"
+          ref="introSection"
+          :class="[
+            'flex flex-col reveal-block',
+            { 'reveal-visible': reveals.intro }
+          ]"
           :style="{ rowGap: ABOUT_LEFT_COLUMN_SECTION_SPACING + 'px', }"
         >
           <!-- INTRO SECTION -->
@@ -228,8 +255,9 @@
 
           <!-- BIO CARD -->
           <div
+            ref="bioSection"
             class="bg-[#151E17] rounded-2xl shadow-lg border border-[#ECEBC7]/10 overflow-hidden bio-card-transition opa"
-            :class="bioCardClass"
+            :class="[bioCardClass, 'reveal-block', { 'reveal-visible': reveals.bio }]"
             :style="{
               maxWidth: ABOUT_BIO_MAX_WIDTH + 'px',
               padding: ABOUT_BIO_PADDING + 'px',
@@ -237,7 +265,7 @@
             }"
           >
             <h2
-              class="font-semibold tracking-[0.16em]"
+              class="font-semibold tracking-[2px]"
               :style="{
                 fontSize: ABOUT_BIO_TITLE_SIZE + 'rem',
                 marginBottom: ABOUT_BIO_TITLE_SPACING + 'px',
@@ -281,7 +309,11 @@
         <!-- RIGHT COLUMN: TEAM GRID         -->
         <!-- =============================== -->
         <div
-          class="flex flex-col"
+          ref="teamSection"
+          :class="[
+            'flex flex-col reveal-block',
+            { 'reveal-visible': reveals.team }
+          ]"
           :style="{
             rowGap: ABOUT_TEAM_SECTION_SPACING + 'px',
             marginTop: ABOUT_TEAM_TOP_OFFSET + 'px'
@@ -559,7 +591,7 @@ const ABOUT_LETTER_TITLE_OPACITY = 0.92;
 const ABOUT_LETTER_TITLE_MARGIN_BOTTOM = 74; // px
 
 /* ---------- LETTER SECTION ---------- */
-const ABOUT_LETTER_PADDING_Y = 200;
+const ABOUT_LETTER_PADDING_Y = 100;
 const ABOUT_LETTER_PADDING_X = 24;
 const ABOUT_LETTER_MIN_HEIGHT = 1000;
 const ABOUT_LETTER_MAX_WIDTH = 900;
@@ -594,7 +626,7 @@ const ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN = 100;
 
 /* ---------- MAIN CONTENT ---------- */
 const ABOUT_MAIN_MAX_WIDTH = 1200;
-const ABOUT_MAIN_PADDING_TOP = 96;
+const ABOUT_MAIN_PADDING_TOP = 100;
 const ABOUT_MAIN_PADDING_BOTTOM = 128;
 const ABOUT_MAIN_PADDING_X_REM = 1.5; // left/right padding in rem
 const ABOUT_MAIN_GRID_GAP = 80;
@@ -640,9 +672,9 @@ const ABOUT_AVATAR_ROLE_SIZE = 0.688;
 
 /* ---------- TEXT COLOR MAP (EN vs ZH, per section) ---------- */
 const ABOUT_TEXT_COLORS = {
-  letterTitle:    { en: "#8C8C8C", zh: "#ECEBC7" },
-  letterBody:     { en: "#8C8C8C", zh: "#ECEBC7" },
-  signatureText:  { en: "#8C8C8C", zh: "#ECEBC7" },
+  letterTitle:    { en: "#D9D9D9", zh: "#D9D9D9" },
+  letterBody:     { en: "#D9D9D9", zh: "#D9D9D9" },
+  signatureText:  { en: "#D9D9D9", zh: "#D9D9D9" },
 
   introHeading:   { en: "#ECEBC7", zh: "#ECEBC7" },
   introBody:      { en: "#ECEBC7", zh: "#ECEBC7" },
@@ -666,7 +698,7 @@ const ABOUT_TEAM_LABEL_KERNING_EN = '0.1em';  // English wants air
 /* =============================================================
    LOGIC (UNCHANGED)
    ============================================================= */
-import { ref, computed, nextTick } from "vue";
+import { ref, computed, nextTick, onMounted, onBeforeUnmount } from "vue";
 import { useLocale } from "~/composables/useLocale";
 import {
   letterParagraphs,
@@ -733,9 +765,64 @@ function avatarClass(id: string) {
         "transition-transform",
         "duration-300",
         "ease-out",
+        "hover:-translate-y-0.5",
       ].join(" ")
-    : "transition-transform duration-300 ease-out";
+    : "transition-transform duration-300 ease-out hover:-translate-y-0.5";
 }
+
+/* SCROLL-TRIGGERED REVEALS */
+const heroSection = ref<HTMLElement | null>(null);
+const letterSection = ref<HTMLElement | null>(null);
+const mainSection = ref<HTMLElement | null>(null);
+const introSection = ref<HTMLElement | null>(null);
+const bioSection = ref<HTMLElement | null>(null);
+const teamSection = ref<HTMLElement | null>(null);
+
+const reveals = ref({
+  hero: false,
+  letter: false,
+  intro: false,
+  bio: false,
+  team: false,
+});
+
+const observerRef = ref<IntersectionObserver | null>(null);
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const target = entry.target;
+        if (target === heroSection.value) reveals.value.hero = true;
+        if (target === letterSection.value) reveals.value.letter = true;
+        if (target === introSection.value) reveals.value.intro = true;
+        if (target === bioSection.value) reveals.value.bio = true;
+        if (target === teamSection.value) reveals.value.team = true;
+        observer.unobserve(target);
+      });
+    },
+    {
+      threshold: 0.25,
+      rootMargin: "0px 0px -8% 0px",
+    }
+  );
+
+  [
+    heroSection.value,
+    letterSection.value,
+    introSection.value,
+    bioSection.value,
+    teamSection.value,
+    mainSection.value,
+  ].forEach((el) => el && observer.observe(el));
+
+  observerRef.value = observer;
+});
+
+onBeforeUnmount(() => {
+  observerRef.value?.disconnect();
+});
 </script>
 
 <style scoped>
@@ -744,10 +831,35 @@ function avatarClass(id: string) {
   transition-timing-function: cubic-bezier(0.25, 0.1, 0.25, 1);
   transition-duration: 500ms;
 }
+
 .signature-block {
   break-inside: avoid;
 }
 
+/* Reveal system */
+.reveal-block {
+  opacity: 0;
+  transform: translateY(26px);
+  transition:
+    opacity 900ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 1000ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.stagger-parent {
+  --reveal-delay: 0ms;
+}
+
+.stagger-item {
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+/* Ring draw animation */
 @keyframes ringDraw {
   from {
     box-shadow: 0 0 0 0 rgba(236, 235, 199, 0);
@@ -759,5 +871,25 @@ function avatarClass(id: string) {
 
 .animate-ring-draw {
   animation: ringDraw 220ms ease-out forwards;
+}
+
+/* Hero texture: slow drift + glow */
+@keyframes slowFloat {
+  0% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0px); }
+}
+
+.hero-text-float {
+  animation: slowFloat 9s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-block,
+  .stagger-item,
+  .hero-text-float {
+    animation: none !important;
+    transition-duration: 0ms !important;
+  }
 }
 </style>

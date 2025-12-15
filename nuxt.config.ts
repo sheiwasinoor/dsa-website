@@ -15,7 +15,7 @@ export default defineNuxtConfig({
   nitro: {
     routeRules: {
       "/api/**": {
-        cors: true,
+        cors: false,
       },
     },
   },
@@ -24,13 +24,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       apiBase: "/", // same-origin
-    },
-  },
-
-  // 🔥 THIS WAS MISSING — safe to add
-  experimental: {
-    fetch: {
-      credentials: "include",
     },
   },
 });

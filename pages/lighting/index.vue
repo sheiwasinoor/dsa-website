@@ -5,7 +5,11 @@
     <!-- 1. HERO SECTION -->
     <!-- ======================================= -->
     <section
-      class="relative w-full flex items-center justify-center overflow-hidden"
+      ref="heroSection"
+      :class="[
+        'relative w-full flex items-center justify-center overflow-hidden reveal-block',
+        { 'reveal-visible': reveals.hero }
+      ]"
       :style="{ minHeight: LIGHTING_HERO_MIN_HEIGHT + 'vh' }"
     >
       <!-- Background -->
@@ -78,7 +82,11 @@ class="uppercase"
     <!-- 2. SEARCH BAR -->
     <!-- ======================================= -->
     <div
-      class="max-w-6xl mx-auto flex justify-end"
+      ref="searchSection"
+      :class="[
+        'max-w-6xl mx-auto flex justify-end reveal-block',
+        { 'reveal-visible': reveals.search }
+      ]"
       :style="{
         paddingTop: LIGHTING_SEARCH_TOP_PADDING + 'vh',
         paddingBottom: LIGHTING_SEARCH_BOTTOM_PADDING + 'vh',
@@ -123,7 +131,11 @@ class="uppercase"
     <!-- 3. PROJECT GRID -->
     <!-- ======================================= -->
     <div
-      class="max-w-6xl mx-auto"
+      ref="gridSection"
+      :class="[
+        'max-w-6xl mx-auto reveal-block',
+        { 'reveal-visible': reveals.grid }
+      ]"
       :style="{
         paddingTop: LIGHTING_GRID_TOP_PADDING + 'vh',
         paddingBottom: LIGHTING_GRID_BOTTOM_PADDING + 'vh',
@@ -144,7 +156,7 @@ class="uppercase"
           @click="goTo(p.slug)"
           v-for="p in filteredProjects"
           :key="p.id"
-          class="relative group overflow-hidden bg-[#101A14] rounded-md cursor-pointer"
+          class="relative group overflow-hidden bg-[#101A14] rounded-md cursor-pointer card-lift"
           :style="{ height: LIGHTING_GRID_CARD_HEIGHT + 'px' }"
         >
           <!-- Thumbnail -->
@@ -191,7 +203,7 @@ class="uppercase"
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
 import { useLocale } from '~/composables/useLocale';
 import { heroCopy } from '~/content/lighting';
 
@@ -272,6 +284,45 @@ const filteredProjects = computed(() => {
 function goTo(slug: string) {
   navigateTo(`${slug}`);
 }
+
+/* Scroll reveals */
+const heroSection = ref<HTMLElement | null>(null);
+const searchSection = ref<HTMLElement | null>(null);
+const gridSection = ref<HTMLElement | null>(null);
+
+const reveals = ref({
+  hero: false,
+  search: false,
+  grid: false,
+});
+
+const observerRef = ref<IntersectionObserver | null>(null);
+
+onMounted(() => {
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        const target = entry.target;
+        if (target === heroSection.value) reveals.value.hero = true;
+        if (target === searchSection.value) reveals.value.search = true;
+        if (target === gridSection.value) reveals.value.grid = true;
+        observer.unobserve(target);
+      });
+    },
+    { threshold: 0.2, rootMargin: "0px 0px -6% 0px" }
+  );
+
+  [heroSection.value, searchSection.value, gridSection.value].forEach(
+    (el) => el && observer.observe(el)
+  );
+
+  observerRef.value = observer;
+});
+
+onBeforeUnmount(() => {
+  observerRef.value?.disconnect();
+});
 </script>
 
 
@@ -307,5 +358,38 @@ function goTo(slug: string) {
 .lighting-grid-leave-to {
   opacity: 0;
   transform: translateY(10px);
+}
+
+/* Reveal primitives */
+.reveal-block {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 800ms cubic-bezier(0.25, 0.1, 0.25, 1),
+    transform 900ms cubic-bezier(0.25, 0.1, 0.25, 1);
+}
+.reveal-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Card hover */
+.card-lift {
+  transition:
+    transform 320ms cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow 320ms cubic-bezier(0.33, 1, 0.68, 1);
+}
+.card-lift:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-block,
+  .card-lift {
+    transition-duration: 0ms !important;
+    transform: none !important;
+    box-shadow: none !important;
+  }
 }
 </style>

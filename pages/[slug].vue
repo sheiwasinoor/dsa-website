@@ -15,47 +15,23 @@
           marginTop: HERO_TOP_OFFSET_REM + 'rem'
         }"
       >
-        <!-- subtle dark strip so navbar reads on top -->
-        <div
-          class="absolute top-0 left-0 w-full h-full pointer-events-none"
-          :style="{ backgroundColor: HERO_NAVBAR_FADE }"
-        ></div>
-
-        <!-- arrows -->
-        <button
-          v-if="hasImages"
-          @click="prevImage"
-          class="absolute left-4 top-1/2 -translate-y-1/2 z-20 text-white text-3xl opacity-70 hover:opacity-100"
-        >
-          ‹
-        </button>
-        <button
-          v-if="hasImages"
-          @click="nextImage"
-          class="absolute right-4 top-1/2 -translate-y-1/2 z-20 text-white text-3xl opacity-70 hover:opacity-100"
-        >
-          ›
-        </button>
 
         <!-- main hero image -->
         <img
+          :key="currentHeroUrl"
           :src="currentHeroUrl"
           :alt="currentHeroAlt"
-          class="w-full h-full object-cover object-center"
+          class="absolute inset-0 w-full h-full object-cover object-center hero-fade hero-parallax"
+          :style="{ transform: `translateY(${heroParallaxY}px)` }"
         />
 
-        <!-- dark overlay for mood -->
-        <div
-          class="absolute inset-0"
-          :style="{ backgroundColor: 'rgba(0,0,0,' + COVER_OVERLAY_OPACITY + ')' }"
-        ></div>
       </div>
 
       <!-- =============================== -->
       <!-- 2. TITLE + DESCRIPTION + META   -->
       <!-- =============================== -->
       <section
-        class="max-w-5xl mx-auto px-6"
+        class="max-w-5xl mx-auto px-6 page-enter"
         :style="{ marginTop: CONTENT_TOP_MARGIN_REM + 'rem' }"
       >
         <div
@@ -132,10 +108,11 @@
           :style="{ gap: GALLERY_GAP_REM + 'rem' }"
         >
           <div
-            v-for="img in project.images"
+            v-for="(img, idx) in project.images"
             :key="img.id"
-            class="overflow-hidden rounded"
+            class="overflow-hidden rounded cursor-pointer thumb-card"
             :style="{ height: GALLERY_CARD_HEIGHT_REM + 'rem' }"
+            @click="openPreview(idx)"
           >
             <img
               :src="img.url"
@@ -145,6 +122,65 @@
           </div>
         </div>
       </section>
+
+      <!-- =============================== -->
+      <!-- 4. IMAGE PREVIEW MODAL         -->
+      <!-- =============================== -->
+      <transition name="fade">
+        <div
+          v-if="previewOpen"
+          class="fixed inset-0 z-50 flex items-center justify-center"
+          :style="{ backgroundColor: 'rgba(0,0,0,0.72)' }"
+          @click.self="closePreview"
+        >
+          <div
+            class="relative w-[92vw] max-w-5xl"
+          >
+            <!-- close -->
+            <button
+              class="absolute -top-10 right-0 text-[#ECEBC7] opacity-80 hover:opacity-100 transition-opacity"
+              @click="closePreview"
+              aria-label="Close"
+            >
+              ✕
+            </button>
+
+            <!-- image frame -->
+            <div class="relative overflow-hidden rounded-lg shadow-2xl">
+              <img
+                v-if="previewUrl"
+                :key="previewUrl"
+                :src="previewUrl"
+                :alt="previewAlt"
+                class="w-full h-[72vh] object-contain bg-black/30 modal-fade"
+              />
+
+              <!-- arrows -->
+              <button
+                v-if="hasImages"
+                class="absolute left-3 top-1/2 -translate-y-1/2 text-[#ECEBC7] text-4xl opacity-70 hover:opacity-100 transition-opacity"
+                @click.stop="previewPrev"
+                aria-label="Previous image"
+              >
+                ‹
+              </button>
+              <button
+                v-if="hasImages"
+                class="absolute right-3 top-1/2 -translate-y-1/2 text-[#ECEBC7] text-4xl opacity-70 hover:opacity-100 transition-opacity"
+                @click.stop="previewNext"
+                aria-label="Next image"
+              >
+                ›
+              </button>
+            </div>
+
+            <!-- caption (optional) -->
+            <div class="mt-4 text-center text-xs tracking-wider text-[#ECEBC7]/70">
+              <span v-if="previewCaption">{{ previewCaption }}</span>
+            </div>
+          </div>
+        </div>
+      </transition>
     </div>
 
     <!-- loading state -->
@@ -155,7 +191,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useLocale } from "~/composables/useLocale";
 import { useTheme } from "~/composables/useTheme";
@@ -165,6 +201,31 @@ const { locale } = useLocale();
 const route = useRoute();
 const project = ref<any>(null);
 const currentImageIndex = ref(0);
+
+const previewOpen = ref(false);
+const previewIndex = ref(0);
+let heroTimer: ReturnType<typeof setInterval> | null = null;
+
+const heroParallaxY = ref(0);
+
+const previewUrl = computed(() => {
+  if (!project.value) return "";
+  if (!hasImages.value) return project.value.coverImageUrl || "";
+  return project.value.images?.[previewIndex.value]?.url || "";
+});
+
+const previewAlt = computed(() => {
+  if (!project.value) return "";
+  if (!hasImages.value) return project.value.title?.[locale] || "";
+  const img = project.value.images?.[previewIndex.value];
+  return img?.alt?.[locale] || project.value.title?.[locale] || "";
+});
+
+const previewCaption = computed(() => {
+  if (!project.value || !hasImages.value) return "";
+  const img = project.value.images?.[previewIndex.value];
+  return img?.alt?.[locale] || "";
+});
 
 /* =======================================
    CONFIG — VISUAL VARIABLES
@@ -176,10 +237,9 @@ const TEXT_COLOR = "#ECEBC7";
 const TITLE_TRACKING = "0.18em";
 
 // Hero
-const HERO_HEIGHT_REM = 32;          // hero image height
+const HERO_HEIGHT_REM = 36;          // hero image height
 const HERO_TOP_OFFSET_REM = 3.5;     // gap below navbar
 const HERO_NAVBAR_FADE = "rgba(0,0,0,0.45)";
-const COVER_OVERLAY_OPACITY = 0.25;  // dark overlay strength
 
 // Content layout
 const CONTENT_TOP_MARGIN_REM = 4;
@@ -239,6 +299,38 @@ function nextImage() {
   currentImageIndex.value = (currentImageIndex.value + 1) % imgs.length;
 }
 
+function openPreview(idx: number) {
+  previewIndex.value = idx;
+  previewOpen.value = true;
+}
+
+function closePreview() {
+  previewOpen.value = false;
+}
+
+function previewPrev() {
+  if (!hasImages.value) return;
+  const imgs = project.value.images;
+  previewIndex.value = (previewIndex.value - 1 + imgs.length) % imgs.length;
+}
+
+function previewNext() {
+  if (!hasImages.value) return;
+  const imgs = project.value.images;
+  previewIndex.value = (previewIndex.value + 1) % imgs.length;
+}
+
+function handleKeydown(e: KeyboardEvent) {
+  if (!previewOpen.value) return;
+  if (e.key === "Escape") closePreview();
+  if (e.key === "ArrowLeft") previewPrev();
+  if (e.key === "ArrowRight") previewNext();
+}
+
+function handleScroll() {
+  heroParallaxY.value = Math.min(window.scrollY * 0.25, 120);
+}
+
 /* =======================================
    DATA FETCH
    ======================================= */
@@ -255,5 +347,81 @@ if (project.value) {
     setTheme("landscape");
   }
 }
+// Auto-rotate hero image every 3 seconds
+  if (heroTimer) clearInterval(heroTimer);
+  heroTimer = setInterval(() => {
+    if (!hasImages.value) return;
+    const imgs = project.value.images;
+    currentImageIndex.value = (currentImageIndex.value + 1) % imgs.length;
+  }, 5000);
+
+  // Keyboard controls for modal
+  window.addEventListener("keydown", handleKeydown);
+  window.addEventListener("scroll", handleScroll);
 });
+
+onUnmounted(() => {
+  if (heroTimer) {
+    clearInterval(heroTimer);
+    heroTimer = null;
+  }
+  window.removeEventListener("keydown", handleKeydown);
+  window.removeEventListener("scroll", handleScroll);
+});
+
+watch(
+  () => project.value?.images?.length,
+  () => {
+    currentImageIndex.value = 0;
+    previewIndex.value = 0;
+  }
+);
 </script>
+<style scoped>
+/* Page entrance */
+.page-enter {
+  animation: pageEnter 520ms ease-out both;
+}
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Hero fade when image changes */
+.hero-fade {
+  animation: heroFade 720ms ease-out;
+}
+@keyframes heroFade {
+  from { opacity: 0.35; transform: scale(1.01); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Thumbnail card micro animation */
+.thumb-card {
+  transition: transform 420ms ease, box-shadow 240ms ease;
+}
+.thumb-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Modal transitions */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 440ms ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+.modal-fade {
+  animation: modalFade 440ms ease-out;
+}
+@keyframes modalFade {
+  from { opacity: 0.55; transform: scale(0.995); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.hero-parallax {
+  will-change: transform;
+  transition: transform 0.05s linear;
+}
+</style>
