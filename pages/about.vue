@@ -69,11 +69,7 @@
     <!-- =================================================== -->
     <section
       ref="letterSection"
-      :class="[
-        'w-full bg-cover bg-center relative',
-        'reveal-block',
-        { 'reveal-visible': reveals.letter }
-      ]"
+      class="w-full bg-cover bg-center relative"
       :style="{
         backgroundImage: `url('/images/about-letter-bg.png')`,
         paddingLeft: ABOUT_LETTER_PADDING_X + 'px',
