@@ -258,7 +258,7 @@ const designItems = [
   },
 ];
 
-const designClusterPaths = ["/landscape", "/lighting", "/youngArt"];
+const designClusterPaths = ["/landscape", "/lighting", "/publicArt"];
 
 const activeDesignKey = computed(() => {
   const current = designItems.find((item) =>
@@ -329,7 +329,7 @@ function closeDesignDropdown() {
 }
 
 .inactive-link {
-  font-weight: 500;
+  font-weight: 300;
   color: var(--nav-inactive) !important;
 }
 
@@ -342,7 +342,7 @@ function closeDesignDropdown() {
   padding-bottom: 0.25rem;
   padding: 0.35rem 0.5rem;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.09em;
   opacity: 0.95;
   transition:
     color 120ms ease-out,

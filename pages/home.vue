@@ -61,7 +61,8 @@
         fontSize: HOME_BODY_SIZE + 'px',
         lineHeight: HOME_BODY_LINE_HEIGHT,
         marginTop: HOME_BODY_EN_MARGIN_TOP + 'px',
-        color: HOME_TEXT_COLOR_SOFT
+        color: HOME_TEXT_COLOR_SOFT,
+        letterSpacing: HOME_BODY_SPACING_EN + 'px',
       }"
     >
       <p
@@ -127,11 +128,13 @@ import {
   HOME_HEADLINE_EN_SPACING,
   HOME_HEADLINE_CN_SPACING,
   HOME_BODY_WEIGHT,
-  HOME_BODY_WEIGHT_CN
+  HOME_BODY_WEIGHT_CN,
+  HOME_BODY_SPACING_EN,
+  HOME_BODY_SPACING_CN,
 } from "~/content/home";
 
-const HOME_TYPO = { HEADLINE_EN_FONT: "Inter",
-HEADLINE_EN_WEIGHT: 200,
+const HOME_TYPO = { HEADLINE_EN_FONT: "var(--font-en)",
+HEADLINE_EN_WEIGHT: 100,
 HEADLINE_CN_FONT: "Heiti SC",
 HEADLINE_CN_WEIGHT: 500,
   BODY_EN_FONT: "Inter",

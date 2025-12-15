@@ -17,7 +17,7 @@
   --dsa-yellow: #ECEBC7;
   --dsa-yellow-dark: #DDDD61;
 
-  --dsa-eucalyptus: #6E8C7C;
+  --dsa-eucalyptus: #8EB29E;
   --dsa-eucalyptus-dark: #617D6E;
 
   --dsa-green: #336341;
@@ -40,7 +40,7 @@
      GLOBAL FONT FAMILIES
      (controlled in fonts.css)
      ----------------------------- */
-  --font-en: "Inter", "Helvetica Neue", Arial, sans-serif;
+  --font-en: "Inter";
   --font-cn: "HeitiSC", "Microsoft YaHei", "PingFang SC", "Noto Sans SC", sans-serif;
   --font-meta: "Roboto", "Inter", sans-serif;
 

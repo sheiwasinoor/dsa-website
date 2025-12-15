@@ -2,7 +2,9 @@
 
 export const letterText = {
   en: [
-    "Stay true to our original aspirations, fearless in exploration. Born amidst the torrent of our era and nurtured through industry transformation, DAYOUNG has undergone multiple metamorphoses, continually breaking down sector barriers to forge its own distinctive path forward. DSA DAYOUNG is a multidisciplinary design platform that systematically crafts public spaces guided by new ecological art aesthetics. Through collaborative practices in landscape architecture, dynamic lighting, and public art, we create immersive spatial atmospheres. Our integrated design approach unites three flagship disciplines—DA Landscape, TS Lighting, and Young ART—to generate new vitality in spaces. In systematically reshaping public environments, we establish a methodology centered on the symbiotic integration of landscape, light, and art. Through the ordered interplay of sound, light, and form, we deliver immersive visual, interactive, and performative experiences. Employing a value-multiplication formula of spatial revitalization, technology empowerment, and artistic operation, we cultivate enduring value for spatial growth.",
+    "Stay true to our original aspirations, fearless in exploration. Born amidst the torrent of our era and nurtured through industry transformation, DAYOUNG has undergone multiple metamorphoses, continually breaking down sector barriers to forge its own distinctive path forward.",
+
+    "DSA Dayoung is an innovative design platform dedicated to the creation of public environment spaces, guided by the aesthetics of new ecological culture and art. By integrating landscape architecture, dynamic lighting, and public art through collaborative practice, we craft multidimensional, high-quality spatial experiences. Our integrated design approach unites three flagship disciplines—DA Landscape, TS Lighting, and Young ART—to generate transformative spatial vitality. In systematically reshaping public environments, we establish a methodology centered on the symbiotic integration of landscape, light, and art. Through the orchestrated interplay of sound, light, and form, we deliver immersive visual, interactive, and performative experiences. Employing a value-multiplication formula of spatial revitalization, technology-driven empowerment, and artistic operation, we cultivate enduring value that nurtures the organic growth of spaces.",
 
     "Mr. Wu Guanzhong once said, “Those who pursue beauty are always warriors.” Art should be a form of spiritual education, nurturing imagination and aesthetic discernment. All our imagination springs from art and interdisciplinary thinking—the freedom to fully envision and create endless possibilities. Today, aesthetic discernment remains an irreplaceable skill even in the age of AI. For us, art within spaces is not something placed on a high pedestal, but rather the sublimation of everyday life.",
 
@@ -30,9 +32,25 @@ export const letterText = {
   ]
 };
 
+/**
+ * Explicit paragraph split for manual two-column layout.
+ * This avoids CSS column-flow issues (Safari/WebKit).
+ * Order is intentional.
+ */
+export const letterParagraphs = {
+  en: {
+    left: letterText.en.slice(0, 4),
+    right: letterText.en.slice(4),
+  },
+  zh: {
+    left: letterText.zh.slice(0, 3),
+    right: letterText.zh.slice(3),
+  },
+} as const;
+
 export const introText = {
   en: [
-    "DDAYOUNG Creation is a public environment design platform guided by neo-ecological art aesthetics, integrating three specialized brands—DA Landscape, TS Lighting, and Young ART—to deliver interdisciplinary solutions through landscape, lighting, and artistic collaboration. Focused on eco-sustainable public space design, it bridges Chinese craftsmanship and global innovation to holistically redefine spatial value.",
+    "DAYOUNG Creation is a public environment design platform guided by neo-ecological art aesthetics, integrating three specialized brands—DA Landscape, TS Lighting, and Young ART—to deliver interdisciplinary solutions through landscape, lighting, and artistic collaboration. Focused on eco-sustainable public space design, it bridges Chinese craftsmanship and global innovation to holistically redefine spatial value.",
   ],
   zh: [
     "DAYOUNG Creation 是一个以新生态艺术美学为导向的公共环境设计平台，致力于从景观、光影与艺术整体塑造空间氛围，回应当代公共空间的情绪、文化与生态需求。",
@@ -112,13 +130,13 @@ export const members: Member[] = [
     }
   },
 
-  {
+    {
     id: "stone",
     group: "chinese",
     nameEn: "STONE",
     nameCn: "石祐嘉",
     role: { en: "Chief Architect", zh: "首席建筑师" },
-    avatar: "/images/team/adrian.png",
+    avatar: "/images/team/stone.png",
     bio: {
       en: [
         "Stone contributes general architectural support.",
@@ -130,7 +148,7 @@ export const members: Member[] = [
       ]
     }
   },
-
+  
   {
     id: "zhong",
     group: "chinese",
@@ -146,6 +164,26 @@ export const members: Member[] = [
       zh: [
         "Zhong 擅长多层次光影系统。",
         "以章节结构组织光线。"
+      ]
+    }
+  },
+
+
+    {
+    id: "zhixiong",
+    group: "chinese",
+    nameEn: "ZHIXIONG",
+    nameCn: "杜志雄",
+    role: { en: "Chief Urban Renewal Engineer", zh: "城市更新总师" },
+    avatar: "/images/team/adrian.png",
+    bio: {
+      en: [
+        "Stone contributes general architectural support.",
+        "His work mainly involves routine coordination tasks."
+      ],
+      zh: [
+        "Stone 在项目中提供基础建筑支持。",
+        "主要负责日常协调工作。"
       ]
     }
   },
