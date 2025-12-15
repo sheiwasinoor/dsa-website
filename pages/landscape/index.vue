@@ -33,7 +33,7 @@
           class="h-px mx-auto"
           :style="{
             marginBottom: LANDSCAPE_HERO_LINE_SPACING + 'vh',
-            width: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'px',
+            width: LANDSCAPE_HERO_LINE_WIDTH + 'px',
             backgroundColor: LANDSCAPE_HERO_LINE_COLOR
           }"
         ></div>
@@ -71,7 +71,7 @@ class="uppercase"
   class="h-px mx-auto"
   :style="{
     marginTop: LANDSCAPE_HERO_BOTTOM_LINE_SPACING + 'vh',
-    width: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'px',
+    width: LANDSCAPE_HERO_LINE_WIDTH + 'px',
     backgroundColor: LANDSCAPE_HERO_LINE_COLOR_BOTTOM
   }"
 ></div>
@@ -232,7 +232,7 @@ const LANDSCAPE_HERO_LINE_COLOR_BOTTOM = "#6E8C7C"; // bottom divider
 const LANDSCAPE_HERO_MIN_HEIGHT = 100;
 const LANDSCAPE_HERO_IMAGE_SCALE = 1.04;
 const LANDSCAPE_HERO_OVERLAY_OPACITY = 0.65;
-const LANDSCAPE_HERO_LINE_WIDTH = 105;
+const LANDSCAPE_HERO_LINE_WIDTH = 656;
 const LANDSCAPE_HERO_LINE_SPACING = 3;
 const LANDSCAPE_HERO_TITLE_SIZE = 32;
 const LANDSCAPE_HERO_TITLE_SPACING = 0.5;
