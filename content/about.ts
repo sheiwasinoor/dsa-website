@@ -83,8 +83,8 @@ export const members: Member[] = [
     nameEn: "DEMI",
     nameCn: "欧阳小平",
     role: {
-      en: "DSA Founder / Principal Designer",
-      zh: "DSA 创始人 / 主持设计师"
+      en: "DSA Founder\nPrincipal Designer",
+      zh: "DSA 创始人\n主持设计师"
     },
     avatar: "/images/team/demi.png",
     bio: {
@@ -135,8 +135,8 @@ export const members: Member[] = [
     avatar: "/images/team/stone.png",
     bio: {
       en: [
-        "Stone contributes general architectural support.",
-        "His work mainly involves routine coordination tasks."
+        "Stone contributes general pivotal basic architectural support.",
+        "His work mainly involves routine and expansive coordination tasks."
       ],
       zh: [
         "Stone 在项目中提供基础建筑支持。",
@@ -154,12 +154,10 @@ export const members: Member[] = [
     avatar: "/images/team/zhong.png",
     bio: {
       en: [
-        "Zhong specialises in layered lighting systems.",
-        "Composes lighting atmospheres."
+        "Nearly 18 years of extensive project design and management experience, specializing in urban renewal projects involving historic preservation buildings, commercial complexes, and super-high-rise lighting design",
       ],
       zh: [
-        "Zhong 擅长多层次光影系统。",
-        "以章节结构组织光线。"
+        "近18年丰富的项目设计实践与管理经验，擅长城市更新类历史文保建筑、商业综合体、超高层照明设计",
       ]
     }
   },
@@ -170,16 +168,14 @@ export const members: Member[] = [
     group: "chinese",
     nameEn: "ZHIXIONG",
     nameCn: "杜志雄",
-    role: { en: "Chief Urban Renewal Engineer", zh: "城市更新总师" },
-    avatar: "/images/team/adrian.png",
+    role: { en: "Chief Urban\nRenewal Engineer", zh: "城市更新总师" },
+    avatar: "/images/team/zhixiong.png",
     bio: {
       en: [
-        "Stone contributes general architectural support.",
-        "His work mainly involves routine coordination tasks."
+        "Specially Appointed Expert of the Shenzhen Real Estate Association and Shenzhen Urban Renewal Development Enterprises Association, with 18 years of experience in the real estate industry. Previously served in multiple government departments, including Shenzhen Planning and Land Resources, Urban Construction, and Land Development, undertaking extensive policy drafting work. Well-versed in various policies related to urban renewal and land consolidation. Specializes in resolving complex projects, addressing various legacy land issues, and handling non-agricultural land and land expropriation compensation transactions."
       ],
       zh: [
-        "Stone 在项目中提供基础建筑支持。",
-        "主要负责日常协调工作。"
+        "深圳市房地产业协会、深圳市城市更新开发企业协会特聘专家，拥有18年房地产行业工作经验，曾供职于深圳规划国土、城市建设、土地开发等多个政府部门承担了大量政策起草工作，熟悉城市更新及土地整备各类政策，擅长解决各式疑难项目及各种土地遗留问题处置、非农与征地返还用交易等。"
       ]
     }
   },
@@ -212,12 +208,10 @@ export const members: Member[] = [
     avatar: "/images/team/lunker.png",
     bio: {
       en: [
-        "Lunker works on waterfront cultural spaces.",
-        "Studies micro-climates."
+        "Over a decade of extensive project design and management experience Specializing in integrated design across real estate, cultural tourism, and commercial sectors."
       ],
       zh: [
-        "Lunker 专注滨水文化空间。",
-        "研究微气候。"
+        "近10年丰富的项目设计实践与管理经验擅长地产、文旅、商业等领域综合设计。"
       ]
     }
   },
@@ -231,12 +225,10 @@ export const members: Member[] = [
     avatar: "/images/team/chelsea.png",
     bio: {
       en: [
-        "Chelsea brings art direction.",
-        "Photography informs her style."
+        "Over the past five years, Chelsea has gained extensive experience in project design and management, specializing in integrated design across landscape, lighting, and art disciplines."
       ],
       zh: [
-        "Chelsea 提供艺术指导。",
-        "摄影背景影响其审美。"
+        "近5年丰富的项目设计实践与管理经验擅长景观、光影、艺术等领域综合设计。"
       ]
     }
   },
@@ -249,12 +241,10 @@ export const members: Member[] = [
     avatar: "/images/team/julien.png",
     bio: {
       en: [
-        "Julien adds European perspective.",
-        "Revitalizes urban nodes."
+        ""
       ],
       zh: [
-        "Julien 带来欧洲城市视角。",
-        "研究公共节点激活。"
+        ""
       ]
     }
   },
@@ -267,12 +257,10 @@ export const members: Member[] = [
     avatar: "/images/team/alina.png",
     bio: {
       en: [
-        "Alina applies theatre lighting logic.",
-        "Works with contrast atmospheres."
+        ""
       ],
       zh: [
-        "Alina 引入舞台灯光逻辑。",
-        "营造戏剧化氛围。"
+        ""
       ]
     }
   }

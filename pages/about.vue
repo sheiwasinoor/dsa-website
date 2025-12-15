@@ -326,18 +326,20 @@
       @click="selectMember(m.id)"
     >
       <div
-        class="rounded-full overflow-hidden border border-transparent transition-all ease-out"
+        class="rounded-full transition-all ease-out"
         :class="avatarClass(m.id)"
         :style="{
           width: ABOUT_AVATAR_SIZE + 'px',
           height: ABOUT_AVATAR_SIZE + 'px'
         }"
       >
-        <img
-          :src="m.avatar"
-          :alt="m.nameEn"
-          class="w-full h-full object-cover"
-        />
+        <div class="w-full h-full rounded-full overflow-hidden">
+          <img
+            :src="m.avatar"
+            :alt="m.nameEn"
+            class="w-full h-full object-cover"
+          />
+        </div>
       </div>
 
       <p
@@ -349,7 +351,8 @@
         :style="{
           fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
           marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
-          color: ABOUT_TEXT_COLORS.avatarName[locale]
+          color: ABOUT_TEXT_COLORS.avatarName[locale],
+          paddingBottom: 3 + 'px'
         }"
       >
         {{ m.nameEn }} | {{ m.nameCn }}
@@ -358,6 +361,8 @@
       <p
         class="text-[#8C8C8C]/100"
         :style="{ fontWeight: 200,
+        whiteSpace: 'pre-line',
+        lineHeight: 14 + 'px',
           fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
       >
         {{ m.role[locale] }}
@@ -381,18 +386,20 @@
       @click="selectMember(m.id)"
     >
       <div
-        class="rounded-full overflow-hidden border border-transparent transition-all ease-out"
+        class="rounded-full transition-all ease-out"
         :class="avatarClass(m.id)"
         :style="{
           width: ABOUT_AVATAR_SIZE + 'px',
           height: ABOUT_AVATAR_SIZE + 'px'
         }"
       >
-        <img
-          :src="m.avatar"
-          :alt="m.nameEn"
-          class="w-full h-full object-cover"
-        />
+        <div class="w-full h-full rounded-full overflow-hidden">
+          <img
+            :src="m.avatar"
+            :alt="m.nameEn"
+            class="w-full h-full object-cover"
+          />
+        </div>
       </div>
 
       <p
@@ -404,7 +411,8 @@
         :style="{
           fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
           marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
-          color: ABOUT_TEXT_COLORS.avatarName[locale]
+          color: ABOUT_TEXT_COLORS.avatarName[locale],
+          paddingBottom: 3 + 'px'
         }"
       >
         {{ m.nameEn }} | {{ m.nameCn }}
@@ -413,6 +421,8 @@
       <p
         class="text-[#8C8C8C]/100"
         :style="{ fontWeight: 200,
+        whiteSpace: 'pre-line',
+        lineHeight: 14 + 'px',
           fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
       >
         {{ m.role[locale] }}
@@ -452,59 +462,58 @@
 
           <!-- TEAM GRID - INTERNATIONAL -->
 <div
-  class="flex justify-center"
+  class="flex justify-center cursor-default"
 >
   <div
     class="flex items-start"
     :style="{ gap: ABOUT_TEAM_GRID_GAP * 2 + 'px' }"
   >
-            <button
-              v-for="m in internationalMembers"
-              :key="m.id"
-              class="flex flex-col items-center text-center group focus:outline-none"
-              @click="selectMember(m.id)"
-            >
-              <div
-                class="rounded-full overflow-hidden border border-transparent transition-all duration-500 ease-out"
-                :class="avatarClass(m.id)"
-                :style="{
-                  width: ABOUT_AVATAR_SIZE + 'px',
-                  height: ABOUT_AVATAR_SIZE + 'px'
-                }"
-              >
-                <img
-                  :src="m.avatar"
-                  :alt="m.nameEn"
-                  class="w-full h-full object-cover"
-                />
-              </div>
-
-              <p
-                class="tracking-[0em]"
-                :class="{
-                  'font-semibold opacity-100': activeId === m.id,
-                  'font-regular opacity-100': activeId !== m.id
-                }"
-                :style="{
-                  fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
-                  marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
-                  color: ABOUT_TEXT_COLORS.avatarName[locale]
-                }"
-              >
-                {{ m.nameEn }}
-              </p>
-
-              <p
-                class="text-[#ECEBC7]/60"
-                :style="{ fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem',
-                color: ABOUT_TEXT_COLORS.avatarRole[locale]
-                }"
-              >
-                {{ m.role[locale] }}
-              </p>
-            </button>
-          </div>
+    <div
+      v-for="m in internationalMembers"
+      :key="m.id"
+      class="flex flex-col items-center text-center"
+    >
+      <div
+        class="rounded-full transition-all duration-500 ease-out"
+        :style="{
+          width: ABOUT_AVATAR_SIZE + 'px',
+          height: ABOUT_AVATAR_SIZE + 'px'
+        }"
+      >
+        <div class="w-full h-full rounded-full overflow-hidden">
+          <img
+            :src="m.avatar"
+            :alt="m.nameEn"
+            class="w-full h-full object-cover"
+          />
         </div>
+      </div>
+
+      <p
+        class="tracking-[0em] font-regular opacity-100"
+        :style="{
+          fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
+          marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
+          color: ABOUT_TEXT_COLORS.avatarName[locale],
+          paddingBottom: 3 + 'px'
+        }"
+      >
+        {{ m.nameEn }}
+      </p>
+
+      <p
+        class="text-[#ECEBC7]/60"
+        :style="{ fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem',
+        whiteSpace: 'pre-line',
+        lineHeight: 14 + 'px',
+        color: ABOUT_TEXT_COLORS.avatarRole[locale]
+        }"
+      >
+        {{ m.role[locale] }}
+      </p>
+    </div>
+  </div>
+</div>
       </div> <!-- END RIGHT COLUMN -->
     </div> <!-- END MAIN GRID -->
   </main>
@@ -576,7 +585,7 @@ const ABOUT_FOOTER_TEXT = {
 /* ---------- SIGNATURE ---------- */
 const ABOUT_SIGNATURE_HEIGHT = 56;
 const ABOUT_SIGNATURE_OPACITY = 0.9;
-const ABOUT_SIGNATURE_TOP_MARGIN = {en:-180 , zh:-200};
+const ABOUT_SIGNATURE_TOP_MARGIN = {en:-180 , zh:-450};
 const ABOUT_SIGNATURE_BOTTOM_MARGIN = 8;
 const ABOUT_SIGNATURE_TEXT_SIZE = 0.9;
 const ABOUT_SIGNATURE_LINE_HEIGHT = 1.5;
@@ -615,7 +624,7 @@ const ABOUT_BIO_TEXT_TOP_MARGIN = 32;
 const ABOUT_TEAM_SECTION_SPACING = 40;
 const ABOUT_TEAM_TOP_OFFSET = 100;
 const ABOUT_TEAM_LABEL_EN_SIZE = 1.375;
-const ABOUT_TEAM_GRID_GAP = 10;
+const ABOUT_TEAM_GRID_GAP = 14;
 const ABOUT_TEAM_ROW_TWO_GAP = 30; // 👈 NEW, px
 const ABOUT_TEAM_SECOND_LABEL_TOP_PADDING = 20;
 const chineseRowOne = computed(() => chineseMembers.value.slice(0, 4));
@@ -716,16 +725,15 @@ function avatarClass(id: string) {
   return id === activeId.value
     ? [
         "scale-[1.04]",
-        "shadow-[0_0_12px_rgba(236,235,199,0.35)]",
-        "transition-all",
-        "duration-500",
-        "ease-out",
-        "ring-2",
+        "ring-1",
         "ring-[#ECEBC7]",
-        "ring-offset-4",
-        "ring-offset-[#000C05]",
+        "ring-opacity-100",
+        "animate-ring-draw",
+        "transition-transform",
+        "duration-300",
+        "ease-out",
       ].join(" ")
-    : "transition-all duration-500 ease-out";
+    : "transition-transform duration-300 ease-out";
 }
 </script>
 
@@ -737,5 +745,18 @@ function avatarClass(id: string) {
 }
 .signature-block {
   break-inside: avoid;
+}
+
+@keyframes ringDraw {
+  from {
+    box-shadow: 0 0 0 0 rgba(236, 235, 199, 0);
+  }
+  to {
+    box-shadow: 0 0 0 1px rgba(236, 235, 199, 1);
+  }
+}
+
+.animate-ring-draw {
+  animation: ringDraw 220ms ease-out forwards;
 }
 </style>
