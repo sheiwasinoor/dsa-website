@@ -104,7 +104,7 @@
             }"
           >
             <!-- LEFT COLUMN -->
-            <div class="flex flex-col">
+            <div class="flex flex-col text-justify">
               <p
                 v-for="(p, i) in letterParagraphs[locale].left"
                 :key="'letter-left-' + i"
@@ -115,7 +115,7 @@
             </div>
 
             <!-- RIGHT COLUMN -->
-            <div class="flex flex-col">
+            <div class="flex flex-col text-justify">
               <p
                 v-for="(p, i) in letterParagraphs[locale].right"
                 :key="'letter-right-' + i"
@@ -191,11 +191,13 @@
           <!-- INTRO SECTION -->
           <div>
             <p
-              class="tracking-[0.22em]"
+              class="tracking-[0.10em]"
               :style="{
                 fontSize: ABOUT_INTRO_HEADING_SIZE + 'rem',
                 marginBottom: ABOUT_INTRO_HEADING_SPACING + 'px',
-                color: ABOUT_TEXT_COLORS.introHeading[locale]
+                color: ABOUT_TEXT_COLORS.introHeading[locale],
+                fontWeight: 100,
+                fontStyle: 'italic'
               }"
             >
               简介 | INTRODUCTION
@@ -209,7 +211,8 @@
                 color: ABOUT_TEXT_COLORS.introHeading[locale],
                 rowGap: ABOUT_INTRO_PARAGRAPH_GAP + 'px',
                 textAlign: 'justify',
-                textJustify: 'inter-word'
+                textJustify: 'inter-word',
+                fontWeight: 100
               }"
             >
               <p
@@ -223,11 +226,12 @@
 
           <!-- BIO CARD -->
           <div
-            class="bg-[#111C14] rounded-2xl shadow-lg border border-[#ECEBC7]/10 overflow-hidden bio-card-transition"
+            class="bg-[#151E17] rounded-2xl shadow-lg border border-[#ECEBC7]/10 overflow-hidden bio-card-transition opa"
             :class="bioCardClass"
             :style="{
               maxWidth: ABOUT_BIO_MAX_WIDTH + 'px',
-              padding: ABOUT_BIO_PADDING + 'px'
+              padding: ABOUT_BIO_PADDING + 'px',
+              borderRadius: '10px'
             }"
           >
             <h2
@@ -235,6 +239,7 @@
               :style="{
                 fontSize: ABOUT_BIO_TITLE_SIZE + 'rem',
                 marginBottom: ABOUT_BIO_TITLE_SPACING + 'px',
+                fontWeight: 400,
                 color: ABOUT_TEXT_COLORS.bioTitle[locale]
               }"
             >
@@ -246,25 +251,18 @@
               </span>
             </h2>
 
-            <p
-              class="text-[#ECEBC7]/80"
-              :style="{
-                fontSize: ABOUT_BIO_ROLE_SIZE + 'rem',
-                marginBottom: ABOUT_BIO_ROLE_SPACING + 'px',
-                color: ABOUT_TEXT_COLORS.bioRole[locale]
-              }"
-            >
-              {{ active.role[locale] }}
-            </p>
 
             <div
               class="transition-opacity duration-700 flex flex-col"
               :class="bioTextVisible ? 'opacity-100' : 'opacity-0'"
               :style="{
+                fontWeight: 200,
                 fontSize: ABOUT_BIO_TEXT_SIZE + 'rem',
                 lineHeight: ABOUT_BIO_LINE_HEIGHT,
                 rowGap: ABOUT_BIO_PARAGRAPH_GAP + 'px',
-                color: ABOUT_TEXT_COLORS.bioRole[locale]
+                
+                color: ABOUT_TEXT_COLORS.bioRole[locale],
+                marginTop: ABOUT_BIO_TEXT_TOP_MARGIN + 'px',
               }"
             >
               <p
@@ -290,13 +288,27 @@
           <!-- Chinese Creativity -->
           <div class="flex justify-center text-center">
             <p
-              class="tracking-[0.28em]"
-              :style="{ fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem',
-              color: ABOUT_TEXT_COLORS.bioRole[locale]
-               }"
-            >
-              中国创意&nbsp;&nbsp;CHINESE CREATIVITY
-            </p>
+  :style="{
+    fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem',
+    color: ABOUT_TEXT_COLORS.bioClass[locale],
+  }"
+>
+  <span
+    :style="{ letterSpacing: ABOUT_TEAM_LABEL_KERNING_ZH }"
+  >
+    中国创意
+  </span>
+
+  <span
+    :style="{ marginInline: ABOUT_TEAM_LABEL_GAP + 'px' }"
+  ></span>
+
+  <span
+    :style="{ letterSpacing: ABOUT_TEAM_LABEL_KERNING_EN }"
+  >
+    CHINESE CREATIVITY
+  </span>
+</p>
           </div>
 
         <!-- TEAM GRID - CHINESE -->
@@ -329,10 +341,10 @@
       </div>
 
       <p
-        class="tracking-[0.16em]"
+        class="tracking-[0em]"
         :class="{
           'font-semibold opacity-100': activeId === m.id,
-          'opacity-70': activeId !== m.id
+          'opacity-100': activeId !== m.id
         }"
         :style="{
           fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
@@ -344,8 +356,9 @@
       </p>
 
       <p
-        class="text-[#ECEBC7]/60"
-        :style="{ fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
+        class="text-[#8C8C8C]/100"
+        :style="{ fontWeight: 200,
+          fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
       >
         {{ m.role[locale] }}
       </p>
@@ -383,10 +396,10 @@
       </div>
 
       <p
-        class="tracking-[0.16em]"
+        class="tracking-[0em]"
         :class="{
           'font-semibold opacity-100': activeId === m.id,
-          'opacity-70': activeId !== m.id
+          'opacity-100': activeId !== m.id
         }"
         :style="{
           fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
@@ -398,8 +411,9 @@
       </p>
 
       <p
-        class="text-[#ECEBC7]/60"
-        :style="{ fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
+        class="text-[#8C8C8C]/100"
+        :style="{ fontWeight: 200,
+          fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
       >
         {{ m.role[locale] }}
       </p>
@@ -413,13 +427,27 @@
             :style="{ paddingTop: ABOUT_TEAM_SECOND_LABEL_TOP_PADDING + 'px' }"
           >
             <p
-              class="tracking-[0.28em]"
-              :style="{ fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem',
-                color: ABOUT_TEXT_COLORS.bioRole[locale]
-               }"
-            >
-              国际视野&nbsp;&nbsp;INTERNATIONAL PERSPECTIVE
-            </p>
+  :style="{
+    fontSize: ABOUT_TEAM_LABEL_EN_SIZE + 'rem',
+    color: ABOUT_TEXT_COLORS.bioClass[locale],
+  }"
+>
+  <span
+    :style="{ letterSpacing: ABOUT_TEAM_LABEL_KERNING_ZH }"
+  >
+    国际视野
+  </span>
+
+  <span
+    :style="{ marginInline: ABOUT_TEAM_LABEL_GAP + 'px' }"
+  ></span>
+
+  <span
+    :style="{ letterSpacing: ABOUT_TEAM_LABEL_KERNING_EN }"
+  >
+    INTERNATIONAL PERSPECTIVE
+  </span>
+</p>
           </div>
 
           <!-- TEAM GRID - INTERNATIONAL -->
@@ -452,10 +480,10 @@
               </div>
 
               <p
-                class="tracking-[0.16em]"
+                class="tracking-[0em]"
                 :class="{
                   'font-semibold opacity-100': activeId === m.id,
-                  'opacity-70': activeId !== m.id
+                  'font-regular opacity-100': activeId !== m.id
                 }"
                 :style="{
                   fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
@@ -575,28 +603,30 @@ const ABOUT_INTRO_PARAGRAPH_GAP = 16;
 const ABOUT_BIO_MAX_WIDTH = 530;
 const ABOUT_BIO_PADDING = 32;
 const ABOUT_BIO_TITLE_SIZE = 1.1;
-const ABOUT_BIO_TITLE_SPACING = 8;
+const ABOUT_BIO_TITLE_SPACING = 6;
 const ABOUT_BIO_ROLE_SIZE = 0.8;
 const ABOUT_BIO_ROLE_SPACING = 16;
 const ABOUT_BIO_TEXT_SIZE = 0.8;
-const ABOUT_BIO_LINE_HEIGHT = 1.3;
-const ABOUT_BIO_PARAGRAPH_GAP = 10;
+const ABOUT_BIO_LINE_HEIGHT = 1.4;
+const ABOUT_BIO_PARAGRAPH_GAP = 8;
+const ABOUT_BIO_TEXT_TOP_MARGIN = 32;
 
 /* ---------- TEAM ---------- */
 const ABOUT_TEAM_SECTION_SPACING = 40;
 const ABOUT_TEAM_TOP_OFFSET = 100;
-const ABOUT_TEAM_LABEL_EN_SIZE = 1;
+const ABOUT_TEAM_LABEL_EN_SIZE = 1.375;
 const ABOUT_TEAM_GRID_GAP = 10;
 const ABOUT_TEAM_ROW_TWO_GAP = 30; // 👈 NEW, px
 const ABOUT_TEAM_SECOND_LABEL_TOP_PADDING = 20;
 const chineseRowOne = computed(() => chineseMembers.value.slice(0, 4));
 const chineseRowTwo = computed(() => chineseMembers.value.slice(4));
+const ABOUT_TEAM_LABEL_GAP = -2; // px — tweak freely
 
 /* ---------- AVATARS ---------- */
 const ABOUT_AVATAR_SIZE = 90;
-const ABOUT_AVATAR_NAME_SIZE = 0.65;
+const ABOUT_AVATAR_NAME_SIZE = 0.813;
 const ABOUT_AVATAR_NAME_TOP_MARGIN = 12;
-const ABOUT_AVATAR_ROLE_SIZE = 0.68;
+const ABOUT_AVATAR_ROLE_SIZE = 0.688;
 
 /* ---------- TEXT COLOR MAP (EN vs ZH, per section) ---------- */
 const ABOUT_TEXT_COLORS = {
@@ -604,17 +634,23 @@ const ABOUT_TEXT_COLORS = {
   letterBody:     { en: "#8C8C8C", zh: "#ECEBC7" },
   signatureText:  { en: "#8C8C8C", zh: "#ECEBC7" },
 
-  introHeading:   { en: "#8C8C8C", zh: "#8C8C8C" },
-  introBody:      { en: "#8C8C8C", zh: "#8C8C8C" },
+  introHeading:   { en: "#ECEBC7", zh: "#ECEBC7" },
+  introBody:      { en: "#ECEBC7", zh: "#ECEBC7" },
 
   bioTitle:       { en: "#D9D9D9", zh: "#D9D9D9" },
   bioRole:        { en: "#D9D9D9", zh: "#D9D9D9" },
   bioBody:        { en: "#D9D9D9", zh: "#D9D9D9" },
+  bioClass:       { en: "#ECEBC7", zh: "#ECEBC7" },
 
   teamLabel:      { en: "#8C8C8C", zh: "#8C8C8C" },
   avatarName:     { en: "#D9D9D9", zh: "#D9D9D9" },
-  avatarRole:     { en: "#D9D9D9", zh: "#D9D9D9" },
+  avatarRole:     { en: "#8C8C8C", zh: "#8C8C8C" },
 } as const;
+
+const ABOUT_TEAM_LABEL_KERNING = { en: -0.3, zh: -0.3}
+
+const ABOUT_TEAM_LABEL_KERNING_ZH = '8px'; // Chinese wants tighter
+const ABOUT_TEAM_LABEL_KERNING_EN = '0.1em';  // English wants air
 
 
 /* =============================================================

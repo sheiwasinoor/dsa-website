@@ -89,8 +89,6 @@ export const members: Member[] = [
     avatar: "/images/team/demi.png",
     bio: {
       zh: [
-        "欧阳小平 DEMI YOUNG",
-        "",
         "DSA大漾 创始人 / 主持设计师",
         "TS Lighting 光影主持设计师",
         "Young ART 主持设计师",
@@ -109,8 +107,6 @@ export const members: Member[] = [
       ],
 
       en: [
-        "DEMI YOUNG",
-        "",
         "DSA Founder / Principal Designer",
         "TS Lighting Principal Designer",
         "Young Art Principal Designer",
