@@ -195,6 +195,7 @@ import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useRoute } from "vue-router";
 import { useLocale } from "~/composables/useLocale";
 import { useTheme } from "~/composables/useTheme";
+import { useAsyncData } from '#app';
 const { setTheme } = useTheme();
 
 const { locale } = useLocale();
@@ -332,22 +333,37 @@ function handleScroll() {
 }
 
 /* =======================================
-   DATA FETCH
+   DATA FETCH (SSR-safe)
    ======================================= */
 
-onMounted(async () => {
-  const slug = route.params.slug;
-  project.value = await $fetch(`/api/projects/get?slug=${slug}`);
-// Assign theme based on stored project.theme
-if (project.value) {
-  const key = project.value.theme;
-  if (["landscape", "lighting", "youngArt"].includes(key)) {
-    setTheme(key);
-  } else {
-    setTheme("landscape");
-  }
-}
-// Auto-rotate hero image every 3 seconds
+const { data: projectData, error } = await useAsyncData(
+  'project',
+  () => $fetch(`/api/projects/get?slug=${route.params.slug}`)
+);
+
+watch(
+  projectData,
+  (val) => {
+    if (val) {
+      project.value = val;
+
+      const key = project.value.theme;
+      if (["landscape", "lighting", "youngArt"].includes(key)) {
+        setTheme(key);
+      } else {
+        setTheme("landscape");
+      }
+    }
+  },
+  { immediate: true }
+);
+
+/* =======================================
+   ON MOUNT - HERO ROTATION & LISTENERS
+   ======================================= */
+
+onMounted(() => {
+  // Auto-rotate hero image every 3 seconds
   if (heroTimer) clearInterval(heroTimer);
   heroTimer = setInterval(() => {
     if (!hasImages.value) return;
