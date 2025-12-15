@@ -1,8 +1,7 @@
-<!-- components/global/Loading.vue -->
 <template>
   <Transition name="page-loading-fade">
     <div
-      v-if="visible"
+      v-if="visible && !fullyLoaded"
       class="fixed inset-0 flex items-center justify-center"
       :style="{
         backgroundColor: LOADING_BG_COLOR,
@@ -22,6 +21,7 @@
 </template>
 
 <script setup lang="ts">
+import { onMounted, onBeforeUnmount, ref, watch } from 'vue';
 /* ============================================================
    CONFIG VALUES — tweak loader UI here
    ============================================================ */
@@ -36,9 +36,27 @@ const LOADING_LOGO_OPACITY = 0.9;
 const LOADING_FADE_DURATION = 700; // ms
 const LOADING_FADE_CURVE = "cubic-bezier(0.25, 0.1, 0.25, 1)";
 
-defineProps<{
+const props = defineProps<{
   visible: boolean;
 }>();
+
+const fullyLoaded = ref(false);
+
+const handleWindowLoad = () => {
+  fullyLoaded.value = true;
+};
+
+onMounted(() => {
+  if (document.readyState === 'complete') {
+    fullyLoaded.value = true;
+  } else {
+    window.addEventListener('load', handleWindowLoad);
+  }
+});
+
+onBeforeUnmount(() => {
+  window.removeEventListener('load', handleWindowLoad);
+});
 </script>
 
 <style scoped>
