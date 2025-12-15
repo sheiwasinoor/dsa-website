@@ -33,7 +33,7 @@
           class="h-px mx-auto"
           :style="{
             marginBottom: LANDSCAPE_HERO_LINE_SPACING + 'vh',
-            width: LANDSCAPE_HERO_LINE_WIDTH + '%',
+            width: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'px',
             backgroundColor: LANDSCAPE_HERO_LINE_COLOR
           }"
         ></div>
@@ -41,9 +41,10 @@
         <h1
 class="uppercase"
   :style="{
-    fontSize: LANDSCAPE_HERO_TITLE_SIZE + 'rem',
-    marginBottom: LANDSCAPE_HERO_TITLE_SPACING + 'vh',
+    fontSize: LANDSCAPE_HERO_TITLE_SIZE + 'px',
+    marginBottom: LANDSCAPE_HERO_TITLE_SPACING + 'px',
     letterSpacing: LANDSCAPE_HERO_TITLE_TRACKING + 'em',
+    fontWeight: 600,
     color: LANDSCAPE_HERO_TEXT_COLOR
   }"
         >
@@ -53,10 +54,11 @@ class="uppercase"
 <p
   class="leading-relaxed mx-auto text-justify"
   :style="{
-    fontSize: LANDSCAPE_HERO_PARAGRAPH_SIZE + 'rem',
-    maxWidth: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'rem',
-    textAlign: 'justify',
-    textJustify: 'inter-word',
+    fontSize: LANDSCAPE_HERO_PARAGRAPH_SIZE + 'px',
+    maxWidth: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'px',
+    fontWeight: 100,
+    letterSpacing: '0.02em',
+
     color: LANDSCAPE_HERO_TEXT_SOFT_COLOR,
     paddingTop: LANDSCAPE_HERO_PARAGRAPH_TOP_PADDING + 'vh',
     paddingBottom: LANDSCAPE_HERO_PARAGRAPH_BOTTOM_PADDING + 'vh'
@@ -69,7 +71,7 @@ class="uppercase"
   class="h-px mx-auto"
   :style="{
     marginTop: LANDSCAPE_HERO_BOTTOM_LINE_SPACING + 'vh',
-    width: LANDSCAPE_HERO_LINE_WIDTH + '%',
+    width: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'px',
     backgroundColor: LANDSCAPE_HERO_LINE_COLOR_BOTTOM
   }"
 ></div>
@@ -232,11 +234,11 @@ const LANDSCAPE_HERO_IMAGE_SCALE = 1.04;
 const LANDSCAPE_HERO_OVERLAY_OPACITY = 0.65;
 const LANDSCAPE_HERO_LINE_WIDTH = 105;
 const LANDSCAPE_HERO_LINE_SPACING = 3;
-const LANDSCAPE_HERO_TITLE_SIZE = 2;
-const LANDSCAPE_HERO_TITLE_SPACING = 1;
+const LANDSCAPE_HERO_TITLE_SIZE = 32;
+const LANDSCAPE_HERO_TITLE_SPACING = 0.5;
 const LANDSCAPE_HERO_TITLE_TRACKING = 0.14; // em — adjust to taste
-const LANDSCAPE_HERO_PARAGRAPH_SIZE = 1.0;
-const LANDSCAPE_HERO_PARAGRAPH_WIDTH = 35;
+const LANDSCAPE_HERO_PARAGRAPH_SIZE = 18;
+const LANDSCAPE_HERO_PARAGRAPH_WIDTH = 637;
 
 // HERO — EXTRA SPACING
 const LANDSCAPE_HERO_PARAGRAPH_TOP_PADDING = 1.5;   // vh
