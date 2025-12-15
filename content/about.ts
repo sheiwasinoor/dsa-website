@@ -50,11 +50,10 @@ export const letterParagraphs = {
 
 export const introText = {
   en: [
-    "DAYOUNG Creation is a public environment design platform guided by neo-ecological art aesthetics, integrating three specialized brands—DA Landscape, TS Lighting, and Young ART—to deliver interdisciplinary solutions through landscape, lighting, and artistic collaboration. Focused on eco-sustainable public space design, it bridges Chinese craftsmanship and global innovation to holistically redefine spatial value.",
+    "DSA Dayoung is an innovative design platform dedicated to the creation of public environment Spaces, guided by the aesthetics of new ecological culture and art. Through collaborative practice in landscape architecture, dynamic lighting, and public art, we create multi-dimensional, high-value spatial experiences. With Chinese creativity and an international perspective, Danyang systematically reshapes the value of public environmental spaces, providing comprehensive solutions for the entire process, from environmental renewal and lighting environments to environmental art, achieving spatial revitalization, long-term operation, and ecological sustainability.",
   ],
   zh: [
-    "DAYOUNG Creation 是一个以新生态艺术美学为导向的公共环境设计平台，致力于从景观、光影与艺术整体塑造空间氛围，回应当代公共空间的情绪、文化与生态需求。",
-    "我们的方式结合生态敏感性与创意科技，将叙事思维融入空间表达，共同营造具有气质与生命力的公共环境。"
+    "DSA大漾一家以新生态文化艺术美学为导向, 致力于公共环境空间营造的创新设计平台。通过景观建筑, 动态光影, 公共艺术专业共创实践, 创造多维度高价值空间使用体验。大漾以中国创意 + 国际视野, 系统重塑公共环境空间价值, 即可提供从环境更新, 光环境到环境艺术的全过程综合解决方案, 实现空间活化, 长效运营与生态可持续发展。",
   ]
 };
 
@@ -92,18 +91,15 @@ export const members: Member[] = [
         "DSA大漾 创始人 / 主持设计师",
         "TS Lighting 光影主持设计师",
         "Young ART 主持设计师",
-        "大漾营造 公共环境设计平台 创办人",
-        "景观 / 光影 / 艺术 整体设计营造领先者",
+        "大漾创始人, 主持设计师, 景观光影艺术空间营造引领者, 上市环境企业特聘顾问。致力于新生态文化艺术美学为导向, 系统重塑公共空间价值。拥有国际事务所, 城市更新局, 地产集团多重角色的综合设计管理工作经验, 擅长公共环境景观与光影艺术整体氛围营造主持设计与统筹管理。",
         "",
-        "世界级景观光影艺术剧《海之交响，超级湾区》- 深圳前海360°环湾景观光影艺术剧场整体设计总统筹",
-        "2025中国第十届五运动会与残特奥会-广东|香港|澳门闭幕式《超级湾区，只此浪潮 》动态光影设计总统筹",
-        "2025中国第届十五运会与残特奥会-深圳市《光影跃动》动态光影创作总统筹",
+        "世界级360°前海环湾城市景观光影艺术氛围营造《海之交响, 超级湾区》设计总负责人",
+        "2025中国第十五届运动会-粤港澳闭幕式-城市景观组设计统筹负责人",
+        "2025中国第届十五运会-深圳市《光影跃动》动态光影秀主持设计师",
+        "2023-2024深圳市国际光影艺术季 专业评委",
         "2023深圳市国际光影艺术季《光合创想》光影表演执行总统筹",
-        "2023年度深圳福田中心区城市动态光影 总负责人",
-        "2022年度深圳福田中心区城市动态光影总负责人  庆祝《香港回归25周年》光影秀总执行",
-        "2023-2024 深圳市国际光影艺术季专家评委",
-        "",
-        "从事景观 / 光影 / 艺术多年，拥有国际事务所、城市更新局、地产集团多重角色的综合设计管理工作经验，擅长公共环境整体景观、动态光影、艺术氛围营造设计统筹与综合管理。"
+        "2022-2023年度深圳福田中心区城市动态光影总负责人",
+        "庆祝《香港回归25周年》主题光影秀执行总统筹",
       ],
 
       en: [
@@ -157,7 +153,7 @@ export const members: Member[] = [
         "Nearly 18 years of extensive project design and management experience, specializing in urban renewal projects involving historic preservation buildings, commercial complexes, and super-high-rise lighting design",
       ],
       zh: [
-        "近18年丰富的项目设计实践与管理经验，擅长城市更新类历史文保建筑、商业综合体、超高层照明设计",
+        "近18年丰富的项目设计实践与管理经验, 擅长城市更新类历史文保建筑, 商业综合体, 超高层照明设计。",
       ]
     }
   },

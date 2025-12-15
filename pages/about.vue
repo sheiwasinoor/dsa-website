@@ -179,14 +179,14 @@
     >
       <div
         class="grid grid-cols-1 lg:grid-cols-2"
-        :style="{ gap: ABOUT_MAIN_GRID_GAP + 'px' }"
+        :style="{ gap: ABOUT_MAIN_GRID_GAP + 'px',  }"
       >
         <!-- =============================== -->
         <!-- LEFT COLUMN                     -->
         <!-- =============================== -->
         <div
           class="flex flex-col"
-          :style="{ rowGap: ABOUT_LEFT_COLUMN_SECTION_SPACING + 'px' }"
+          :style="{ rowGap: ABOUT_LEFT_COLUMN_SECTION_SPACING + 'px', }"
         >
           <!-- INTRO SECTION -->
           <div>
@@ -212,7 +212,9 @@
                 rowGap: ABOUT_INTRO_PARAGRAPH_GAP + 'px',
                 textAlign: 'justify',
                 textJustify: 'inter-word',
-                fontWeight: 100
+                fontWeight: 100,
+                maxWidth: 510 + 'px',
+                paddingLeft: 10 + 'px'
               }"
             >
               <p
@@ -253,14 +255,14 @@
 
 
             <div
-              class="transition-opacity duration-700 flex flex-col"
+              class="transition-opacity duration-700 flex flex-col justify-center"
               :class="bioTextVisible ? 'opacity-100' : 'opacity-0'"
               :style="{
                 fontWeight: 200,
                 fontSize: ABOUT_BIO_TEXT_SIZE + 'rem',
                 lineHeight: ABOUT_BIO_LINE_HEIGHT,
                 rowGap: ABOUT_BIO_PARAGRAPH_GAP + 'px',
-                
+                textWrap: 'pretty',
                 color: ABOUT_TEXT_COLORS.bioRole[locale],
                 marginTop: ABOUT_BIO_TEXT_TOP_MARGIN + 'px',
               }"
@@ -345,14 +347,14 @@
       <p
         class="tracking-[0em]"
         :class="{
-          'font-semibold opacity-100': activeId === m.id,
+          ' opacity-100, text-[#ECEBC7]': activeId === m.id,
           'opacity-100': activeId !== m.id
         }"
         :style="{
           fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
           marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
-          color: ABOUT_TEXT_COLORS.avatarName[locale],
-          paddingBottom: 3 + 'px'
+          paddingBottom: '3px',
+          color: activeId === m.id ? '#ECEBC7' : ABOUT_TEXT_COLORS.avatarName[locale]
         }"
       >
         {{ m.nameEn }} | {{ m.nameCn }}
@@ -373,11 +375,11 @@
   <!-- ROW 2 — centered 3 -->
 <div
   v-if="chineseRowTwo.length"
-  class="flex justify-center mt-12"
+  class="mt-12 grid justify-center"
 >
   <div
-    class="flex"
-    :style="{ gap: ABOUT_TEAM_ROW_TWO_GAP + 'px' }"
+    class="grid grid-cols-3 justify-items-center"
+    :style="{ columnGap: ABOUT_TEAM_ROW_TWO_GAP + 'px' }"
   >
     <button
       v-for="m in chineseRowTwo"
@@ -405,14 +407,14 @@
       <p
         class="tracking-[0em]"
         :class="{
-          'font-semibold opacity-100': activeId === m.id,
+          ' opacity-100': activeId === m.id,
           'opacity-100': activeId !== m.id
         }"
         :style="{
           fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
           marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
-          color: ABOUT_TEXT_COLORS.avatarName[locale],
-          paddingBottom: 3 + 'px'
+          paddingBottom: '3px',
+          color: activeId === m.id ? '#ECEBC7' : ABOUT_TEXT_COLORS.avatarName[locale]
         }"
       >
         {{ m.nameEn }} | {{ m.nameCn }}
@@ -421,7 +423,6 @@
       <p
         class="text-[#8C8C8C]/100"
         :style="{ fontWeight: 200,
-        whiteSpace: 'pre-line',
         lineHeight: 14 + 'px',
           fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
       >
@@ -616,7 +617,7 @@ const ABOUT_BIO_TITLE_SPACING = 6;
 const ABOUT_BIO_ROLE_SIZE = 0.8;
 const ABOUT_BIO_ROLE_SPACING = 16;
 const ABOUT_BIO_TEXT_SIZE = 0.8;
-const ABOUT_BIO_LINE_HEIGHT = 1.4;
+const ABOUT_BIO_LINE_HEIGHT = 2;
 const ABOUT_BIO_PARAGRAPH_GAP = 8;
 const ABOUT_BIO_TEXT_TOP_MARGIN = 32;
 
@@ -724,7 +725,7 @@ async function selectMember(id: string) {
 function avatarClass(id: string) {
   return id === activeId.value
     ? [
-        "scale-[1.04]",
+        "scale-[1.08]",
         "ring-1",
         "ring-[#ECEBC7]",
         "ring-opacity-100",
