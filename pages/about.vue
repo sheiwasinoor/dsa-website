@@ -18,49 +18,26 @@
       }"
     >
       <div
-        class="mx-auto grid grid-cols-1 md:grid-cols-2 items-center"
+        class="mx-auto flex items-center justify-center"
         :style="{
           maxWidth: ABOUT_HERO_MAX_WIDTH + 'px',
-          columnGap: ABOUT_HERO_COLUMN_GAP + 'px',
           paddingLeft: ABOUT_HERO_CONTAINER_PADDING_LEFT + 'px',
           paddingRight: ABOUT_HERO_CONTAINER_PADDING_RIGHT + 'px',
         }"
       >
-        <!-- LEFT: HERO TEXT IMAGE -->
-        <div
-          class="flex justify-center md:justify-end hero-text-float"
+        <video
+          src="/videos/dsa-about-final.webm"
+          playsinline
+          autoplay
+          muted
+          loop
+          class="h-auto reveal-block"
+          :class="{ 'reveal-visible': reveals.hero }"
           :style="{
-            paddingRight: ABOUT_HERO_TEXT_PADDING_RIGHT + 'px',
+            width: ABOUT_HERO_VIDEO_WIDTH * ABOUT_HERO_VIDEO_SCALE + 'px',
+            maxWidth: '100%',
           }"
-        >
-          <img
-            src="/images/hero-text.png"
-            alt="Hero Text"
-            :style="{
-              width: ABOUT_HERO_TEXT_WIDTH + 'px',
-              maxWidth: '100%',
-            }"
-          />
-        </div>
-
-        <!-- RIGHT: HERO VIDEO -->
-        <div
-          class="flex justify-center md:justify-start"
-          :style="{
-            paddingLeft: ABOUT_HERO_VIDEO_PADDING_LEFT + 'px',
-          }"
-        >
-          <video
-            src="/videos/dsa-about.mp4"
-            playsinline
-            autoplay
-            muted
-            class="h-auto"
-            :style="{
-              width: ABOUT_HERO_VIDEO_WIDTH * ABOUT_HERO_VIDEO_SCALE + 'px',
-            }"
-          ></video>
-        </div>
+        ></video>
       </div>
     </section>
 
@@ -573,9 +550,9 @@ const ABOUT_HERO_CONTAINER_PADDING_RIGHT = 220;  // shift hero block left
 const ABOUT_HERO_TEXT_WIDTH = 420;           // hero-text.png width (20% smaller)
 const ABOUT_HERO_TEXT_PADDING_RIGHT = 10;    // spacing from center
 
-const ABOUT_HERO_VIDEO_WIDTH = 1680;          // video width (20% larger)
+const ABOUT_HERO_VIDEO_WIDTH = 800;          // video width (20% larger)
 const ABOUT_HERO_VIDEO_PADDING_LEFT = 10;    // spacing from center
-const ABOUT_HERO_VIDEO_SCALE = 1.2; // 👈 THIS is your 20%
+const ABOUT_HERO_VIDEO_SCALE = 1; // 👈 THIS is your 20%
 
 // ===== LETTER TITLE =====
 const ABOUT_LETTER_TITLE_EN = "To My Friends and Partners,";
