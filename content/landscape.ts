@@ -23,13 +23,13 @@ export interface LandscapeProject {
 export const heroCopy: LandscapeHeroCopy = {
   title: {
     en: 'LANDSCAPE ARCHITECTURE',
-    zh: '景观设计'
+    zh: 'LANDSCAPE ARCHITECTUR'
   },
   body: {
     en:
       'Led by DAYOUNG Creation, DA Landscape specializes in activating aging spaces and natural sites to revitalize urban and ecological areas, creating sustainable, human-centric, and operational public spaces. Leveraging the platform’s expertise in comprehensive environmental management, green energy, and dual-carbon research, DA delivers end-to-end solutions—from diagnosis, design, construction, to maintenance—empowered by integrated industrial-chain capabilities for holistic public environment renewal.',
     zh:
-      '在 DAYOUNG Creation 的引领下，DA Landscape 专注于激活老化空间和自然场地，以 revitalizing 城市和生态区域，打造可持续、以人为本、可运营的公共空间。依托平台在综合环境管理、绿色能源和双碳研究方面的专业能力，DA 提供从诊断、设计、建设到维护的端到端解决方案——以一体化产业链能力实现整体公共环境焕新。'
+      '由DSA大漾牵头的景观建筑-DA Landscape环境更新专注区域活化设计, 通过激活老旧空间与自然场域, 重焕空间活力与生命力, 打造出可持续, 有温度, 可运营的公共空间。并依托平台在环境综合治理, 绿色能源, 双碳研究等全产业链布局优势,赋能DA核心技术支持, 从诊断-设计-营造-运维, 提供“一站式”公共环境综合解决方案。近期代表作有：2025年世界级城市景观-深圳前海城市品质提升环湾景观光影艺术整体空间营造, 2024年纳入深圳市政府重点示范城市有机更新案例-深圳宝安区清平古墟影视小镇等项目。'
   }
 };
 

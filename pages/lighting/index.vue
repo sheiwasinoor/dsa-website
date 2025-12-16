@@ -33,7 +33,7 @@
           class="h-px mx-auto"
           :style="{
             marginBottom: LIGHTING_HERO_LINE_SPACING + 'vh',
-            width: LIGHTING_HERO_LINE_WIDTH + '%',
+            width: LIGHTING_HERO_LINE_WIDTH + 'px',
             backgroundColor: LIGHTING_HERO_LINE_COLOR
           }"
         ></div>
@@ -41,9 +41,10 @@
         <h1
 class="uppercase"
   :style="{
-    fontSize: LIGHTING_HERO_TITLE_SIZE + 'rem',
-    marginBottom: LIGHTING_HERO_TITLE_SPACING + 'vh',
+    fontSize: LIGHTING_HERO_TITLE_SIZE + 'px',
+    marginBottom: LIGHTING_HERO_TITLE_SPACING + 'px',
     letterSpacing: LIGHTING_HERO_TITLE_TRACKING + 'em',
+    fontWeight: 600,
     color: LIGHTING_HERO_TEXT_COLOR
   }"
         >
@@ -53,10 +54,11 @@ class="uppercase"
 <p
   class="leading-relaxed mx-auto text-justify"
   :style="{
-    fontSize: LIGHTING_HERO_PARAGRAPH_SIZE + 'rem',
-    maxWidth: LIGHTING_HERO_PARAGRAPH_WIDTH + 'rem',
-    textAlign: 'justify',
-    textJustify: 'inter-word',
+    fontSize: LIGHTING_HERO_PARAGRAPH_SIZE + 'px',
+    maxWidth: LIGHTING_HERO_PARAGRAPH_WIDTH + 'px',
+    fontWeight: 200,
+    letterSpacing: '-0.01em',
+    lineHeight: '26px',
     color: LIGHTING_HERO_TEXT_SOFT_COLOR,
     paddingTop: LIGHTING_HERO_PARAGRAPH_TOP_PADDING + 'vh',
     paddingBottom: LIGHTING_HERO_PARAGRAPH_BOTTOM_PADDING + 'vh'
@@ -69,7 +71,7 @@ class="uppercase"
   class="h-px mx-auto"
   :style="{
     marginTop: LIGHTING_HERO_BOTTOM_LINE_SPACING + 'vh',
-    width: LIGHTING_HERO_LINE_WIDTH + '%',
+    width: LIGHTING_HERO_LINE_WIDTH + 'px',
     backgroundColor: LIGHTING_HERO_LINE_COLOR_BOTTOM
   }"
 ></div>
@@ -98,19 +100,19 @@ class="uppercase"
         class="relative group transition-all duration-500 border-b"
         :style="{
           width: LIGHTING_SEARCH_WIDTH + 'px',
-          borderColor: LIGHTING_SEARCH_BORDER_COLOR
+          borderColor: '#ECEBC7'
         }"
       >
         <input
           v-model="searchQuery"
           type="text"
           placeholder="search keywords"
-          class="bg-transparent text-[#ECEBC7]/70 placeholder-[#ECEBC7]/40 tracking-wide
+          class="bg-transparent text-[#ECEBC7] placeholder-[#ECEBC7] tracking-wide
                  focus:outline-none text-sm transition-all duration-500 pr-8 w-full pb-2"
         />
 
         <svg
-          class="absolute right-0 top-1/2 -translate-y-1/2 stroke-[#ECEBC7]/50
+          class="absolute right-0 top-1/2 -translate-y-1/2 stroke-[#ECEBC7]
                  transition-transform duration-500 group-focus-within:translate-x-1 pointer-events-none"
           fill="none"
           viewBox="0 0 24 24"
@@ -230,13 +232,13 @@ const LIGHTING_HERO_LINE_COLOR_BOTTOM = "#ECEBC7"; // bottom divider
 const LIGHTING_HERO_MIN_HEIGHT = 100;
 const LIGHTING_HERO_IMAGE_SCALE = 1.04;
 const LIGHTING_HERO_OVERLAY_OPACITY = 0.65;
-const LIGHTING_HERO_LINE_WIDTH = 105;
+const LIGHTING_HERO_LINE_WIDTH = 656;
 const LIGHTING_HERO_LINE_SPACING = 3;
-const LIGHTING_HERO_TITLE_SIZE = 2;
-const LIGHTING_HERO_TITLE_SPACING = 1;
+const LIGHTING_HERO_TITLE_SIZE = 32;
+const LIGHTING_HERO_TITLE_SPACING = 0.5;
 const LIGHTING_HERO_TITLE_TRACKING = 0.14; // em — adjust to taste
-const LIGHTING_HERO_PARAGRAPH_SIZE = 1.0;
-const LIGHTING_HERO_PARAGRAPH_WIDTH = 35;
+const LIGHTING_HERO_PARAGRAPH_SIZE = 18;
+const LIGHTING_HERO_PARAGRAPH_WIDTH = 580;
 
 // HERO — EXTRA SPACING
 const LIGHTING_HERO_PARAGRAPH_TOP_PADDING = 1.5;   // vh

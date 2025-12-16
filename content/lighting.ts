@@ -22,14 +22,14 @@ export interface LightingProject {
 
 export const heroCopy: LightingHeroCopy = {
   title: {
-    en: 'LANDSCAPE ARCHITECTURE',
-    zh: '景观设计'
+    en: 'LIGHTING SHOW',
+    zh: 'LIGHTING SHOW'
   },
   body: {
     en:
-      'Led by DAYOUNG Creation, DA Lighting specializes in activating aging spaces and natural sites to revitalize urban and ecological areas, creating sustainable, human-centric, and operational public spaces. Leveraging the platform’s expertise in comprehensive environmental management, green energy, and dual-carbon research, DA delivers end-to-end solutions—from diagnosis, design, construction, to maintenance—empowered by integrated industrial-chain capabilities for holistic public environment renewal.',
+      'Dynamic Light and Shadow - TS Lighting, a major shareholder of Dayang, is a pioneering Sino-French dual-core driven lighting art institution with offices in Shenzhen, Shanghai, and Paris. The lighting and shadow division is co-founded and led by partner Ms. Ouyang Xiaoping and Mr. Zhong Ming, the chief lighting consultant of the Shanghai Bund. The team excels at balancing and controlling the execution from concept to final implementation, considering both effect and cost. They collaborate with lighting, landscape, and art professionals to create new urban lightscapes.',
     zh:
-      '在 DAYOUNG Creation 的引领下，DA Lighting 专注于激活老化空间和自然场地，以 revitalizing 城市和生态区域，打造可持续、以人为本、可运营的公共空间。依托平台在综合环境管理、绿色能源和双碳研究方面的专业能力，DA 提供从诊断、设计、建设到维护的端到端解决方案——以一体化产业链能力实现整体公共环境焕新。'
+      '动态光影-大漾股东TS 照明是一所中法双核驱动的先锋灯光艺术机构, 在深圳, 上海, 巴黎设有办公室, 光影板块由合伙人欧阳小平女士与上海外滩灯光总顾问钟鸣先生共同创立与主持设计, 团队能最好的执行从创意到最终落地效果与造价的平衡与管控 ,照明与景观, 艺术专业并肩合力,营造城市新光景。近期著名代表作：上海《外滩漫步》动态光影秀, 广东港澳十五运会《光影跃动》动态光影秀, 前海沿江高速大桥跨海段动态光影, 深圳中心区光影秀等重量级城市标杆文化共建与文旅光影艺术项目.'
   }
 };
 

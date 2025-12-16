@@ -47,7 +47,7 @@
         fontSize: HOME_HEADLINE_EN_SIZE + 'px',
         marginTop: HOME_HEADLINE_EN_MARGIN_TOP + 'px',
         letterSpacing: HOME_HEADLINE_EN_SPACING + 'em',
-        marginBottom: '45px',
+        marginBottom: '30px',
       }"
     >
       {{ HOME_HEADLINE_EN }}

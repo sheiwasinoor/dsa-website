@@ -22,14 +22,14 @@ export interface YoungArtProject {
 
 export const heroCopy: YoungArtHeroCopy = {
   title: {
-    en: 'YOUNG ART ARCHITECTURE',
-    zh: '景观设计'
+    en: 'PUBLIC ART',
+    zh: 'PUBLIC ART'
   },
   body: {
     en:
-      'Led by DAYOUNG Creation, DA YoungArt specializes in activating aging spaces and natural sites to revitalize urban and ecological areas, creating sustainable, human-centric, and operational public spaces. Leveraging the platform’s expertise in comprehensive environmental management, green energy, and dual-carbon research, DA delivers end-to-end solutions—from diagnosis, design, construction, to maintenance—empowered by integrated industrial-chain capabilities for holistic public environment renewal.',
+      'The Public Art Section - YOUNG ART brings together globally renowned artists and ecological technology innovation teams who are committed to an ecological foundation, providing public spaces with the highest quality and most cost-effective ecological technology + cultural art implementation solutions. Recent notable works include: Shenzhen Qianhai "Large-scale Public Art Installation" and Pengrui Foshan No. 1 "Rebirth of All Things" Large-scale Public Art Installation.',
     zh:
-      '在 DAYOUNG Creation 的引领下，DA YoungArt 专注于激活老化空间和自然场地，以 revitalizing 城市和生态区域，打造可持续、以人为本、可运营的公共空间。依托平台在综合环境管理、绿色能源和双碳研究方面的专业能力，DA 提供从诊断、设计、建设到维护的端到端解决方案——以一体化产业链能力实现整体公共环境焕新。'
+      '公共艺术-YOUNG AR集结了坚持以生态为本底, 享誉全球的艺术家与生态科技创新团队, 擅长以全域专业视角, 构建新生态艺术跨界融合新模式,不断探索新材料新工艺应用, 打破空间屏障, 实现设计与技术应用落地无缝对接, 为公共空间提供最高质且成本最有效的生态科技+文化艺术落地解决方案。近期著名代表作：深圳前海《海上光影艺术剧场》大型公共艺术装置, 鹏瑞集团佛山一号《万物更生》大型公共艺术装置。'
   }
 };
 

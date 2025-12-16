@@ -56,9 +56,9 @@ class="uppercase"
   :style="{
     fontSize: LANDSCAPE_HERO_PARAGRAPH_SIZE + 'px',
     maxWidth: LANDSCAPE_HERO_PARAGRAPH_WIDTH + 'px',
-    fontWeight: 100,
-    letterSpacing: '0.02em',
-
+    fontWeight: 200,
+    letterSpacing: '-0.01em',
+    lineHeight: '26px',
     color: LANDSCAPE_HERO_TEXT_SOFT_COLOR,
     paddingTop: LANDSCAPE_HERO_PARAGRAPH_TOP_PADDING + 'vh',
     paddingBottom: LANDSCAPE_HERO_PARAGRAPH_BOTTOM_PADDING + 'vh'
@@ -100,19 +100,19 @@ class="uppercase"
         class="relative group transition-all duration-500 border-b"
         :style="{
           width: LANDSCAPE_SEARCH_WIDTH + 'px',
-          borderColor: LANDSCAPE_SEARCH_BORDER_COLOR
+          borderColor: '#8EB29E'
         }"
       >
         <input
           v-model="searchQuery"
           type="text"
           placeholder="search keywords"
-          class="bg-transparent text-[#ECEBC7]/70 placeholder-[#ECEBC7]/40 tracking-wide
+          class="bg-transparent text-[#8EB29E] placeholder-[#8EB29E] tracking-wide
                  focus:outline-none text-sm transition-all duration-500 pr-8 w-full pb-2"
         />
 
         <svg
-          class="absolute right-0 top-1/2 -translate-y-1/2 stroke-[#ECEBC7]/50
+          class="absolute right-0 top-1/2 -translate-y-1/2 stroke-[#8EB29E]
                  transition-transform duration-500 group-focus-within:translate-x-1 pointer-events-none"
           fill="none"
           viewBox="0 0 24 24"
@@ -238,7 +238,7 @@ const LANDSCAPE_HERO_TITLE_SIZE = 32;
 const LANDSCAPE_HERO_TITLE_SPACING = 0.5;
 const LANDSCAPE_HERO_TITLE_TRACKING = 0.14; // em — adjust to taste
 const LANDSCAPE_HERO_PARAGRAPH_SIZE = 18;
-const LANDSCAPE_HERO_PARAGRAPH_WIDTH = 637;
+const LANDSCAPE_HERO_PARAGRAPH_WIDTH = 580;
 
 // HERO — EXTRA SPACING
 const LANDSCAPE_HERO_PARAGRAPH_TOP_PADDING = 1.5;   // vh

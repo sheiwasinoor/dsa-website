@@ -14,7 +14,7 @@
     >
       <!-- Background -->
       <img
-        src="/images/youngArt-hero.jpg"
+        src="/images/pubic-art-hero.png"
         alt="Young Art Architecture"
         class="absolute inset-0 w-full h-full object-cover object-center"
         :style="{ transform: `scale(${YOUNGART_HERO_IMAGE_SCALE})` }"
@@ -33,7 +33,7 @@
           class="h-px mx-auto"
           :style="{
             marginBottom: YOUNGART_HERO_LINE_SPACING + 'vh',
-            width: YOUNGART_HERO_LINE_WIDTH + '%',
+            width: YOUNGART_HERO_LINE_WIDTH + 'px',
             backgroundColor: YOUNGART_HERO_LINE_COLOR
           }"
         ></div>
@@ -41,9 +41,10 @@
         <h1
 class="uppercase"
   :style="{
-    fontSize: YOUNGART_HERO_TITLE_SIZE + 'rem',
-    marginBottom: YOUNGART_HERO_TITLE_SPACING + 'vh',
+    fontSize: YOUNGART_HERO_TITLE_SIZE + 'px',
+    marginBottom: YOUNGART_HERO_TITLE_SPACING + 'px',
     letterSpacing: YOUNGART_HERO_TITLE_TRACKING + 'em',
+    fontWeight: 600,
     color: YOUNGART_HERO_TEXT_COLOR
   }"
         >
@@ -53,10 +54,11 @@ class="uppercase"
 <p
   class="leading-relaxed mx-auto text-justify"
   :style="{
-    fontSize: YOUNGART_HERO_PARAGRAPH_SIZE + 'rem',
-    maxWidth: YOUNGART_HERO_PARAGRAPH_WIDTH + 'rem',
-    textAlign: 'justify',
-    textJustify: 'inter-word',
+    fontSize: YOUNGART_HERO_PARAGRAPH_SIZE + 'px',
+    maxWidth: YOUNGART_HERO_PARAGRAPH_WIDTH + 'px',
+    fontWeight: 200,
+    letterSpacing: '-0.01em',
+    lineHeight: '26px',
     color: YOUNGART_HERO_TEXT_SOFT_COLOR,
     paddingTop: YOUNGART_HERO_PARAGRAPH_TOP_PADDING + 'vh',
     paddingBottom: YOUNGART_HERO_PARAGRAPH_BOTTOM_PADDING + 'vh'
@@ -69,7 +71,7 @@ class="uppercase"
   class="h-px mx-auto"
   :style="{
     marginTop: YOUNGART_HERO_BOTTOM_LINE_SPACING + 'vh',
-    width: YOUNGART_HERO_LINE_WIDTH + '%',
+    width: YOUNGART_HERO_LINE_WIDTH + 'px',
     backgroundColor: YOUNGART_HERO_LINE_COLOR_BOTTOM
   }"
 ></div>
@@ -98,19 +100,19 @@ class="uppercase"
         class="relative group transition-all duration-500 border-b"
         :style="{
           width: YOUNGART_SEARCH_WIDTH + 'px',
-          borderColor: YOUNGART_SEARCH_BORDER_COLOR
+          borderColor: '#9A96CC'
         }"
       >
         <input
           v-model="searchQuery"
           type="text"
           placeholder="search keywords"
-          class="bg-transparent text-[#ECEBC7]/70 placeholder-[#ECEBC7]/40 tracking-wide
+          class="bg-transparent text-[#9A96CC] placeholder-[#9A96CC] tracking-wide
                  focus:outline-none text-sm transition-all duration-500 pr-8 w-full pb-2"
         />
 
         <svg
-          class="absolute right-0 top-1/2 -translate-y-1/2 stroke-[#ECEBC7]/50
+          class="absolute right-0 top-1/2 -translate-y-1/2 stroke-[#9A96CC]
                  transition-transform duration-500 group-focus-within:translate-x-1 pointer-events-none"
           fill="none"
           viewBox="0 0 24 24"
@@ -230,13 +232,13 @@ const YOUNGART_HERO_LINE_COLOR_BOTTOM = "#40327E"; // bottom divider
 const YOUNGART_HERO_MIN_HEIGHT = 100;
 const YOUNGART_HERO_IMAGE_SCALE = 1.04;
 const YOUNGART_HERO_OVERLAY_OPACITY = 0.65;
-const YOUNGART_HERO_LINE_WIDTH = 105;
+const YOUNGART_HERO_LINE_WIDTH = 656;
 const YOUNGART_HERO_LINE_SPACING = 3;
-const YOUNGART_HERO_TITLE_SIZE = 2;
-const YOUNGART_HERO_TITLE_SPACING = 1;
+const YOUNGART_HERO_TITLE_SIZE = 32;
+const YOUNGART_HERO_TITLE_SPACING = 0.5;
 const YOUNGART_HERO_TITLE_TRACKING = 0.14; // em — adjust to taste
-const YOUNGART_HERO_PARAGRAPH_SIZE = 1.0;
-const YOUNGART_HERO_PARAGRAPH_WIDTH = 35;
+const YOUNGART_HERO_PARAGRAPH_SIZE = 18;
+const YOUNGART_HERO_PARAGRAPH_WIDTH = 580;
 
 // HERO — EXTRA SPACING
 const YOUNGART_HERO_PARAGRAPH_TOP_PADDING = 1.5;   // vh
