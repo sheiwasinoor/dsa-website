@@ -17,13 +17,19 @@
       >
 
         <!-- main hero image -->
-        <img
-          :key="currentHeroUrl"
-          :src="currentHeroUrl"
-          :alt="currentHeroAlt"
-          class="absolute inset-0 w-full h-full object-cover object-center hero-fade hero-parallax"
+        <div
+          class="absolute inset-0 hero-img-wrap"
           :style="{ transform: `translateY(${heroParallaxY}px)` }"
-        />
+        >
+          <Transition name="hero-swap" mode="out-in">
+            <img
+              :key="currentHeroUrl"
+              :src="currentHeroUrl"
+              :alt="currentHeroAlt"
+              class="w-full h-full object-cover object-center hero-img"
+            />
+          </Transition>
+        </div>
 
       </div>
 
@@ -36,7 +42,7 @@
       >
         <div
           class="grid grid-cols-1 md:grid-cols-[6.71fr_3.29fr]"
-          :style="{ gap: CONTENT_COL_GAP_REM + 'rem' }"
+          :style="{ gap: CONTENT_COL_GAP_REM + 'rem', marginTop: CONTENT_TOP_MARGIN_REM + 'rem' }"
         >
           <!-- LEFT: title + description -->
           <div>
@@ -53,20 +59,21 @@
             </h1>
 
             <p
-              class="leading-relaxed"
-              :style="{
-                opacity: DESCRIPTION_TEXT_OPACITY,
-                fontWeight: 200,
-                textAlign: 'justify',
-                textJustify: 'inter-word',
-                textWrap: 'pretty',
-                fontSize: BODY_FONT_SIZE_REM + 'rem',
-                color: BODY_COLOR,
-                letterSpacing: '0.02rem'
-              }"
-            >
-              {{ project.description[locale] }}
-            </p>
+            class="leading-relaxed"
+            :style="{
+              opacity: DESCRIPTION_TEXT_OPACITY,
+              fontWeight: 200,
+              textAlign: 'justify',
+              textJustify: 'inter-word',
+              textWrap: 'pretty',
+              fontSize: BODY_FONT_SIZE_REM + 'rem',
+              color: BODY_COLOR,
+              letterSpacing: '0.02rem',
+              marginBottom: isMobile ? '1rem' : '2rem'
+            }"
+          >
+            {{ project.description[locale] }}
+          </p>
           </div>
 
 
@@ -175,12 +182,15 @@
           :style="{ backgroundColor: 'rgba(0,0,0,0.72)' }"
           @click.self="closePreview"
         >
-          <div
-            class="relative w-[92vw] max-w-5xl"
-          >
+        <div
+          class="relative w-[92vw] max-w-5xl"
+          @touchstart="onTouchStart"
+          @touchend="onTouchEnd"
+        >
             <!-- close -->
             <button
-              class="absolute -top-10 right-0 text-[#ECEBC7] opacity-80 hover:opacity-100 transition-opacity"
+              class="absolute -top-10 right-0 text-[#ECEBC7] opacity-80 hover:opacity-100 transition-opacity close-btn-mobile"
+              style="z-index: 60;"
               @click="closePreview"
               aria-label="Close"
             >
@@ -254,6 +264,8 @@ const previewIndex = ref(0);
 let heroTimer: ReturnType<typeof setInterval> | null = null;
 
 const heroParallaxY = ref(0);
+const touchStartX = ref<number | null>(null);
+const touchEndX = ref<number | null>(null);
 
 const sortedImages = computed(() => {
   if (!project.value || !Array.isArray(project.value.images)) return [];
@@ -334,18 +346,18 @@ const TEXT_COLOR = "#ECEBC7";
 const TITLE_TRACKING = "0.05em";
 
 // Hero
-const HERO_HEIGHT_REM = 36;          // hero image height
-const HERO_TOP_OFFSET_REM = 4.5;     // gap below navbar
+const HERO_HEIGHT_REM = computed(() => (isMobile.value ? 22 : 36)); // hero image height
+const HERO_TOP_OFFSET_REM = computed(() => (isMobile.value ? 2.5 : 4.5)); // gap below navbar
 const HERO_NAVBAR_FADE = "rgba(0,0,0,0.45)";
 
 // Content layout
-const CONTENT_TOP_MARGIN_REM = 4;
-const CONTENT_COL_GAP_REM = 6;
+const CONTENT_TOP_MARGIN_REM = computed(() => (isMobile.value ? 2.5 : 4));
+const CONTENT_COL_GAP_REM = computed(() => (isMobile.value ? 2.5 : 6));
 
 // Title / body
-const TITLE_FONT_SIZE_REM = 1.7;
-const TITLE_BOTTOM_MARGIN_REM = 2;
-const BODY_FONT_SIZE_REM = 0.92;
+const TITLE_FONT_SIZE_REM = computed(() => (isMobile.value ? 1.35 : 1.7));
+const TITLE_BOTTOM_MARGIN_REM = computed(() => (isMobile.value ? 1.5 : 2));
+const BODY_FONT_SIZE_REM = computed(() => (isMobile.value ? 0.9 : 0.92));
 const DESCRIPTION_TEXT_OPACITY = 0.88;
 const BODY_COLOR = "#8C8C8C";
 
@@ -354,10 +366,15 @@ const META_TEXT_COLOR = "#8EB29E";
 const META_BLOCK_GAP_REM = 1.8;
 
 // Gallery
-const GALLERY_TOP_MARGIN_REM = 6;
+const GALLERY_TOP_MARGIN_REM = computed(() => (isMobile.value ? 3.5 : 6));
 const GALLERY_GAP_REM = 2.4;
 const GALLERY_CARD_HEIGHT_REM = 10.5;
 const PAGE_BOTTOM_PADDING_REM = 8;
+
+const isMobile = computed(() => {
+  if (!import.meta.client) return false;
+  return window.matchMedia("(max-width: 720px)").matches;
+});
 
 /* =======================================
    HERO IMAGE LOGIC
@@ -412,6 +429,24 @@ function previewNext() {
   if (!hasImages.value) return;
   const imgs = sortedImages.value;
   previewIndex.value = (previewIndex.value + 1) % imgs.length;
+}
+
+function onTouchStart(e: TouchEvent) {
+  touchStartX.value = e.changedTouches[0].clientX;
+}
+
+function onTouchEnd(e: TouchEvent) {
+  touchEndX.value = e.changedTouches[0].clientX;
+  if (touchStartX.value === null || touchEndX.value === null) return;
+  const delta = touchEndX.value - touchStartX.value;
+  const threshold = 40;
+  if (delta > threshold) {
+    previewPrev();
+  } else if (delta < -threshold) {
+    previewNext();
+  }
+  touchStartX.value = null;
+  touchEndX.value = null;
 }
 
 function handleKeydown(e: KeyboardEvent) {
@@ -518,9 +553,6 @@ watch(
 }
 
 /* Hero fade when image changes */
-.hero-fade {
-  animation: heroFade 720ms ease-out;
-}
 @keyframes heroFade {
   from { opacity: 0.35; transform: scale(1.01); }
   to { opacity: 1; transform: scale(1); }
@@ -553,5 +585,47 @@ watch(
 .hero-parallax {
   will-change: transform;
   transition: transform 0.05s linear;
+}
+
+/* Hero slide + zoom */
+.hero-img-wrap {
+  animation: heroZoom 18s ease-in-out infinite alternate;
+  overflow: hidden;
+}
+.hero-img {
+  will-change: transform, opacity;
+}
+@keyframes heroZoom {
+  from { transform: scale(1.02); }
+  to { transform: scale(1.06); }
+}
+
+.hero-swap-enter-active,
+.hero-swap-leave-active {
+  transition: opacity 320ms ease, transform 320ms ease;
+}
+.hero-swap-enter-from {
+  opacity: 0;
+  transform: translateX(10px);
+}
+.hero-swap-leave-to {
+  opacity: 0;
+  transform: translateX(-10px);
+}
+
+@media (max-width: 720px) {
+  .close-btn-mobile {
+    top: 0.5rem;
+    right: 0.5rem;
+    background: rgba(0,0,0,0.45);
+    border-radius: 999px;
+    width: 44px;
+    height: 44px;
+    padding: 8px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 60;
+  }
 }
 </style>

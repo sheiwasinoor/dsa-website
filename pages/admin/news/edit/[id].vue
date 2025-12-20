@@ -15,8 +15,8 @@
 
         <!-- BASIC -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <TextField label="Title (EN)" v-model="form.titleEn" required />
-          <TextField label="Title (ZH)" v-model="form.titleZh" required />
+          <TextField label="Title (EN)" v-model="form.titleEn" />
+          <TextField label="Title (ZH)" v-model="form.titleZh" />
         </div>
 
         <TextField label="Slug" v-model="form.slug" disabled />

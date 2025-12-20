@@ -6,6 +6,7 @@
     <!-- ======================================= -->
     <section
       ref="heroSection"
+      class="hero-section"
       :class="[
         'relative w-full flex items-center justify-center overflow-hidden reveal-block',
         { 'reveal-visible': reveals.hero }
@@ -27,10 +28,10 @@
       ></div>
 
       <!-- HERO CONTENT -->
-      <div class="relative z-10 max-w-3xl mx-auto px-6 text-center text-[#ECEBC7]">
+      <div class="relative z-10 max-w-3xl mx-auto px-6 text-center text-[#ECEBC7] hero-content">
 
         <div
-          class=" mx-auto"
+          class=" mx-auto hero-line"
           :style="{
             marginBottom: LIGHTING_HERO_LINE_SPACING + 'vh',
             width: LIGHTING_HERO_LINE_WIDTH + 'px',
@@ -53,7 +54,7 @@ class="uppercase"
         </h1>
 
 <p
-  class="leading-relaxed mx-auto text-justify"
+  class="leading-relaxed mx-auto text-justify hero-body"
   :style="{
     fontSize: LIGHTING_HERO_PARAGRAPH_SIZE + 'px',
     maxWidth: LIGHTING_HERO_PARAGRAPH_WIDTH + 'px',
@@ -69,7 +70,7 @@ class="uppercase"
 </p>
 
 <div
-  class="mx-auto"
+  class="mx-auto hero-line"
   :style="{
     marginTop: LIGHTING_HERO_BOTTOM_LINE_SPACING + 'vh',
     width: LIGHTING_HERO_LINE_WIDTH + 'px',
@@ -87,6 +88,7 @@ class="uppercase"
     <!-- ======================================= -->
     <div
       ref="searchSection"
+      class="search-wrap"
       :class="[
         'max-w-6xl mx-auto flex justify-end reveal-block',
         { 'reveal-visible': reveals.search }
@@ -136,6 +138,7 @@ class="uppercase"
     <!-- ======================================= -->
     <div
       ref="gridSection"
+      class="grid-wrap"
       :class="[
         'max-w-6xl mx-auto reveal-block',
         { 'reveal-visible': reveals.grid }
@@ -337,6 +340,67 @@ onBeforeUnmount(() => {
   observerRef.value?.disconnect();
 });
 </script>
+
+<style scoped>
+.hero-body {
+  text-align: justify !important;
+  text-wrap: pretty;
+}
+
+@media (max-width: 720px) {
+  .hero-section {
+    min-height: 68vh !important;
+    padding: 76px 0 32px 0;
+    align-items: center;
+  }
+
+  .hero-content {
+    max-width: 92vw !important;
+    padding: 0 12px;
+  }
+
+  .hero-line {
+    width: 90vw !important;
+  }
+
+  .hero-content h1 {
+    font-size: 22px !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 14px !important;
+  }
+
+  .hero-body {
+    font-size: 14px !important;
+    max-width: 92vw !important;
+    line-height: 22px !important;
+    padding-top: 12px !important;
+    padding-bottom: 14px !important;
+    text-align: justify !important;
+  }
+
+  .search-wrap {
+    justify-content: center !important;
+    padding-top: 24px !important;
+    padding-bottom: 24px !important;
+  }
+
+  .search-wrap > div {
+    width: 100% !important;
+    max-width: 520px;
+  }
+
+  .grid-wrap {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+    padding-top: 24px !important;
+    padding-bottom: 48px !important;
+  }
+
+  .grid-wrap .grid {
+    gap: 16px !important;
+  }
+}
+</style>
 
 
 

@@ -11,7 +11,7 @@
     }"
   >
     <section
-      class="mx-auto grid grid-cols-1 lg:grid-cols-[35%_65%] gap-28 mb-32 items-start"
+      class="mx-auto grid grid-cols-1 lg:grid-cols-[35%_65%] gap-28 mb-32 items-start contact-hero"
     >
       <div class="max-w-[420px]" style="padding-left: 80px; padding-top: 120px;">
         <div>
@@ -70,7 +70,7 @@
           </h1>
 
           <p class="uppercase tracking-[0.22em] mb-6 text-sm opacity-80">
-            SHENZHEN | SHANGHAI | SINGAPORE | PARIS
+            SHENZHEN | SHANGHAI | SINGAPORE
           </p>
 
           <div class="space-y-8 text-sm leading-relaxed opacity-85">
@@ -113,40 +113,40 @@
     </section>
 
     <section
-      class="mx-auto grid grid-cols-1 lg:grid-cols-[35%_65%] gap-28 items-start"
+      class="mx-auto grid grid-cols-1 lg:grid-cols-[35%_65%] gap-28 items-start contact-body"
     >
-      <div class="max-w-[420px]" style="padding-left: 80px;">
-        <h1 class="font-semibold mb-6" :style="{ color: '#8EB29E', fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
+      <div class="max-w-[420px] contact-join">
+        <h1 class="font-semibold mb-6 text-center" :style="{ color: '#8EB29E', fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
           Join Us
         </h1>
 
         <template v-if="locale === 'en'">
-          <p class="leading-relaxed mb-4 opacity-80">
+          <p class="leading-relaxed mb-4 opacity-80 join-copy join-justify">
             Our company is constantly seeking designers who are passionate about the aesthetic design of new ecological art, love landscape, light and shadow, public art, have graduated from relevant design majors, possess high artistic accomplishment and aesthetic sense, and have working experience in high-quality design companies to join the DSA team.
           </p>
 
-          <p class="leading-relaxed mb-6 opacity-80">
+          <p class="leading-relaxed mb-6 opacity-80 join-copy join-justify">
             We offer job opportunities for project manager, environmental update designer, assistant designer and intern positions.
           </p>
 
-          <p class="font-medium mb-1">Please submit your resume and portfolio.</p>
-          <p class="opacity-70 mb-6">Each file should not exceed 50mb.</p>
+          <p class="font-medium mb-1 join-copy">Please submit your resume and portfolio.</p>
+          <p class="opacity-70 mb-6 join-copy">Each file should not exceed 50mb.</p>
         </template>
         <template v-else>
-          <p class="leading-relaxed mb-4 opacity-80">
+          <p class="leading-relaxed mb-4 opacity-80 join-copy join-justify">
             我司长期寻找对跨学科设计充满热诚，热爱景观、光影、艺术设计的相关设计专业毕业、有较高的艺术修养和审美，有高品质设计公司工作经验的设计师加入我们。
           </p>
 
-          <p class="leading-relaxed mb-6 opacity-80">
+          <p class="leading-relaxed mb-6 opacity-80 join-copy join-justify">
             长期提供项目经理、环境更新设计师、助理设计师、实习生岗位的工作机会。
           </p>
 
-          <p class="font-medium mb-1">请提交你的履历和作品集。</p>
-          <p class="opacity-70 mb-6">每个档案大小不得超过50MB。</p>
+          <p class="font-medium mb-1 join-copy">请提交你的履历和作品集。</p>
+          <p class="opacity-70 mb-6 join-copy">每个档案大小不得超过50MB。</p>
         </template>
 
         <!-- FILE BUTTONS -->
-        <div class="flex gap-4">
+        <div class="flex gap-4 file-buttons">
           <label
             class="cursor-pointer px-5 py-3 rounded flex items-center justify-center gap-2"
             :style="{
@@ -208,7 +208,7 @@
       <!-- ============================= -->
       <!-- RIGHT SIDE — FORM -->
       <!-- ============================= -->
-      <div class="w-full max-w-[570px]">
+      <div class="w-full max-w-[570px] contact-form">
         <form @submit.prevent="submitForm" class="space-y-6">
 
           <!-- NAME -->
@@ -499,5 +499,79 @@ async function submitForm() {
 
 :deep(label) {
   color: #8EB29E;
+}
+
+@media (max-width: 720px) {
+  .contact-hero,
+  .contact-body {
+    gap: 40px !important;
+    text-align: center;
+  }
+
+  .contact-hero > div,
+  .contact-body > div {
+    padding: 0 !important;
+    margin: 0 auto;
+  }
+
+  .contact-hero h1,
+  .contact-body h1 {
+    text-align: center;
+  }
+
+  .contact-form {
+    max-width: 100% !important;
+    margin: 0 auto;
+  }
+
+  .contact-form form {
+    width: 100%;
+  }
+
+  .contact-neutral-dropdowns {
+    grid-template-columns: 1fr !important;
+  }
+
+  .contact-neutral-dropdowns > * {
+    width: 100%;
+  }
+
+  .contact-join {
+    max-width: 100% !important;
+    padding: 0 12px !important;
+  }
+
+  .join-copy {
+    text-align: center !important;
+    text-wrap: pretty;
+    width: 100% !important;
+    max-width: 640px !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+
+  .file-buttons {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .file-buttons label {
+    width: 100% !important;
+    max-width: 320px;
+  }
+}
+
+.join-copy {
+  text-align: center;
+  text-wrap: pretty;
+  width: 100%;
+  max-width: 640px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.join-justify {
+  text-align: justify;
+  text-justify: inter-word;
 }
 </style>

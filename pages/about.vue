@@ -7,7 +7,7 @@
     <section
       ref="heroSection"
       :class="[
-        'bg-[#000A04] w-full flex items-center justify-center relative',
+        'bg-[#000A04] w-full flex items-center justify-center relative about-hero',
         'reveal-block',
         { 'reveal-visible': reveals.hero }
       ]"
@@ -18,7 +18,7 @@
       }"
     >
       <div
-        class="mx-auto flex items-center justify-center"
+        class="mx-auto flex items-center justify-center about-hero-inner"
         :style="{
           maxWidth: ABOUT_HERO_MAX_WIDTH + 'px',
           paddingLeft: ABOUT_HERO_CONTAINER_PADDING_LEFT + 'px',
@@ -30,7 +30,7 @@
           playsinline
           autoplay
           muted
-          class="h-auto reveal-block"
+          class="h-auto reveal-block about-hero-video"
           :class="{ 'reveal-visible': reveals.hero }"
           :style="{
             width: ABOUT_HERO_VIDEO_WIDTH * ABOUT_HERO_VIDEO_SCALE + 'px',
@@ -45,7 +45,7 @@
     <!-- =================================================== -->
     <section
       ref="letterSection"
-      class="w-full bg-cover bg-center relative"
+      class="w-full bg-cover bg-center relative about-letter"
       :style="{
         backgroundImage: `url('/images/about-letter-bg.png')`,
         paddingLeft: ABOUT_LETTER_PADDING_X + 'px',
@@ -125,15 +125,17 @@
         <div
           class="flex justify-end signature-block"
           :style="{
-            marginTop: ABOUT_SIGNATURE_TOP_MARGIN[locale] + 'px',
-            marginBottom: ABOUT_SIGNATURE_BOTTOM_MARGIN + 'px'
+            marginTop: isMobile
+              ? (locale === 'zh' ? '-200px' : '4px')
+              : ABOUT_SIGNATURE_TOP_MARGIN[locale] + 'px',
+            marginBottom: isMobile ? '10px' : ABOUT_SIGNATURE_BOTTOM_MARGIN + 'px'
           }"
         >
           <img
             src="/images/signature.png"
             alt="Signature"
             :style="{
-              height: ABOUT_SIGNATURE_HEIGHT + 'px',
+              height: (isMobile ? ABOUT_SIGNATURE_HEIGHT * 0.75 : ABOUT_SIGNATURE_HEIGHT) + 'px',
               width: 'auto',
               opacity: ABOUT_SIGNATURE_OPACITY
             }"
@@ -143,9 +145,9 @@
         <p
             class="text-right"
             :style="{
-              fontSize: ABOUT_SIGNATURE_TEXT_SIZE + 'rem',
+              fontSize: (isMobile ? ABOUT_SIGNATURE_TEXT_SIZE * 0.9 : ABOUT_SIGNATURE_TEXT_SIZE) + 'rem',
               lineHeight: ABOUT_SIGNATURE_LINE_HEIGHT,
-              marginBottom: ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN + 'px',
+              marginBottom: (isMobile ? 12 : ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN) + 'px',
               color: ABOUT_TEXT_COLORS.signatureText[locale]
             }"
         >
@@ -163,7 +165,7 @@
     <!-- =================================================== -->
     <main
       ref="mainSection"
-      class="mx-auto"
+      class="mx-auto about-main"
       :style="{
         maxWidth: ABOUT_MAIN_MAX_WIDTH + 'px',
         paddingTop: ABOUT_MAIN_PADDING_TOP + 'px',
@@ -172,10 +174,10 @@
         paddingRight: ABOUT_MAIN_PADDING_X_REM + 'rem'
       }"
     >
-        <div
-          class="grid grid-cols-1 lg:grid-cols-2"
-          :style="{ gap: ABOUT_MAIN_GRID_GAP + 'px',  }"
-        >
+          <div
+            class="grid grid-cols-1 lg:grid-cols-2"
+            :style="{ gap: ABOUT_MAIN_GRID_GAP + 'px',  }"
+          >
         <!-- =============================== -->
         <!-- LEFT COLUMN                     -->
         <!-- =============================== -->
@@ -227,14 +229,15 @@
 
           <!-- BIO CARD -->
           <div
-            ref="bioSection"
-            class="bg-[#151E17] rounded-2xl shadow-lg border border-[#ECEBC7]/10 overflow-hidden bio-card-transition opa"
-            :class="[bioCardClass, 'reveal-block', { 'reveal-visible': reveals.bio }]"
-            :style="{
-              maxWidth: ABOUT_BIO_MAX_WIDTH + 'px',
-              padding: ABOUT_BIO_PADDING + 'px',
-              borderRadius: '10px'
-            }"
+          ref="bioSection"
+          class="bg-[#151E17] rounded-2xl shadow-lg border border-[#ECEBC7]/10 overflow-hidden bio-card-transition opa bio-card"
+          :class="[bioCardClass, 'reveal-block', { 'reveal-visible': reveals.bio }]"
+          v-if="!isMobile"
+          :style="{
+            maxWidth: ABOUT_BIO_MAX_WIDTH + 'px',
+            padding: ABOUT_BIO_PADDING + 'px',
+            borderRadius: '10px'
+          }"
           >
             <h2
               class="font-semibold tracking-[2px]"
@@ -332,7 +335,7 @@
       @click="selectMember(m.id)"
     >
       <div
-        class="rounded-full transition-all ease-out"
+        class="rounded-full transition-all ease-out avatar-circle"
         :class="avatarClass(m.id)"
         :style="{
           width: ABOUT_AVATAR_SIZE + 'px',
@@ -392,7 +395,7 @@
       @click="selectMember(m.id)"
     >
       <div
-        class="rounded-full transition-all ease-out"
+        class="rounded-full transition-all ease-out avatar-circle"
         :class="avatarClass(m.id)"
         :style="{
           width: ABOUT_AVATAR_SIZE + 'px',
@@ -519,6 +522,66 @@
     </div>
   </div>
 </div>
+
+        <!-- Mobile Bio (after team) -->
+        <div
+          v-if="hydrated && isMobile"
+          class="bg-[#151E17] rounded-2xl shadow-lg border border-[#ECEBC7]/10 overflow-hidden bio-card-transition opa bio-card mt-10 bio-card-mobile"
+          :class="[bioCardClass, 'reveal-block', { 'reveal-visible': reveals.bio }]"
+          :style="{
+            padding: ABOUT_BIO_PADDING + 'px',
+            borderRadius: '10px'
+          }"
+        >
+          <h2
+            class="font-semibold tracking-[2px]"
+            :style="{
+              fontSize: ABOUT_BIO_TITLE_SIZE + 'rem',
+              marginBottom: ABOUT_BIO_TITLE_SPACING + 'px',
+              fontWeight: 400,
+              color: ABOUT_TEXT_COLORS.bioTitle[locale]
+            }"
+          >
+            <span v-if="active.group === 'chinese'">
+              {{ active.nameEn }} | {{ active.nameCn }}
+            </span>
+            <span v-else>
+              {{ active.nameEn }}
+            </span>
+          </h2>
+
+          <p
+            :style="{
+              color: ABOUT_TEXT_COLORS.bioRole[locale],
+              fontSize: ABOUT_BIO_ROLE_SIZE + 'rem',
+              letterSpacing: ABOUT_BIO_ROLE_TRACKING + 'px',
+              marginBottom: ABOUT_BIO_ROLE_MARGIN_BOTTOM + 'px'
+            }"
+          >
+            {{ active.role[locale] }}
+          </p>
+
+          <div
+            class="transition-opacity duration-700 flex flex-col justify-center"
+            :class="bioTextVisible ? 'opacity-100' : 'opacity-0'"
+            :style="{
+              fontWeight: 200,
+              fontSize: ABOUT_BIO_TEXT_SIZE + 'rem',
+              lineHeight: ABOUT_BIO_LINE_HEIGHT,
+              rowGap: ABOUT_BIO_PARAGRAPH_GAP + 'px',
+              textWrap: 'pretty',
+              color: ABOUT_TEXT_COLORS.bioRole[locale],
+              marginTop: ABOUT_BIO_TEXT_TOP_MARGIN + 'px',
+            }"
+          >
+            <p
+              v-for="(p, i) in active.bio[locale]"
+              :key="'bio-mobile-' + i"
+            >
+              {{ p }}
+            </p>
+          </div>
+        </div>
       </div> <!-- END RIGHT COLUMN -->
     </div> <!-- END MAIN GRID -->
   </main>
@@ -543,7 +606,7 @@ const ABOUT_HERO_IMAGE_OPACITY = 1.0;      // 0–1
 // NEW HERO CONSTANTS FOR ABOUT PAGE
 const ABOUT_HERO_MAX_WIDTH = 3200;          // overall hero container width
 const ABOUT_HERO_COLUMN_GAP = 0;           // gap between text & video
-const ABOUT_HERO_CONTAINER_PADDING_LEFT = 120;   // shift hero block right
+const ABOUT_HERO_CONTAINER_PADDING_LEFT = 220;   // shift hero block right
 const ABOUT_HERO_CONTAINER_PADDING_RIGHT = 220;  // shift hero block left
 
 const ABOUT_HERO_TEXT_WIDTH = 420;           // hero-text.png width (20% smaller)
@@ -688,6 +751,8 @@ const { locale } = useLocale();
 /* TEAM + BIOS */
 const members = ref(membersData);
 const activeId = ref("demi");
+const isMobile = ref(false);
+const hydrated = ref(false);
 
 const active = computed(() =>
   members.value.find((m) => m.id === activeId.value)!
@@ -706,7 +771,10 @@ const bioTextVisible = ref(true);
 const bioCardClass = ref("scale-100 opacity-100");
 
 async function selectMember(id: string) {
-  if (id === activeId.value) return;
+  if (id === activeId.value) {
+    if (isMobile.value) scrollToBio();
+    return;
+  }
 
   bioTextVisible.value = false;
 
@@ -723,7 +791,16 @@ async function selectMember(id: string) {
 
   setTimeout(() => {
     bioTextVisible.value = true;
+    if (isMobile.value) scrollToBio();
   }, 50);
+}
+
+function scrollToBio() {
+  // On mobile, scroll to the mobile bio card placed after the team list
+  const target = document.querySelector(".bio-card-mobile");
+  if (target) {
+    target.scrollIntoView({ behavior: "smooth", block: "center" });
+  }
 }
 
 function avatarClass(id: string) {
@@ -761,6 +838,25 @@ const reveals = ref({
 const observerRef = ref<IntersectionObserver | null>(null);
 
 onMounted(() => {
+  if (import.meta.client) {
+    const mq = window.matchMedia("(max-width: 700px)");
+    const setMobile = (e: MediaQueryList | MediaQueryListEvent) => {
+      isMobile.value = e.matches;
+      if (isMobile.value) {
+        // Ensure content is visible even if the observer misses on small screens
+        reveals.value.hero = true;
+        reveals.value.letter = true;
+        reveals.value.intro = true;
+        reveals.value.bio = true;
+        reveals.value.team = true;
+      }
+    };
+    setMobile(mq);
+    mq.addEventListener("change", setMobile);
+    onBeforeUnmount(() => mq.removeEventListener("change", setMobile));
+  }
+  hydrated.value = true;
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -862,6 +958,59 @@ onBeforeUnmount(() => {
   .hero-text-float {
     animation: none !important;
     transition-duration: 0ms !important;
+  }
+}
+
+@media (max-width: 700px) {
+  .about-hero {
+    padding: 72px 0 16px 0 !important;
+    min-height: auto !important;
+  }
+
+  .about-hero-inner {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .about-hero-video {
+    width: 100vw !important;
+    max-width: none !important;
+    min-width: 360px !important;
+    margin: 0 auto;
+  }
+
+  .about-letter {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    background-size: cover;
+  }
+
+  .about-letter-grid {
+    font-size: 1rem !important;
+    color: #ecebc7 !important;
+  }
+
+  .about-main {
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+
+  .about-main-grid {
+    gap: 24px !important;
+  }
+
+  .bio-card {
+    max-width: 100% !important;
+  }
+
+  .avatar-circle {
+    transform: scale(0.9);
   }
 }
 </style>

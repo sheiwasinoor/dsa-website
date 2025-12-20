@@ -10,9 +10,9 @@
       color: var(--footer-text, #F1F5F7);
     "
   >
-    <div class="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row md:justify-between gap-8">
+    <div class="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row md:justify-between gap-8 footer-wrap">
       <!-- Left: Logo -->
-      <div class="flex items-start">
+      <div class="flex items-start footer-logo">
         <img
           src="/images/navbar-logo.png"
           alt="DSA Logo"
@@ -22,7 +22,7 @@
 
       <!-- Middle: Locations -->
       <div
-        class="flex flex-col md:flex-row gap-3"
+        class="flex flex-col md:flex-row gap-3 footer-locations"
         :style="{ fontSize: '10px' }"
       >
         <!-- Shenzhen -->
@@ -79,7 +79,7 @@
       </div>
 
       <!-- Right: QR Codes -->
-      <div class="flex flex-col md:flex-row gap-8">
+      <div class="flex flex-col md:flex-row gap-8 footer-qr">
         <div class="flex flex-col items-center text-center">
           <span class="tracking-[0.12em] text-xs font-light mb-2" style="color: var(--footer-logo-color, #D9D9D9);">
             Wechat
@@ -141,3 +141,34 @@ import { useTheme } from '~/composables/useTheme';
 
 const { theme } = useTheme();
 </script>
+
+<style scoped>
+@media (max-width: 768px) {
+  .footer-wrap {
+    align-items: center;
+    text-align: center;
+  }
+
+  .footer-logo {
+    justify-content: center;
+  }
+
+  .footer-locations {
+    align-items: center;
+  }
+
+  .footer-locations > div {
+    width: 100% !important;
+    max-width: 260px;
+  }
+
+  .footer-qr {
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer-qr > div {
+    width: 100%;
+  }
+}
+</style>

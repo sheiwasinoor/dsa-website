@@ -48,7 +48,6 @@
               v-model="form.titleEn"
               type="text"
               class="w-full mt-1 rounded-md border border-[#334036]/50 bg-[#000C05] px-3 py-2 text-sm focus:border-[#ECEBC7]"
-              required
             />
           </div>
 
@@ -58,7 +57,6 @@
               v-model="form.titleZh"
               type="text"
               class="w-full mt-1 rounded-md border border-[#334036]/50 bg-[#000C05] px-3 py-2 text-sm focus:border-[#ECEBC7]"
-              required
             />
           </div>
         </div>
@@ -70,7 +68,6 @@
             v-model="form.bodyEn"
             rows="6"
             class="w-full mt-1 rounded-md border border-[#334036]/50 bg-[#000C05] px-3 py-2 text-sm leading-relaxed focus:border-[#ECEBC7]"
-            required
           ></textarea>
         </div>
 
@@ -80,7 +77,6 @@
             v-model="form.bodyZh"
             rows="6"
             class="w-full mt-1 rounded-md border border-[#334036]/50 bg-[#000C05] px-3 py-2 text-sm leading-relaxed focus:border-[#ECEBC7]"
-            required
           ></textarea>
         </div>
 

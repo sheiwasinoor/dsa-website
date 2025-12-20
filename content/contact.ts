@@ -98,12 +98,6 @@ export const offices: OfficeCity[] = [
     label: 'Singapore',
     addressLines: ['73 Holland Grove View, Singapore 276230'],
   },
-  // Paris is in the tab bar but no address given, easy to add later:
-  {
-    id: 'paris',
-    label: 'Paris',
-    addressLines: ['(Coming soon)'],
-  },
 ];
 
 export const joinUsCopy: JoinUsCopy = {

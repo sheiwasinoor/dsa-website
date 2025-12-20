@@ -13,13 +13,13 @@
         <article
           v-for="(post, idx) in posts"
           :key="post.id"
-          class="group break-inside-avoid cursor-pointer transform transition duration-700 hover:-translate-y-2 hover:scale-[1.04] mosaic-tilt"
+          class="group break-inside-avoid cursor-pointer transform transition duration-700 hover:-translate-y-2 hover:scale-[1.04]"
           :style="tileStyle(idx)"
           @click="toggleInline(post)"
         >
           <div
-            class="overflow-hidden rounded-xl shadow-2xl border border-transparent tile-sheen"
-            :style="{ backgroundColor: STYLE.tileBg, borderColor: STYLE.tileBorderColor, borderWidth: '1px' }"
+            class="overflow-hidden rounded-xl shadow-2xl border border-transparent"
+            :style="{ backgroundColor: STYLE.tileBg, borderColor: STYLE.tileBorderColor, borderWidth: '0px' }"
             :data-post-id="post.id"
           >
             <div class="relative overflow-hidden">
@@ -31,9 +31,16 @@
               />
               <div
                 v-else
-                class="w-full h-48 bg-[#1A241F] flex items-center justify-center text-xs tracking-[0.18em] uppercase"
+                class="w-full h-48 bg-[#1A241F] flex items-center justify-center text-center px-4"
               >
-                {{ locale === 'en' ? 'YOUNG NEWS' : 'YOUNG 新闻' }}
+                <div class="space-y-2 text-left">
+                  <p class="text-[#ECEBC7] font-black text-xl leading-tight tracking-[0.18em] uppercase line-clamp-2">
+                    {{ post.title[locale] || post.body[locale] || (locale === 'en' ? 'YOUNG NEWS' : 'YOUNG 新闻') }}
+                  </p>
+                  <p class="text-[#ECEBC7]/80 text-sm leading-snug tracking-[0.04em] line-clamp-3">
+                    {{ post.body[locale] || post.title[locale] || (locale === 'en' ? 'YOUNG NEWS' : 'YOUNG 新闻') }}
+                  </p>
+                </div>
               </div>
 
               <div
@@ -66,12 +73,12 @@
     <transition name="fade">
       <div
         v-if="activePost"
-        class="fixed inset-0 z-50 flex items-center justify-center px-4"
+        class="fixed inset-0 z-[9999] flex items-center justify-center px-4 pt-16"
         style="background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);"
         @click.self="activePost = null"
       >
-        <div class="bg-[#0B1510] rounded-2xl max-w-3xl w-full shadow-2xl border border-[#2f3d34] overflow-hidden modal-pop">
-          <div class="relative">
+        <div class="bg-[#0B1510] rounded-2xl max-w-3xl w-full shadow-2xl border border-[#2f3d34] overflow-hidden modal-pop my-8 max-h-[90vh] flex flex-col">
+          <div class="relative shrink-0">
             <img
               v-if="activePost.imageUrl"
               :src="activePost.imageUrl"
@@ -79,14 +86,14 @@
               class="w-full h-64 object-cover"
             />
             <button
-              class="absolute top-3 right-3 h-10 w-10 rounded-full bg-black/60 text-[#ECEBC7] flex items-center justify-center hover:bg-black/80 transition"
+              class="absolute top-3 right-3 h-10 w-10 rounded-full bg-black/60 text-[#ECEBC7] flex items-center justify-center hover:bg-black/80 transition z-[10000]"
               @click="activePost = null"
               aria-label="Close article"
             >
               ✕
             </button>
           </div>
-          <div class="p-6 space-y-3">
+          <div class="p-6 space-y-3 overflow-y-auto">
             <h3 class="font-bold text-2xl leading-tight">
               {{ activePost.title[locale] }}
             </h3>
@@ -110,7 +117,7 @@ const STYLE = {
   headingMarginBottom: '1.1rem',
   descColor: 'rgba(236,235,199,0.72)',
   overlayTitleSize: '0.9rem',
-  overlayTitleLS: '0.2em',
+  overlayTitleLS: '0.20em',
   overlayBodySize: '0.8rem',
   tileBorderColor: '#29352F',
   tileBg: '#050E0A'
@@ -191,19 +198,11 @@ if (import.meta.client) {
   });
 }
 
-const TILE_GRADIENTS = [
-  "linear-gradient(135deg, rgba(142,178,158,0.4), rgba(102,54,165,0.35))",
-  "linear-gradient(145deg, rgba(236,235,199,0.45), rgba(80,120,255,0.28))",
-  "linear-gradient(155deg, rgba(255,120,180,0.45), rgba(60,255,200,0.25))",
-  "linear-gradient(125deg, rgba(255,200,120,0.4), rgba(120,180,255,0.3))",
-];
-
 function tileStyle(idx: number) {
-  const grad = TILE_GRADIENTS[idx % TILE_GRADIENTS.length];
   return {
     borderColor: "transparent",
-    boxShadow: "0 12px 30px rgba(0,0,0,0.45), 0 0 28px rgba(142,178,158,0.35)",
-    backgroundImage: grad,
+    boxShadow: "0 12px 30px rgba(0,0,0,0.45)",
+    backgroundImage: STYLE.tileBg,
   };
 }
 </script>

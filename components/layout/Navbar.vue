@@ -23,8 +23,19 @@
         />
       </button>
 
+      <!-- Mobile toggle -->
+      <button
+        type="button"
+        class="mobile-toggle"
+        @click="toggleMobileMenu"
+        aria-label="Open menu"
+      >
+        <span :class="['burger-line', mobileMenuOpen ? 'open' : '']"></span>
+        <span :class="['burger-line', mobileMenuOpen ? 'open' : '']"></span>
+      </button>
+
       <!-- Nav items -->
-      <ul class="flex items-center gap-[var(--nav-gap-items)]">
+      <ul class="desktop-nav flex items-center gap-[var(--nav-gap-items)]">
         
         <!-- ABOUT -->
         <li>
@@ -133,6 +144,93 @@
         </li>
       </ul>
     </nav>
+
+    <!-- Mobile drawer -->
+    <transition name="mobile-fade">
+      <div
+        v-if="mobileMenuOpen"
+        class="mobile-overlay"
+        @click.self="closeMobileMenu"
+      >
+        <div class="mobile-panel">
+          <div class="mobile-panel-header">
+            <img src="/images/navbar-logo.png" alt="DSA Design" class="h-7 w-auto" />
+            <button
+              type="button"
+              class="close-btn"
+              @click="closeMobileMenu"
+              aria-label="Close menu"
+            >
+              ✕
+            </button>
+          </div>
+
+          <div class="mobile-links">
+            <button
+              type="button"
+              class="mobile-link"
+              :class="{ 'active-link': isRouteActive('/about') }"
+              @click="navAndClose('/about')"
+            >
+              {{ locale === 'en' ? 'ABOUT' : '关于我们' }}
+            </button>
+
+            <button
+              type="button"
+              class="mobile-link"
+              :class="{ 'active-link': isRouteActive('/landscape') }"
+              @click="navAndClose('/landscape')"
+            >
+              {{ designItems.find((i) => i.key === 'landscape')?.label[locale] ?? 'LANDSCAPE ARCHITECTURE' }}
+            </button>
+
+            <button
+              type="button"
+              class="mobile-link"
+              :class="{ 'active-link': isRouteActive('/lighting') }"
+              @click="navAndClose('/lighting')"
+            >
+              {{ designItems.find((i) => i.key === 'lighting')?.label[locale] ?? 'LIGHTING SHOW' }}
+            </button>
+
+            <button
+              type="button"
+              class="mobile-link"
+              :class="{ 'active-link': isRouteActive('/publicArt') }"
+              @click="navAndClose('/publicArt')"
+            >
+              {{ designItems.find((i) => i.key === 'youngArt')?.label[locale] ?? 'PUBLIC ART' }}
+            </button>
+
+            <button
+              type="button"
+              class="mobile-link"
+              :class="{ 'active-link': isRouteActive('/young-news') }"
+              @click="navAndClose('/young-news')"
+            >
+              {{ locale === 'en' ? 'YOUNG NEWS' : 'YOUNG 新闻' }}
+            </button>
+
+            <button
+              type="button"
+              class="mobile-link"
+              :class="{ 'active-link': isRouteActive('/contact') }"
+              @click="navAndClose('/contact')"
+            >
+              {{ locale === 'en' ? 'CONTACT US' : '联系我们' }}
+            </button>
+
+            <button
+              type="button"
+              class="mobile-link"
+              @click="handleLocaleToggle"
+            >
+              {{ locale === 'en' ? '中文' : 'EN' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </transition>
   </header>
 </template>
 
@@ -169,6 +267,7 @@ const { navigateWithFade } = useGlobalFade();
 
 const hasSolidBg = ref(false);
 const isDropdownOpen = ref(false);
+const mobileMenuOpen = ref(false);
 
 /* ----------------------------------------------
    Navbar spacing vars
@@ -234,6 +333,7 @@ watch(
   () => route.path,
   () => {
     isDropdownOpen.value = false;
+    mobileMenuOpen.value = false;
   }
 );
 
@@ -244,17 +344,17 @@ const designItems = [
   {
     key: "landscape",
     to: "/landscape",
-    label: { en: "LANDSCAPE ARCHITECTURE", zh: "景观设计" },
+    label: { en: "LANDSCAPE ARCHITECTURE", zh: "景观建筑" },
   },
   {
     key: "lighting",
     to: "/lighting",
-    label: { en: "LIGHTING SHOW", zh: "灯光设计" },
+    label: { en: "LIGHTING SHOW", zh: "动态光影" },
   },
   {
     key: "youngArt",
     to: "/publicArt",
-    label: { en: "PUBLIC ART", zh: "PUBLIC 艺术" },
+    label: { en: "PUBLIC ART", zh: "公共艺术" },
   },
 ];
 
@@ -294,6 +394,11 @@ function goTo(to: string) {
   navigateWithFade(to);
 }
 
+function navAndClose(to: string) {
+  navigateWithFade(to);
+  mobileMenuOpen.value = false;
+}
+
 function handleDesignChildClick(to: string) {
   navigateWithFade(to);
   isDropdownOpen.value = false;
@@ -315,6 +420,19 @@ function openDesignDropdown() {
 
 function closeDesignDropdown() {
   isDropdownOpen.value = false;
+}
+
+function toggleMobileMenu() {
+  mobileMenuOpen.value = !mobileMenuOpen.value;
+}
+
+function closeMobileMenu() {
+  mobileMenuOpen.value = false;
+}
+
+function handleLocaleToggle() {
+  startLocaleTransition();
+  mobileMenuOpen.value = false;
 }
 </script>
 
@@ -391,5 +509,142 @@ function closeDesignDropdown() {
 .dropdown-delayed-enter-from,
 .dropdown-delayed-leave-to {
   opacity: 0;
+}
+
+/* ----------------------------------------------
+   Mobile styles
+---------------------------------------------- */
+.mobile-toggle {
+  display: none;
+  height: 40px;
+  width: 44px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  flex-direction: column;
+  background: transparent;
+  border: 1px solid var(--nav-divider);
+  border-radius: 10px;
+  padding: 8px;
+}
+
+.burger-line {
+  display: block;
+  height: 2px;
+  width: 100%;
+  background-color: var(--nav-inactive);
+  transition: transform 180ms ease, opacity 180ms ease;
+}
+
+.burger-line.open:nth-child(1) {
+  transform: translateY(6px) rotate(45deg);
+}
+
+.burger-line.open:nth-child(2) {
+  transform: translateY(-6px) rotate(-45deg);
+}
+
+.mobile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(6px);
+  z-index: 45;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.mobile-panel {
+  width: min(320px, 78vw);
+  background: rgba(0, 12, 5, 0.95);
+  border-left: 1px solid var(--nav-divider);
+  padding: 1.2rem 1rem 1.6rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  box-shadow: -6px 0 20px rgba(0, 0, 0, 0.35);
+}
+
+.mobile-panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.close-btn {
+  height: 38px;
+  width: 38px;
+  border-radius: 12px;
+  border: 1px solid var(--nav-divider);
+  color: var(--nav-inactive);
+  background: transparent;
+}
+
+.mobile-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.mobile-link {
+  text-align: left;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nav-inactive);
+  font-size: 0.95rem;
+}
+
+.mobile-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.mobile-section-label {
+  font-size: 0.8rem;
+  letter-spacing: 0.16em;
+  color: var(--nav-inactive);
+  opacity: 0.8;
+}
+
+.mobile-pill-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.mobile-pill {
+  padding: 0.5rem 0.75rem;
+  border-radius: 999px;
+  border: 1px solid var(--nav-divider);
+  color: var(--nav-active);
+  letter-spacing: 0.08em;
+  font-size: 0.82rem;
+  text-transform: uppercase;
+  background: rgba(0, 12, 5, 0.6);
+}
+
+.mobile-fade-enter-active,
+.mobile-fade-leave-active {
+  transition: opacity 200ms ease;
+}
+.mobile-fade-enter-from,
+.mobile-fade-leave-to {
+  opacity: 0;
+}
+
+@media (max-width: 960px) {
+  nav {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  .desktop-nav {
+    display: none;
+  }
+
+  .mobile-toggle {
+    display: inline-flex;
+  }
 }
 </style>
