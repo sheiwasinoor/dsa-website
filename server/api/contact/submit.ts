@@ -2,6 +2,10 @@ import { defineEventHandler, readMultipartFormData, createError } from 'h3';
 import { PrismaClient } from '@prisma/client'
 import fs from 'fs';
 import path from 'path';
+import { Resend } from 'resend';
+
+const resend = new Resend(process.env.RESEND_API_KEY);
+const CONTACT_RECEIVER = process.env.CONTACT_RECEIVER;
 
 export default defineEventHandler(async (event) => {
   if (event.method !== 'POST') {
@@ -46,6 +50,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
+  if (resumeFile.type !== 'application/pdf' || portfolioFile.type !== 'application/pdf') {
+    throw createError({
+      statusCode: 400,
+      statusMessage: 'Resume and portfolio must be PDF files'
+    });
+  }
+
   // Save file to /public/uploads/contact/
   const uploadDir = path.join(process.cwd(), 'public', 'uploads', 'contact');
   if (!fs.existsSync(uploadDir)) fs.mkdirSync(uploadDir, { recursive: true });
@@ -61,6 +72,7 @@ export default defineEventHandler(async (event) => {
   const portfolioUrl = saveFile(portfolioFile, 'portfolio');
 
   // Save into database
+  const prisma = new PrismaClient();
   const saved = await prisma.contactSubmission.create({
     data: {
       firstName,
@@ -75,6 +87,47 @@ export default defineEventHandler(async (event) => {
       portfolioUrl
     }
   });
+
+  if (CONTACT_RECEIVER && process.env.RESEND_API_KEY) {
+    try {
+      const attachments = [];
+      if (resumeFile?.data) {
+        attachments.push({
+          filename: resumeFile.filename,
+          content: resumeFile.data,
+        });
+      }
+      if (portfolioFile?.data) {
+        attachments.push({
+          filename: portfolioFile.filename,
+          content: portfolioFile.data,
+        });
+      }
+
+      await resend.emails.send({
+        from: 'DSA Website <no-reply@dsa-dayoung.com>',
+        to: [CONTACT_RECEIVER],
+        subject: `New Job Application — ${firstName} ${lastName}`,
+        html: `
+          <h2>New Contact Submission</h2>
+          <p><strong>Name:</strong> ${firstName} ${lastName}</p>
+          <p><strong>Email:</strong> ${email}</p>
+          <p><strong>Mobile:</strong> ${mobile}</p>
+          <p><strong>Status:</strong> ${status}</p>
+          <p><strong>Location:</strong> ${location}</p>
+          <p><strong>Position:</strong> ${position}</p>
+          <p><strong>Message:</strong></p>
+          <p>${message.replace(/\n/g, '<br/>')}</p>
+          <hr />
+          <p><strong>Resume:</strong> <a href="${resumeUrl}">${resumeUrl}</a></p>
+          <p><strong>Portfolio:</strong> <a href="${portfolioUrl}">${portfolioUrl}</a></p>
+        `,
+        attachments,
+      });
+    } catch (emailErr) {
+      console.error('Email send failed:', emailErr);
+    }
+  }
 
   return {
     success: true,

@@ -10,103 +10,113 @@
       paddingRight: UI.PAGE_PADDING_X + 'rem',
     }"
   >
-    <section class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-28 mb-32">
-      <div>
-        <h1
-          class="font-semibold mb-6"
-          :style="{
-            fontSize: UI.HEADER_SIZE,
-            letterSpacing: UI.HEADER_TRACKING
-          }"
-        >
-          {{ contactSectionCopy.contactHeading }}
-        </h1>
+    <section
+      class="mx-auto grid grid-cols-1 lg:grid-cols-[35%_65%] gap-28 mb-32 items-start"
+    >
+      <div class="max-w-[420px]" style="padding-left: 80px; padding-top: 120px;">
+        <div>
+          <h1
+            class="mb-10"
+            :style="{
+              fontSize: '40px',
+              letterSpacing: '0.08em',
+              fontWeight: 500,
+              color: '#8EB29E'
+            }"
+          >
+            {{ contactSectionCopy.contactHeading }}
+          </h1>
 
-        <template v-if="locale === 'en'">
-          <p class="leading-relaxed mb-4" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            {{ contactSectionCopy.business.title }} — {{ contactSectionCopy.business.email }}
-          </p>
-          <p v-for="(line, i) in contactSectionCopy.business.phoneLines" :key="'b' + i" class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            {{ line }}
-          </p>
+          <template v-if="locale === 'en'">
+            <p class="mb-1" style="font-size: 1.25rem; font-weight: 600;color: #8C8C8C;">
+              Business Collaboration
+            </p>
+            <p class="mb-2 opacity-90">
+              dayoung@dayoung.work
+            </p>
+            <p class="mb-1 opacity-75">+86 177 2268 4557</p>
+            <p class="mb-8 opacity-75">+86 755 88878571</p>
 
-          <p class="leading-relaxed mt-6 mb-4 font-medium" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            {{ contactSectionCopy.career.title }} — {{ contactSectionCopy.career.email }}
-          </p>
-          <p v-for="(line, i) in contactSectionCopy.career.phoneLines" :key="'c' + i" class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            {{ line }}
-          </p>
-        </template>
-        <template v-else>
-          <p class="leading-relaxed mb-4" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            业务合作 — dayoung@dayoung.work
-          </p>
-          <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            +86 177 2268 4557
-          </p>
-          <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            +86 755 88878571
-          </p>
+            <p class="mb-1" style="font-size: 1.25rem;font-weight: 600; color: #8C8C8C;">
+              Career
+            </p>
+            <p class="mb-2 opacity-90">job@dayoung.work</p>
+            <p class="opacity-75">+86 177 2784 7995</p>
+          </template>
+          <template v-else>
+            <p class="leading-relaxed mb-4" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+              业务合作 — dayoung@dayoung.work
+            </p>
+            <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+              +86 177 2268 4557
+            </p>
+            <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+              +86 755 88878571
+            </p>
 
-          <p class="leading-relaxed mt-6 mb-4 font-medium" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            招聘联系 — Job@dayoung.work
-          </p>
-          <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-            +86 177 2784 7995
-          </p>
-        </template>
-
+            <p class="leading-relaxed mt-6 mb-4 font-medium" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+              招聘联系 — Job@dayoung.work
+            </p>
+            <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
+              +86 177 2784 7995
+            </p>
+          </template>
+        </div>
       </div>
-  <div>
-    <h1 class="font-semibold mb-6" :style="{ fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
-      Address
-    </h1>
-
-    <p class="uppercase tracking-[0.22em] mb-6 text-sm opacity-80">
-      SHENZHEN | SHANGHAI | SINGAPORE | PARIS
-    </p>
-
-    <div class="space-y-8 text-sm leading-relaxed opacity-85">
-      <template v-if="locale === 'en'">
+      <div class="max-w-[520px]" style="padding-top: 120px;">
         <div>
-          <p class="font-semibold mb-1">Shenzhen</p>
-          <p>13A Floor, Cultural and Sports Industry HQ Tower, Futian Sports Park, Futian District, Shenzhen, China</p>
-        </div>
+          <h1 class="font-semibold mb-6" :style="{ color: '#8EB29E',fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
+            Address
+          </h1>
 
-        <div>
-          <p class="font-semibold mb-1">Shanghai</p>
-          <p>270-1bZhongYi Building, Nanjin East Road, Huang Pu District, Shanghai, China</p>
-        </div>
+          <p class="uppercase tracking-[0.22em] mb-6 text-sm opacity-80">
+            SHENZHEN | SHANGHAI | SINGAPORE | PARIS
+          </p>
 
-        <div>
-          <p class="font-semibold mb-1">Singapore</p>
-          <p>73 Holland Grove View, Singapore 276230</p>
-        </div>
-      </template>
-      <template v-else>
-        <div>
-          <p class="font-semibold mb-1">Shenzhen</p>
-          <p>深圳市福田区福田体育公园文化体育产业总部大厦-十三A层</p>
-          <p>（中国深圳新媒体广告产业园内）</p>
-        </div>
+          <div class="space-y-8 text-sm leading-relaxed opacity-85">
+            <template v-if="locale === 'en'">
+              <div>
+                <p class="font-semibold mb-1">Shenzhen</p>
+                <p>13A Floor, Cultural and Sports Industry HQ Tower, <br></br> Futian Sports Park, Futian District, Shenzhen, China</p>
+              </div>
 
-        <div>
-          <p class="font-semibold mb-1">Shanghai</p>
-          <p>上海市黄浦区北京东路270-1号中一大楼7层</p>
-        </div>
+              <div>
+                <p class="font-semibold mb-1">Shanghai</p>
+                <p>270-1bZhongYi Building, Nanjin East Road, <br></br> Huang Pu District, Shanghai, China</p>
+              </div>
 
-        <div>
-          <p class="font-semibold mb-1">Singapore</p>
-          <p>73 Holland Grove View, Singapore 276230</p>
-        </div>
-      </template>
-    </div>
-  </div>
-</section>
+              <div>
+                <p class="font-semibold mb-1">Singapore</p>
+                <p>73 Holland Grove View, Singapore 276230</p>
+              </div>
+            </template>
+            <template v-else>
+              <div>
+                <p class="font-semibold mb-1">Shenzhen</p>
+                <p>深圳市福田区福田体育公园文化体育产业总部大厦-十三A层</p>
+                <p>（中国深圳新媒体广告产业园内）</p>
+              </div>
 
-    <section class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-28">
-      <div>
-        <h1 class="font-semibold mb-6" :style="{ fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
+              <div>
+                <p class="font-semibold mb-1">Shanghai</p>
+                <p>上海市黄浦区北京东路270-1号中一大楼7层</p>
+              </div>
+
+              <div>
+                <p class="font-semibold mb-1">Singapore</p>
+                <p>73 Holland Grove View, Singapore 276230</p>
+              </div>
+            </template>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section
+      class="mx-auto grid grid-cols-1 lg:grid-cols-[35%_65%] gap-28 items-start"
+    >
+      <div class="max-w-[420px]" style="padding-left: 80px;">
+        <h1 class="font-semibold mb-6" :style="{ color: '#8EB29E', fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
           Join Us
         </h1>
 
@@ -138,25 +148,59 @@
         <!-- FILE BUTTONS -->
         <div class="flex gap-4">
           <label
-            class="cursor-pointer px-5 py-3 rounded flex items-center gap-2"
+            class="cursor-pointer px-5 py-3 rounded flex items-center justify-center gap-2"
             :style="{
               backgroundColor: UI.FILE_BUTTON_BG,
-              color: UI.FILE_BUTTON_TEXT
+              color: UI.FILE_BUTTON_TEXT,
+              width: '195px'
             }"
           >
-            <input type="file" class="hidden" @change="onResumeUpload" />
-            <span>📄 Resume</span>
+            <input type="file" class="hidden" accept="application/pdf" @change="onResumeUpload" />
+            <span class="inline-flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-4 h-4"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 5 17 10"/>
+                <line x1="12" y1="5" x2="12" y2="21"/>
+              </svg>
+              <span :style="{ letterSpacing: UI.SUBMIT_TRACKING , fontWeight: 300,}">Resume</span>
+            </span>
           </label>
 
           <label
-            class="cursor-pointer px-5 py-3 rounded flex items-center gap-2"
+            class="cursor-pointer px-5 py-3 rounded flex items-center justify-center gap-2"
             :style="{
               backgroundColor: UI.FILE_BUTTON_BG,
-              color: UI.FILE_BUTTON_TEXT
+              color: UI.FILE_BUTTON_TEXT,
+              width: '195px'
             }"
           >
-            <input type="file" class="hidden" @change="onPortfolioUpload" />
-            <span>🗂 Portfolio</span>
+            <input type="file" class="hidden" accept="application/pdf" @change="onPortfolioUpload" />
+            <span class="inline-flex items-center gap-2">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                class="w-4 h-4"
+              >
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                <polyline points="7 10 12 5 17 10"/>
+                <line x1="12" y1="5" x2="12" y2="21"/>
+              </svg>
+              <span :style="{ letterSpacing: UI.SUBMIT_TRACKING, fontWeight:300, }">Portfolio</span>
+            </span>
           </label>
         </div>
       </div>
@@ -164,61 +208,84 @@
       <!-- ============================= -->
       <!-- RIGHT SIDE — FORM -->
       <!-- ============================= -->
-      <form @submit.prevent="submitForm" class="space-y-6">
+      <div class="w-full max-w-[570px]">
+        <form @submit.prevent="submitForm" class="space-y-6">
 
-        <!-- NAME -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <TextField label="First name" v-model="form.firstName" required />
-          <TextField label="Last name" v-model="form.lastName" required />
-        </div>
+          <!-- NAME -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <TextField label="First name" v-model="form.firstName" required />
+            <TextField label="Last name" v-model="form.lastName" required />
+          </div>
 
-        <!-- CONTACT -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <TextField label="Mobile" v-model="form.mobile" required />
-          <TextField label="Email address" v-model="form.email" required />
-        </div>
+          <!-- CONTACT -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <TextField label="Mobile" v-model="form.mobile" required />
+            <TextField label="Email address" v-model="form.email" required />
+          </div>
 
-        <!-- DROPDOWNS -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <DSADropdown
-            label="Status"
-            :options="STATUS_OPTIONS"
-            v-model="form.status"
+          <!-- DROPDOWNS -->
+          <div
+            class="grid grid-cols-1 gap-4 contact-neutral-dropdowns md:grid-cols-[1fr_1fr_1fr]"
+            :style="{ color: '#8C8C8C', gridTemplateColumns: '1fr 1fr 1.5fr' }"
+          >
+            <DSADropdown
+              label="Status"
+              :options="STATUS_OPTIONS"
+              v-model="form.status"
+              size="compact"
+            />
+
+            <DSADropdown
+              label="Location"
+              :options="LOCATION_OPTIONS"
+              v-model="form.location"
+              size="compact"
+            />
+
+            <DSADropdown
+              label="Position"
+              :options="POSITION_OPTIONS"
+              v-model="form.position"
+              size="compact"
+            />
+          </div>
+
+          <!-- MESSAGE -->
+          <TextArea
+            label="Your message"
+            v-model="form.message"
+            required
           />
 
-          <DSADropdown
-            label="Location"
-            :options="LOCATION_OPTIONS"
-            v-model="form.location"
-          />
-
-          <DSADropdown
-            label="Position"
-            :options="POSITION_OPTIONS"
-            v-model="form.position"
-          />
-        </div>
-
-        <!-- MESSAGE -->
-        <TextArea
-          label="Your message"
-          v-model="form.message"
-          required
-        />
-
-        <!-- SUBMIT BUTTON -->
-        <button
-          type="submit"
-          class="w-full font-semibold py-3 rounded"
+          <!-- SUBMIT BUTTON -->
+          <button
+            type="submit"
+            class="w-full font-semibold py-3 rounded transition"
+            :disabled="isSubmitting"
+            :style="{
+              backgroundColor: UI.SUBMIT_BG,
+              color: UI.SUBMIT_TEXT,
+              letterSpacing: UI.SUBMIT_TRACKING,
+              fontWeight: 300,
+              opacity: isSubmitting ? 0.7 : 1,
+              cursor: isSubmitting ? 'not-allowed' : 'pointer'
+            }"
+          >
+            {{ isSubmitting ? 'Submitting…' : 'Submit' }}
+          </button>
+        </form>
+        <div
+          v-if="submitSuccess"
+          class="mt-6 p-4 rounded text-sm tracking-wide"
           :style="{
-            backgroundColor: UI.SUBMIT_BG,
-            color: UI.SUBMIT_TEXT,
-            letterSpacing: UI.SUBMIT_TRACKING
+            backgroundColor: '#0A1410',
+            border: '1px solid #336341',
+            color: '#ECEBC7'
           }"
         >
-          Submit
-        </button>
-      </form>
+          Your submission has been received. We’ll be in touch.
+        </div>
+      </div>
     </section>
 
     <!-- ERROR MODAL -->
@@ -274,6 +341,9 @@ const portfolioName = ref("");
 const showError = ref(false);
 const errorList = ref<string[]>([]);
 
+const isSubmitting = ref(false)
+const submitSuccess = ref(false)
+
 //
 // ======================================
 // UI CONSTANTS
@@ -282,7 +352,7 @@ const errorList = ref<string[]>([]);
 
 const UI = {
   PAGE_BG: "#000C05",
-  TEXT_MAIN: CONTACT_COLORS.textMain,
+  TEXT_MAIN: "#8C8C8C",
 
   PAGE_TOP_PADDING: 10,
   PAGE_BOTTOM_PADDING: 10,
@@ -294,11 +364,11 @@ const UI = {
   SUBHEADER_SIZE: "1.1rem",
   DESCRIPTION_OPACITY: 0.85,
 
-  FILE_BUTTON_BG: "#5D6762",
-  FILE_BUTTON_TEXT: "#ECEBC7",
+  FILE_BUTTON_BG: "#617D6E",
+  FILE_BUTTON_TEXT: "#D9D9D9",
 
-  SUBMIT_BG: DSA_PURPLE,
-  SUBMIT_TEXT: "#ECEBC7",
+  SUBMIT_BG: '#617D6E',
+  SUBMIT_TEXT: "#D9D9D9",
   SUBMIT_TRACKING: "0.12em",
 };
 
@@ -377,40 +447,57 @@ function validate() {
 //
 
 async function submitForm() {
-  if (!validate()) return;
+  if (!validate()) return
 
-  const fd = new FormData();
+  isSubmitting.value = true
+  submitSuccess.value = false
+
+  const fd = new FormData()
 
   Object.entries(form.value).forEach(([k, v]) => {
-    fd.append(k, v);
-  });
+    fd.append(k, v)
+  })
 
-  if (resumeFile.value) fd.append("resume", resumeFile.value);
-  if (portfolioFile.value) fd.append("portfolio", portfolioFile.value);
+  if (resumeFile.value) fd.append("resume", resumeFile.value)
+  if (portfolioFile.value) fd.append("portfolio", portfolioFile.value)
 
   try {
-    const res = await $fetch("/api/contact/submit", {
+    const res: any = await $fetch("/api/contact/submit", {
       method: "POST",
       body: fd,
-    });
+    })
 
-    if (!res.success) {
-      errorList.value = res.errors || ["Unknown server error."];
-      showError.value = true;
-      return;
+    if (!res?.success) {
+      errorList.value = res?.errors || ["Submission failed."]
+      showError.value = true
+      return
     }
 
-    // Clear form
-    Object.keys(form.value).forEach((k) => form.value[k] = "");
-    resumeFile.value = null;
-    portfolioFile.value = null;
-    resumeName.value = "";
-    portfolioName.value = "";
+    submitSuccess.value = true
 
-    alert("Submission received. Thank you!");
-  } catch (err: any) {
-    errorList.value = ["Network error — try again later."];
-    showError.value = true;
+    // reset form
+    Object.keys(form.value).forEach((k) => (form.value as any)[k] = "")
+    resumeFile.value = null
+    portfolioFile.value = null
+    resumeName.value = ""
+    portfolioName.value = ""
+
+  } catch {
+    errorList.value = ["Network error — please try again later."]
+    showError.value = true
+  } finally {
+    isSubmitting.value = false
   }
 }
 </script>
+
+<style scoped>
+/* Force neutral grey inside dropdowns (Status / Location / Position) */
+:deep(.contact-neutral-dropdowns *) {
+  color: #8C8C8C !important;
+}
+
+:deep(label) {
+  color: #8EB29E;
+}
+</style>

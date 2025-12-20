@@ -1,5 +1,5 @@
 import { PrismaClient } from "@prisma/client";
-import { createError } from "h3";
+import { createError, getQuery } from "h3";
 
 const prisma = new PrismaClient();
 

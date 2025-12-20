@@ -30,11 +30,12 @@
       <div class="relative z-10 max-w-3xl mx-auto px-6 text-center text-[#ECEBC7]">
 
         <div
-          class="h-px mx-auto"
+          class=" mx-auto"
           :style="{
             marginBottom: LIGHTING_HERO_LINE_SPACING + 'vh',
             width: LIGHTING_HERO_LINE_WIDTH + 'px',
-            backgroundColor: LIGHTING_HERO_LINE_COLOR
+            backgroundColor: LIGHTING_HERO_LINE_COLOR,
+            height: 0.5 + 'px'
           }"
         ></div>
 
@@ -68,11 +69,12 @@ class="uppercase"
 </p>
 
 <div
-  class="h-px mx-auto"
+  class="mx-auto"
   :style="{
     marginTop: LIGHTING_HERO_BOTTOM_LINE_SPACING + 'vh',
     width: LIGHTING_HERO_LINE_WIDTH + 'px',
-    backgroundColor: LIGHTING_HERO_LINE_COLOR_BOTTOM
+    backgroundColor: LIGHTING_HERO_LINE_COLOR_BOTTOM,
+            height: 0.5 + 'px'
   }"
 ></div>
       </div>
@@ -261,7 +263,7 @@ const LIGHTING_GRID_GAP = 32; // Increased from 28 → 32
 const LIGHTING_GRID_CARD_HEIGHT = 336; // 20% bigger (old 280)
 const LIGHTING_GRID_IMAGE_ZOOM_DURATION = 500;
 const LIGHTING_GRID_HOVER_OVERLAY_DURATION = 450;
-const LIGHTING_GRID_HOVER_OVERLAY_HEIGHT = 45;
+const LIGHTING_GRID_HOVER_OVERLAY_HEIGHT = 35;
 const LIGHTING_GRID_TEXT_FADE_DURATION = 320;
 const LIGHTING_GRID_FILTER_ANIMATION_DURATION = 400;
 const LIGHTING_GRID_TITLE_SIZE = 1.32; // Increased 15% from 1.15
@@ -295,12 +297,17 @@ const gridSection = ref<HTMLElement | null>(null);
 const reveals = ref({
   hero: false,
   search: false,
-  grid: false,
+  grid: false, // stays hidden until observer or timeout flips it
 });
 
 const observerRef = ref<IntersectionObserver | null>(null);
 
 onMounted(() => {
+  // Fail-safe so thumbnails don't stay invisible if observer never fires (e.g., offscreen)
+  const gridTimeout = setTimeout(() => {
+    reveals.value.grid = true;
+  }, 400);
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -320,6 +327,10 @@ onMounted(() => {
   );
 
   observerRef.value = observer;
+
+  onBeforeUnmount(() => {
+    clearTimeout(gridTimeout);
+  });
 });
 
 onBeforeUnmount(() => {

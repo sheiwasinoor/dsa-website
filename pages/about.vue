@@ -26,11 +26,10 @@
         }"
       >
         <video
-          src="/videos/dsa-about-final.webm"
+          src="/videos/dsa-about-update-update.webm"
           playsinline
           autoplay
           muted
-          loop
           class="h-auto reveal-block"
           :class="{ 'reveal-visible': reveals.hero }"
           :style="{
@@ -550,7 +549,7 @@ const ABOUT_HERO_CONTAINER_PADDING_RIGHT = 220;  // shift hero block left
 const ABOUT_HERO_TEXT_WIDTH = 420;           // hero-text.png width (20% smaller)
 const ABOUT_HERO_TEXT_PADDING_RIGHT = 10;    // spacing from center
 
-const ABOUT_HERO_VIDEO_WIDTH = 800;          // video width (20% larger)
+const ABOUT_HERO_VIDEO_WIDTH = 1000;          // video width (20% larger)
 const ABOUT_HERO_VIDEO_PADDING_LEFT = 10;    // spacing from center
 const ABOUT_HERO_VIDEO_SCALE = 1; // 👈 THIS is your 20%
 

@@ -59,6 +59,7 @@ class="uppercase"
     fontWeight: 200,
     letterSpacing: '-0.01em',
     lineHeight: '26px',
+    textWrap: 'pretty',
     color: YOUNGART_HERO_TEXT_SOFT_COLOR,
     paddingTop: YOUNGART_HERO_PARAGRAPH_TOP_PADDING + 'vh',
     paddingBottom: YOUNGART_HERO_PARAGRAPH_BOTTOM_PADDING + 'vh'
@@ -225,8 +226,8 @@ onMounted(async () => {
 // HERO COLORS + LINES
 const YOUNGART_HERO_TEXT_COLOR = "#D8DCDD";          // main hero title + body color
 const YOUNGART_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
-const YOUNGART_HERO_LINE_COLOR = "#40327E"; // top divider
-const YOUNGART_HERO_LINE_COLOR_BOTTOM = "#40327E"; // bottom divider
+const YOUNGART_HERO_LINE_COLOR = "#9a96CC"; // top divider
+const YOUNGART_HERO_LINE_COLOR_BOTTOM = "#9a96CC"; // bottom divider
 
 // HERO
 const YOUNGART_HERO_MIN_HEIGHT = 100;
@@ -261,7 +262,7 @@ const YOUNGART_GRID_GAP = 32; // Increased from 28 → 32
 const YOUNGART_GRID_CARD_HEIGHT = 336; // 20% bigger (old 280)
 const YOUNGART_GRID_IMAGE_ZOOM_DURATION = 500;
 const YOUNGART_GRID_HOVER_OVERLAY_DURATION = 450;
-const YOUNGART_GRID_HOVER_OVERLAY_HEIGHT = 45;
+const YOUNGART_GRID_HOVER_OVERLAY_HEIGHT = 35;
 const YOUNGART_GRID_TEXT_FADE_DURATION = 320;
 const YOUNGART_GRID_FILTER_ANIMATION_DURATION = 400;
 const YOUNGART_GRID_TITLE_SIZE = 1.32; // Increased 15% from 1.15
@@ -295,12 +296,17 @@ const gridSection = ref<HTMLElement | null>(null);
 const reveals = ref({
   hero: false,
   search: false,
-  grid: false,
+  grid: false, // stays hidden until observer or timeout flips it
 });
 
 const observerRef = ref<IntersectionObserver | null>(null);
 
 onMounted(() => {
+  // Fail-safe so thumbnails don't stay invisible if observer never fires (e.g., offscreen)
+  const gridTimeout = setTimeout(() => {
+    reveals.value.grid = true;
+  }, 400);
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -320,6 +326,10 @@ onMounted(() => {
   );
 
   observerRef.value = observer;
+
+  onBeforeUnmount(() => {
+    clearTimeout(gridTimeout);
+  });
 });
 
 onBeforeUnmount(() => {

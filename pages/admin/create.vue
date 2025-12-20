@@ -35,7 +35,7 @@
       </p>
 
       <!-- OPTIONS GRID -->
-      <div class="grid grid-cols-1 md:grid-cols-2" :style="{ gap: UI.GRID_GAP }">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2" :style="{ gap: UI.GRID_GAP }">
 
         <!-- PROJECT CREATOR -->
         <div
@@ -158,6 +158,102 @@
             @mouseleave="(e)=>{ e.currentTarget.style.color = UI.CARD_LINK_COLOR; }"
           >
             → Create News
+          </div>
+        </div>
+
+        <!-- EDIT PROJECT -->
+        <div
+          class="cursor-pointer rounded-xl transition"
+          :style="{
+            border: '1px solid ' + UI.CARD_BORDER,
+            backgroundColor: UI.CARD_BG,
+            padding: UI.CARD_PADDING
+          }"
+          @mouseover="(e) => { e.currentTarget.style.borderColor = UI.CARD_BORDER_HOVER; e.currentTarget.style.backgroundColor = UI.CARD_BG_HOVER; }"
+          @mouseleave="(e) => { e.currentTarget.style.borderColor = UI.CARD_BORDER; e.currentTarget.style.backgroundColor = UI.CARD_BG; }"
+        >
+          <h2
+            class="font-semibold"
+            :style="{
+              fontSize: UI.CARD_TITLE_SIZE,
+              letterSpacing: UI.CARD_TITLE_TRACKING,
+              marginBottom: UI.CARD_TITLE_MARGIN_BOTTOM
+            }"
+          >
+            Edit Project
+          </h2>
+
+          <p
+            :style="{
+              color: UI.CARD_TEXT_COLOR,
+              fontSize: UI.CARD_TEXT_SIZE,
+              lineHeight: UI.CARD_TEXT_LINE_HEIGHT,
+              marginBottom: '1.5rem'
+            }"
+          >
+            View and edit existing projects.
+          </p>
+
+          <div class="flex flex-col space-y-3 text-left">
+            <button
+              class="text-left font-semibold"
+              :style="{
+                color: UI.CARD_LINK_COLOR,
+                letterSpacing: '0.12em'
+              }"
+              @click="goTo('/admin/projects')"
+              @mouseover="(e)=>{ e.currentTarget.style.color = UI.CARD_LINK_HOVER; }"
+              @mouseleave="(e)=>{ e.currentTarget.style.color = UI.CARD_LINK_COLOR; }"
+            >
+              → Edit Projects
+            </button>
+          </div>
+        </div>
+
+        <!-- EDIT NEWS -->
+        <div
+          class="rounded-xl transition"
+          :style="{
+            border: '1px solid ' + UI.CARD_BORDER,
+            backgroundColor: UI.CARD_BG,
+            padding: UI.CARD_PADDING
+          }"
+        >
+          <h2
+            class="font-semibold"
+            :style="{
+              fontSize: UI.CARD_TITLE_SIZE,
+              letterSpacing: UI.CARD_TITLE_TRACKING,
+              marginBottom: UI.CARD_TITLE_MARGIN_BOTTOM
+            }"
+          >
+            Edit News
+          </h2>
+
+          <p
+            :style="{
+              color: UI.CARD_TEXT_COLOR,
+              fontSize: UI.CARD_TEXT_SIZE,
+              lineHeight: UI.CARD_TEXT_LINE_HEIGHT,
+              marginBottom: '1.5rem'
+            }"
+          >
+            View and edit existing news posts.
+          </p>
+
+          <div class="flex flex-col space-y-3 text-left">
+            <button
+              class="text-left font-semibold"
+              :style="{
+                color: UI.CARD_LINK_COLOR,
+                letterSpacing: '0.12em'
+              }"
+              @click="goTo('/admin/news')"
+              @mouseover="(e)=>{ e.currentTarget.style.color = UI.CARD_LINK_HOVER; }"
+              @mouseleave="(e)=>{ e.currentTarget.style.color = UI.CARD_LINK_COLOR; }"
+            >
+              → Edit News
+            </button>
           </div>
         </div>
 

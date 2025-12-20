@@ -19,7 +19,9 @@ export default defineEventHandler(async (event) => {
     const project = await prisma.project.findUnique({
       where: { slug: String(slug) },
       include: {
-        images: true,
+        images: {
+          orderBy: { id: "asc" },
+        },
       },
     });
 
@@ -38,9 +40,13 @@ export default defineEventHandler(async (event) => {
       category: { en: project.categoryEn, zh: project.categoryZh },
       description: { en: project.descriptionEn, zh: project.descriptionZh },
       location: project.location,
+      locationZh: project.locationZh,
       client: project.client,
+      clientZh: project.clientZh,
       status: project.status,
+      statusZh: project.statusZh,
       service: project.service,
+      serviceZh: project.serviceZh,
       destination: project.destination,
       keywords: project.keywords
         ? project.keywords.split(",").map((s) => s.trim())
@@ -54,6 +60,7 @@ export default defineEventHandler(async (event) => {
           zh: img.altZh,
         },
         isCover: img.isCover,
+        isHero: img.isHero,
       })),
     };
   } catch (err) {

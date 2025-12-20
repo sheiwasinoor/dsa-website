@@ -27,15 +27,12 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  // Validate required fields
-  const required = ["slug", "titleEn", "titleZh", "bodyEn", "bodyZh"];
-  for (const r of required) {
-    if (!fields[r]) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: `Missing required field: ${r}`,
-      });
-    }
+  // Only slug is mandatory; other fields can be empty strings
+  if (!fields.slug) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Missing required field: slug",
+    });
   }
 
   // Upload image if included
@@ -60,10 +57,10 @@ export default defineEventHandler(async (event) => {
   const post = await prisma.newsPost.create({
     data: {
       slug: fields.slug,
-      titleEn: fields.titleEn,
-      titleZh: fields.titleZh,
-      bodyEn: fields.bodyEn,
-      bodyZh: fields.bodyZh,
+      titleEn: fields.titleEn ?? "",
+      titleZh: fields.titleZh ?? "",
+      bodyEn: fields.bodyEn ?? "",
+      bodyZh: fields.bodyZh ?? "",
       imageUrl,
       published: fields.published === "true",
     },

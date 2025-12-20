@@ -35,7 +35,7 @@
         :style="{ marginTop: CONTENT_TOP_MARGIN_REM + 'rem' }"
       >
         <div
-          class="grid grid-cols-1 md:grid-cols-2"
+          class="grid grid-cols-1 md:grid-cols-[6.71fr_3.29fr]"
           :style="{ gap: CONTENT_COL_GAP_REM + 'rem' }"
         >
           <!-- LEFT: title + description -->
@@ -45,7 +45,8 @@
               :style="{
                 fontSize: TITLE_FONT_SIZE_REM + 'rem',
                 letterSpacing: TITLE_TRACKING,
-                marginBottom: TITLE_BOTTOM_MARGIN_REM + 'rem'
+                marginBottom: TITLE_BOTTOM_MARGIN_REM + 'rem',
+                color: TITLE_COLOR
               }"
             >
               {{ project.title[locale] }}
@@ -55,40 +56,81 @@
               class="leading-relaxed"
               :style="{
                 opacity: DESCRIPTION_TEXT_OPACITY,
+                fontWeight: 200,
                 textAlign: 'justify',
                 textJustify: 'inter-word',
-                fontSize: BODY_FONT_SIZE_REM + 'rem'
+                textWrap: 'pretty',
+                fontSize: BODY_FONT_SIZE_REM + 'rem',
+                color: BODY_COLOR,
+                letterSpacing: '0.02rem'
               }"
             >
               {{ project.description[locale] }}
             </p>
           </div>
 
+
           <!-- RIGHT: meta info -->
           <!-- RIGHT: meta info -->
                         <div
-                        class="text-xs md:text-[0.78rem] leading-relaxed space-y-3"
-                        :style="{ color: META_TEXT_COLOR }"
+                        class="leading-relaxed space-y-0.5"
+                        :style="{
+                          paddingTop: '72px',
+                          color: META_TEXT_COLOR,
+                          fontSize: '12px'
+                        }"
                         >
-                        <p v-if="project.location">
-                            <span class="font-semibold tracking-wider">Project Location:</span>
-                            {{ " " + project.location }}
-                        </p>
+                          <p v-if="project.location || project.locationZh">
+                            <span class="font-light tracking-wider"
+                              :style="{ color: META_LABEL_COLOR }"
+                            >
+                              {{ locale === 'zh' ? '项目地点： ' : 'Project Location: ' }}
+                            </span>
+                            <span :style="{ color: META_VALUE_COLOR }">
+                              {{ locale === 'zh'
+                                  ? (project.locationZh || project.location)
+                                  : project.location }}
+                            </span>
+                          </p>
 
-                        <p v-if="project.client">
-                            <span class="font-semibold tracking-wider">Client:</span>
-                            {{ " " + project.client }}
-                        </p>
+                          <p v-if="project.client || project.clientZh">
+                           <span class="font-light tracking-wider"
+                            :style="{ color: META_LABEL_COLOR }"
+                          >
+                            {{ locale === 'zh' ? '项目业主： ' : 'Client: ' }}
+                          </span>
+                            <span :style="{ color: META_VALUE_COLOR }">
+                              {{ locale === 'zh'
+                                  ? (project.clientZh || project.client)
+                                  : project.client }}
+                            </span>
+                          </p>
 
-                        <p v-if="project.status">
-                            <span class="font-semibold tracking-wider">Project Status:</span>
-                            {{ " " + project.status }}
-                        </p>
+                          <p v-if="project.status || project.statusZh">
+                            <span class="font-light tracking-wider"
+                              :style="{ color: META_LABEL_COLOR }"
+                            >
+                              {{ locale === 'zh' ? '项目状态： ' : 'Project Status: ' }}
+                            </span>
+                            <span :style="{ color: META_VALUE_COLOR }">
+                              {{ locale === 'zh'
+                                  ? (project.statusZh || project.status)
+                                  : project.status }}
+                            </span>
+                          </p>
 
-                        <p v-if="project.service">
-                            <span class="font-semibold tracking-wider">Service:</span>
-                            {{ " " + project.service }}
-                        </p>
+                          <p v-if="project.service || project.serviceZh">
+                            <span class="font-light tracking-wider"
+                            :style="{ color: META_LABEL_COLOR }"
+                          >
+                            {{ locale === 'zh' ? '服务内容： ' : 'Service: ' }}
+                          </span>
+                            <span :style="{ color: META_VALUE_COLOR }">
+                              {{ locale === 'zh'
+                                  ? (project.serviceZh || project.service)
+                                  : project.service }}
+                            </span>
+                          </p>
                         </div>
         </div>
       </section>
@@ -183,9 +225,12 @@
       </transition>
     </div>
 
-    <!-- loading state -->
-    <div v-else class="text-center py-20 text-[#ECEBC7]/50 tracking-wider">
-      Loading...
+    <!-- loading / error state -->
+    <div v-else class="text-center py-20 tracking-wider">
+      <p v-if="loadError" class="text-[#ECEBC7]/70">
+        {{ loadError }}
+      </p>
+      <p v-else class="text-[#ECEBC7]/50">Loading...</p>
     </div>
   </div>
 </template>
@@ -202,6 +247,7 @@ const { locale } = useLocale();
 const route = useRoute();
 const project = ref<any>(null);
 const currentImageIndex = ref(0);
+const loadError = ref<string>("");
 
 const previewOpen = ref(false);
 const previewIndex = ref(0);
@@ -209,23 +255,73 @@ let heroTimer: ReturnType<typeof setInterval> | null = null;
 
 const heroParallaxY = ref(0);
 
+const sortedImages = computed(() => {
+  if (!project.value || !Array.isArray(project.value.images)) return [];
+  const imgs = [...project.value.images];
+  imgs.sort((a, b) => Number(b.isCover === true) - Number(a.isCover === true));
+  return imgs;
+});
+
+const hasImages = computed(() => sortedImages.value.length > 0);
+
 const previewUrl = computed(() => {
   if (!project.value) return "";
   if (!hasImages.value) return project.value.coverImageUrl || "";
-  return project.value.images?.[previewIndex.value]?.url || "";
+  return sortedImages.value?.[previewIndex.value]?.url || "";
 });
 
 const previewAlt = computed(() => {
   if (!project.value) return "";
   if (!hasImages.value) return project.value.title?.[locale] || "";
-  const img = project.value.images?.[previewIndex.value];
+  const img = sortedImages.value?.[previewIndex.value];
   return img?.alt?.[locale] || project.value.title?.[locale] || "";
 });
 
 const previewCaption = computed(() => {
   if (!project.value || !hasImages.value) return "";
-  const img = project.value.images?.[previewIndex.value];
+  const img = sortedImages.value?.[previewIndex.value];
   return img?.alt?.[locale] || "";
+});
+
+// Theme title colors (per client direction)
+const TITLE_COLOR_LANDSCAPE = "#8EB29E"; // DSA eucalyptus
+const TITLE_COLOR_LIGHTING = "#ECEBC7";  // Yellow (update if you have a specific hex)
+const TITLE_COLOR_ART = "#9a96cc";       // New purple
+
+const TITLE_COLOR = computed(() => {
+  switch (project.value?.destination) {
+    case "lighting":
+      return TITLE_COLOR_LIGHTING;
+    case "youngArt":
+      return TITLE_COLOR_ART;
+    case "landscape":
+    default:
+      return TITLE_COLOR_LANDSCAPE;
+  }
+});
+
+const META_LABEL_COLOR = computed(() => {
+  switch (project.value?.destination) {
+    case "lighting":
+      return TITLE_COLOR_LIGHTING;
+    case "youngArt":
+      return TITLE_COLOR_ART;
+    case "landscape":
+    default:
+      return TITLE_COLOR_LANDSCAPE;
+  }
+});
+
+const META_VALUE_COLOR = computed(() => {
+  switch (project.value?.destination) {
+    case "lighting":
+      return TITLE_COLOR_LIGHTING;
+    case "youngArt":
+      return TITLE_COLOR_ART;
+    case "landscape":
+    default:
+      return TITLE_COLOR_LANDSCAPE;
+  }
 });
 
 /* =======================================
@@ -235,11 +331,11 @@ const previewCaption = computed(() => {
 // Page
 const PAGE_BG_COLOR = "#000C05";
 const TEXT_COLOR = "#ECEBC7";
-const TITLE_TRACKING = "0.18em";
+const TITLE_TRACKING = "0.05em";
 
 // Hero
 const HERO_HEIGHT_REM = 36;          // hero image height
-const HERO_TOP_OFFSET_REM = 3.5;     // gap below navbar
+const HERO_TOP_OFFSET_REM = 4.5;     // gap below navbar
 const HERO_NAVBAR_FADE = "rgba(0,0,0,0.45)";
 
 // Content layout
@@ -251,9 +347,10 @@ const TITLE_FONT_SIZE_REM = 1.7;
 const TITLE_BOTTOM_MARGIN_REM = 2;
 const BODY_FONT_SIZE_REM = 0.92;
 const DESCRIPTION_TEXT_OPACITY = 0.88;
+const BODY_COLOR = "#8C8C8C";
 
 // Meta column
-const META_TEXT_COLOR = "#ECEBC7";
+const META_TEXT_COLOR = "#8EB29E";
 const META_BLOCK_GAP_REM = 1.8;
 
 // Gallery
@@ -266,14 +363,10 @@ const PAGE_BOTTOM_PADDING_REM = 8;
    HERO IMAGE LOGIC
    ======================================= */
 
-const hasImages = computed(
-  () => project.value && Array.isArray(project.value.images) && project.value.images.length > 0
-);
-
 const currentHeroUrl = computed(() => {
   if (!project.value) return "";
   if (hasImages.value) {
-    return project.value.images[currentImageIndex.value]?.url || project.value.coverImageUrl;
+    return sortedImages.value[currentImageIndex.value]?.url || project.value.coverImageUrl;
   }
   return project.value.coverImageUrl;
 });
@@ -281,7 +374,7 @@ const currentHeroUrl = computed(() => {
 const currentHeroAlt = computed(() => {
   if (!project.value) return "";
   if (hasImages.value) {
-    const img = project.value.images[currentImageIndex.value];
+    const img = sortedImages.value[currentImageIndex.value];
     return img?.alt?.[locale] || project.value.title[locale];
   }
   return project.value.title[locale];
@@ -289,14 +382,14 @@ const currentHeroAlt = computed(() => {
 
 function prevImage() {
   if (!hasImages.value) return;
-  const imgs = project.value.images;
+  const imgs = sortedImages.value;
   currentImageIndex.value =
     (currentImageIndex.value - 1 + imgs.length) % imgs.length;
 }
 
 function nextImage() {
   if (!hasImages.value) return;
-  const imgs = project.value.images;
+  const imgs = sortedImages.value;
   currentImageIndex.value = (currentImageIndex.value + 1) % imgs.length;
 }
 
@@ -311,13 +404,13 @@ function closePreview() {
 
 function previewPrev() {
   if (!hasImages.value) return;
-  const imgs = project.value.images;
+  const imgs = sortedImages.value;
   previewIndex.value = (previewIndex.value - 1 + imgs.length) % imgs.length;
 }
 
 function previewNext() {
   if (!hasImages.value) return;
-  const imgs = project.value.images;
+  const imgs = sortedImages.value;
   previewIndex.value = (previewIndex.value + 1) % imgs.length;
 }
 
@@ -336,9 +429,14 @@ function handleScroll() {
    DATA FETCH (SSR-safe)
    ======================================= */
 
-const { data: projectData, error } = await useAsyncData(
-  'project',
-  () => $fetch(`/api/projects/get?slug=${route.params.slug}`)
+const slugKey = computed(() => `project:${String(route.params.slug || "")}`);
+
+const { data: projectData, error, refresh } = await useAsyncData(
+  slugKey,
+  () => $fetch(`/api/projects/get?slug=${encodeURIComponent(String(route.params.slug || ""))}`),
+  {
+    watch: [() => route.params.slug],
+  }
 );
 
 watch(
@@ -346,8 +444,9 @@ watch(
   (val) => {
     if (val) {
       project.value = val;
+      loadError.value = "";
 
-      const key = project.value.theme;
+      const key = project.value.destination;
       if (["landscape", "lighting", "youngArt"].includes(key)) {
         setTheme(key);
       } else {
@@ -358,11 +457,26 @@ watch(
   { immediate: true }
 );
 
+watch(
+  error,
+  (err) => {
+    if (!err) return;
+    // Nuxt errors can be strings, Error objects, or NuxtError-like objects.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const message = (err as any)?.statusMessage || (err as any)?.message || "Failed to load project.";
+    loadError.value = String(message);
+  },
+  { immediate: true }
+);
+
 /* =======================================
    ON MOUNT - HERO ROTATION & LISTENERS
    ======================================= */
 
 onMounted(() => {
+  // Always revalidate on client navigation to ensure latest edits are shown
+  refresh();
+
   // Auto-rotate hero image every 3 seconds
   if (heroTimer) clearInterval(heroTimer);
   heroTimer = setInterval(() => {

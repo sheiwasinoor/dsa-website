@@ -20,17 +20,32 @@
 
         <!-- OPTIONAL DETAILS -->
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <TextField label="Location" v-model="form.location" />
-          <TextField label="Client" v-model="form.client" />
-          <TextField label="Status" v-model="form.status" />
-          <TextField label="Service" v-model="form.service" />
+          <TextField label="Location (EN)" v-model="form.location" />
+          <TextField label="Location (ZH)" v-model="form.locationZh" />
+
+          <TextField label="Client (EN)" v-model="form.client" />
+          <TextField label="Client (ZH)" v-model="form.clientZh" />
+
+          <TextField label="Status (EN)" v-model="form.status" />
+          <TextField label="Status (ZH)" v-model="form.statusZh" />
+
+          <TextField label="Service (EN)" v-model="form.service" />
+          <TextField label="Service (ZH)" v-model="form.serviceZh" />
+
           <TextField label="Keywords (comma separated)" v-model="form.keywords" />
-          <TextField
-            label="Theme (Auto‑filled)"
-            v-model="form.theme"
-            :readonly="true"
-            :disabled="true"
-          />
+          <div class="space-y-2">
+            <label class="block font-semibold tracking-wider">Destination</label>
+            <select
+              v-model="form.destination"
+              class="w-full bg-[#0A1410] border border-[#2B3B33] rounded px-3 py-2 text-[#ECEBC7] focus:outline-none focus:ring-2 focus:ring-[#336341]"
+              required
+            >
+              <option value="" disabled>Select destination</option>
+              <option value="landscape">landscape</option>
+              <option value="lighting">lighting</option>
+              <option value="youngArt">youngArt</option>
+            </select>
+          </div>
         </div>
 
         <!-- DESCRIPTIONS -->
@@ -69,6 +84,26 @@
               @dragend="endDrag"
             >
               <img :src="file" class="h-28 w-28 object-cover rounded border" />
+
+              <div class="absolute top-1 left-1 flex gap-1">
+                <label class="bg-black/60 text-xs px-2 py-0.5 rounded flex items-center gap-1 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    v-model="isHeroFlags[i]"
+                    class="accent-[#336341]"
+                  />
+                  Hero
+                </label>
+              </div>
+
+              <button
+                type="button"
+                class="absolute top-1 right-1 bg-black/60 text-xs px-2 py-0.5 rounded text-red-400"
+                @click="removeImage(i)"
+              >
+                ✕
+              </button>
+
               <label class="absolute bottom-1 left-1 flex items-center gap-1 bg-black/60 px-2 py-0.5 rounded text-xs cursor-pointer">
                 <input
                   type="radio"
@@ -150,7 +185,9 @@ import { useRoute } from 'vue-router';
 const route = useRoute();
 
 // If ?destination=lighting was clicked
-const preselectedDestination = route.query.destination ?? "";
+const rawDestination = String(route.query.destination || "");
+const isValidDestination = ["landscape", "lighting", "youngArt"].includes(rawDestination);
+const preselectedDestination = isValidDestination ? rawDestination : "";
 import { ref, watch } from "vue";
 import TextField from "~/components/admin/TextField.vue";
 import TextArea from "~/components/admin/TextArea.vue";
@@ -161,12 +198,21 @@ const form = ref({
   titleZh: "",
   categoryEn: "",
   categoryZh: "",
+
   location: "",
+  locationZh: "",
+
   client: "",
+  clientZh: "",
+
   status: "",
+  statusZh: "",
+
   service: "",
+  serviceZh: "",
+
   keywords: "",
-  theme: preselectedDestination || "landscape",
+  destination: preselectedDestination,
   descriptionEn: "",
   descriptionZh: "",
 });
@@ -180,10 +226,12 @@ watch(() => form.value.titleEn, (val) => {
   }
 });
 
+
 const images = ref<File[]>([]);
 const previewImages = ref<string[]>([]);
 const successMessage = ref("");
 const coverIndex = ref(0);
+const isHeroFlags = ref<boolean[]>([]);
 
 const dragSourceIndex = ref<number|null>(null);
 
@@ -226,6 +274,10 @@ function handleDropUpload(e: DragEvent) {
     ...previewImages.value,
     ...dropped.map(f => URL.createObjectURL(f))
   ];
+  isHeroFlags.value = [
+    ...isHeroFlags.value,
+    ...dropped.map(() => true)
+  ];
 }
 
 function handleFiles(event: Event) {
@@ -242,13 +294,29 @@ function handleFiles(event: Event) {
     ...previewImages.value,
     ...newFiles.map(f => URL.createObjectURL(f))
   ];
+  isHeroFlags.value = [
+    ...isHeroFlags.value,
+    ...newFiles.map(() => true)
+  ];
+}
+
+function removeImage(i: number) {
+  images.value.splice(i, 1);
+  previewImages.value.splice(i, 1);
+  isHeroFlags.value.splice(i, 1);
+
+  if (coverIndex.value === i) {
+    coverIndex.value = 0;
+  } else if (coverIndex.value > i) {
+    coverIndex.value--;
+  }
 }
 
 async function submitForm() {
   const fd = new FormData();
 
-    // 🌟 VALIDATE THEME BEFORE SUBMITTING
-  if (!["landscape", "lighting", "youngArt"].includes(form.value.theme)) {
+  // Validate destination before submitting
+  if (!["landscape", "lighting", "youngArt"].includes(form.value.destination)) {
     alert("Please choose a project destination.");
     return;
   }
@@ -259,6 +327,10 @@ async function submitForm() {
   });
 
   fd.append("coverIndex", String(coverIndex.value));
+
+  isHeroFlags.value.forEach((flag, i) => {
+    fd.append(`isHero_${i}`, String(flag));
+  });
 
   // append images
   images.value.forEach(img => {

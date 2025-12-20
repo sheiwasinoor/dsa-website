@@ -46,11 +46,13 @@ export default defineEventHandler(async (event) => {
     }
   }
 
-  // Validate theme/destination
-  if (!fields.theme || !["landscape", "lighting", "youngArt"].includes(fields.theme)) {
+  // Normalize destination (accept legacy "theme" from UI)
+  const destination = fields.destination || fields.theme;
+
+  if (!destination || !["landscape", "lighting", "youngArt"].includes(destination)) {
     throw createError({
       statusCode: 400,
-      statusMessage: "Invalid or missing theme (landscape / lighting / youngArt)",
+      statusMessage: "Invalid or missing destination (landscape / lighting / youngArt)",
     });
   }
 
@@ -65,11 +67,15 @@ export default defineEventHandler(async (event) => {
       descriptionEn: fields.descriptionEn || null,
       descriptionZh: fields.descriptionZh || null,
       location: fields.location || null,
+      locationZh: fields.locationZh || null,
       client: fields.client || null,
+      clientZh: fields.clientZh || null,
       status: fields.status || null,
+      statusZh: fields.statusZh || null,
       service: fields.service || null,
+      serviceZh: fields.serviceZh || null,
       keywords: fields.keywords || null,
-      theme: fields.theme || "landscape",
+      destination,
     },
   });
 
@@ -83,7 +89,20 @@ export default defineEventHandler(async (event) => {
   // Filter image files
   const images = files.filter(f => f.type?.startsWith("image/"));
 
-  for (const img of images) {
+  function getIsHero(index: number) {
+    const key = `isHero_${index}`;
+    if (Object.prototype.hasOwnProperty.call(fields, key)) {
+      return fields[key] === "true" || fields[key] === "1" || fields[key] === "on";
+    }
+    // default to true to keep existing behavior when no flag is sent
+    return true;
+  }
+
+  const coverIndex = Number(fields.coverIndex ?? 0);
+  const coverIndexValid = Number.isInteger(coverIndex) && coverIndex >= 0;
+
+  for (let i = 0; i < images.length; i++) {
+    const img = images[i];
     const buffer = img.data as Buffer;
 
     // Generate filename
@@ -94,15 +113,23 @@ export default defineEventHandler(async (event) => {
     writeFileSync(filePath, buffer);
 
     // Save DB record
-    await prisma.projectImage.create({
+    const createdImage = await prisma.projectImage.create({
       data: {
         projectId: project.id,
         url: `/uploads/projects/${filename}`,
         altEn: fields.altEn || null,
         altZh: fields.altZh || null,
-        isCover: false,
+        isHero: getIsHero(i),
+        isCover: coverIndexValid ? i === coverIndex : getIsHero(i) ?? false,
       },
     });
+
+    if ((coverIndexValid && i === coverIndex) || (!coverIndexValid && getIsHero(i))) {
+      await prisma.project.update({
+        where: { id: project.id },
+        data: { coverImageUrl: createdImage.url },
+      });
+    }
   }
 
   return {

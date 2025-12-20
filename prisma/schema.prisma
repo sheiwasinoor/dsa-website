@@ -35,6 +35,10 @@ model Project {
   client         String?
   status         String?
   service        String?
+  locationZh     String?
+  clientZh       String?
+  statusZh       String?
+  serviceZh      String?
   keywords       String?
 
   theme Destination @default(landscape)
@@ -54,6 +58,7 @@ model ProjectImage {
   altEn     String?
   altZh     String?
   isCover   Boolean @default(false)
+  isHero    Boolean @default(true)
 
   project Project @relation(fields: [projectId], references: [id])
 }

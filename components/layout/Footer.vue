@@ -2,103 +2,142 @@
   <footer
     class="border-t bg-[#000C05] text-[#F1F5F7]"
     style="
+      position: relative;
+      z-index: 0;
       margin-top: var(--footer-margin-top, 6rem);
       border-color: var(--footer-border, rgba(93,103,98,0.40));
       background-color: var(--footer-bg, #000C05);
       color: var(--footer-text, #F1F5F7);
     "
   >
-    <div class="mx-auto flex max-w-6xl flex-col gap-8 px-6 py-10 md:flex-row md:items-start md:justify-between">
-      <!-- Left: Logo + Socials -->
-      <div class="space-y-4">
-        <!-- Logo -->
-        <div class="flex items-center gap-2">
-          <span
-            class="text-lg font-semibold tracking-wide"
-            style="color: var(--footer-logo-color, #ECEBC7);"
-          >
-            DSA DESIGN
-          </span>
-        </div>
-
-        <!-- Social icons (placeholder icons for now) -->
-        <div
-          class="flex items-center gap-4"
-          style="color: var(--footer-social-color, #5D6762);"
-        >
-          <button class="transition hover:text-[color:var(--footer-link-hover, #ECEBC7)] hover:drop-shadow-[0_0_8px_var(--footer-link-glow, rgba(236,235,199,0.65))]">
-            FB
-          </button>
-          <button class="transition hover:text-[color:var(--footer-link-hover, #ECEBC7)] hover:drop-shadow-[0_0_8px_var(--footer-link-glow, rgba(236,235,199,0.65))]">
-            IN
-          </button>
-          <button class="transition hover:text-[color:var(--footer-link-hover, #ECEBC7)] hover:drop-shadow-[0_0_8px_var(--footer-link-glow, rgba(236,235,199,0.65))]">
-            YT
-          </button>
-          <button class="transition hover:text-[color:var(--footer-link-hover, #ECEBC7)] hover:drop-shadow-[0_0_8px_var(--footer-link-glow, rgba(236,235,199,0.65))]">
-            IG
-          </button>
-        </div>
+    <div class="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row md:justify-between gap-8">
+      <!-- Left: Logo -->
+      <div class="flex items-start">
+        <img
+          src="/images/navbar-logo.png"
+          alt="DSA Logo"
+          class="h-8 w-auto object-contain"
+        />
       </div>
 
-      <!-- Right: Topic / Page columns -->
+      <!-- Middle: Locations -->
       <div
-        class="grid gap-8 text-sm md:grid-cols-3"
-        style="color: var(--footer-text, #F1F5F7);"
+        class="flex flex-col md:flex-row gap-3"
+        :style="{ fontSize: '10px' }"
       >
-        <div v-for="col in footerColumns" :key="col.topic" class="space-y-2">
-          <div
-            class="uppercase tracking-[0.12em] text-xs"
-            style="color: var(--footer-text, #F1F5F7);"
+        <!-- Shenzhen -->
+        <div class="max-w-none" :style="{ width: '220px' }">
+          <h3
+            class="tracking-[0.12em] text-xs font-semibold mb-2"
+            style="color: var(--footer-logo-color, #D9D9D9);"
           >
-            {{ col.topic }}
-          </div>
-          <div>
-            <NuxtLink
-              :to="col.to"
-              class="border-b border-current pb-0.5 text-xs tracking-[0.12em] uppercase transition-colors duration-200"
-              :class="linkColorClass"
-            >
-              {{ col.label }}
-            </NuxtLink>
-          </div>
+            Shenzhen
+          </h3>
+          <p v-if="locale === 'zh'" style="color: #8C8C8C;">
+            深圳市福田区福田体育公园文化体育产业总部<br />
+            大厦十三A层（中国深圳新媒体广告产业园内）
+          </p>
+          <p v-else style="color: #8C8C8C;">
+            13A Floor, Cultural & Sports <br />
+            Industry HQ Tower, <br />
+            Futian Sports Park, Futian District,<br />
+            Shenzhen, China
+          </p>
+        </div>
+
+        <!-- Shanghai -->
+        <div class="max-w-none" :style="{ width: '220px' }">
+          <h3
+            class="tracking-[0.12em] text-xs font-semibold mb-2"
+            style="color: var(--footer-logo-color, #D9D9D9);"
+          >
+            Shanghai
+          </h3>
+          <p v-if="locale === 'zh'" style="color: #8C8C8C;">
+            上海市黄浦区北京东路270号中一大楼7层
+          </p>
+          <p v-else style="color: #8C8C8C;">
+            270‑1b ZhongYi Building,<br />
+            Nanjing East Road, Huangpu District,<br />
+            Shanghai, China
+          </p>
+        </div>
+
+        <!-- Singapore -->
+        <div class="max-w-none" :style="{ width: '142px' }">
+          <h3
+            class="tracking-[0.12em] text-xs font-semibold mb-2"
+            style="color: var(--footer-logo-color, #D9D9D9);"
+          >
+            Singapore
+          </h3>
+          <p style="color: #8C8C8C;">
+            73 Holland Grove View,<br />
+            Singapore 276230
+          </p>
         </div>
       </div>
+
+      <!-- Right: QR Codes -->
+      <div class="flex flex-col md:flex-row gap-8">
+        <div class="flex flex-col items-center text-center">
+          <span class="tracking-[0.12em] text-xs font-light mb-2" style="color: var(--footer-logo-color, #D9D9D9);">
+            Wechat
+          </span>
+          <img
+            src="/images/Wechat.jpg"
+            alt="WeChat QR Code"
+            class="object-contain"
+            :style="{ width: '70px', height: '70px' }"
+          />
+        </div>
+        <div class="flex flex-col items-center text-center">
+          <span
+            class="tracking-[0.12em] text-xs font-light mb-2 whitespace-nowrap"
+            style="color: var(--footer-logo-color, #D9D9D9);"
+          >
+            Wechat Video
+          </span>
+          <img
+            src="/images/Wechat-video.jpg"
+            alt="WeChat Video QR Code"
+            class="object-contain"
+            :style="{ width: '70px', height: '70px' }"
+          />
+        </div>
+        <div class="flex flex-col items-center text-center">
+          <span class="tracking-[0.12em] text-xs font-light mb-2" style="color: var(--footer-logo-color, #D9D9D9);">
+            Xiaohongshu
+          </span>
+          <img
+            src="/images/xhs.jpg"
+            alt="Xiaohongshu QR Code"
+            class="object-contain"
+            :style="{ width: '70px', height: '70px' }"
+          />
+        </div>
+      </div>
+    </div>
+    <!-- Footer Credit -->
+    <div
+      class="w-full text-center mt-8"
+      :style="{
+        fontSize: '10px',
+        color: '#5D6762',
+        letterSpacing: '0.12em',
+        paddingBottom: '50px'
+      }"
+    >
+      designed by pakhicreatif©
     </div>
   </footer>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { useLocale } from '~/composables/useLocale';
+const { locale } = useLocale();
+
 import { useTheme } from '~/composables/useTheme';
 
 const { theme } = useTheme();
-
-// Example footer structure; we can adjust once we know actual “Topic/Page”
-const footerColumns = [
-  {
-    topic: 'Topic',
-    label: 'About',
-    to: '/about'
-  },
-  {
-    topic: 'Topic',
-    label: 'Landscape',
-    to: '/landscape'
-  },
-  {
-    topic: 'Topic',
-    label: 'Contact',
-    to: '/contact'
-  }
-];
-
-const linkColorClass = computed(() => {
-  // Landscape = green, Lighting = yellow
-  if (theme.value === 'lighting') {
-    return 'text-[#ECEBC7] hover:text-[#336341] hover:drop-shadow-[0_0_8px_rgba(51,99,65,0.65)]';
-  }
-  // landscape default
-  return 'text-[#336341] hover:text-[#ECEBC7] hover:drop-shadow-[0_0_8px_rgba(236,235,199,0.65)]';
-});
 </script>

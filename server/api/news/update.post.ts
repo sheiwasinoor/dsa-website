@@ -16,13 +16,18 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const map = Object.fromEntries(
-    form
-      .filter((item) => item.type === "field")
-      .map((item) => [item.name, item.value])
-  );
+  const fields: Record<string, string> = {};
+  let file: any = null;
 
-  const id = map.id;
+  for (const item of form) {
+    if (item.filename) {
+      file = item;
+    } else {
+      fields[item.name] = item.data.toString("utf8");
+    }
+  }
+
+  const id = fields.id;
   if (!id) {
     throw createError({
       statusCode: 400,
@@ -43,16 +48,13 @@ export default defineEventHandler(async (event) => {
 
   // Prepare update payload
   const updateData: any = {
-    titleEn: map.titleEn,
-    titleZh: map.titleZh,
-    bodyEn: map.bodyEn,
-    bodyZh: map.bodyZh,
-    slug: map.slug,
-    published: map.published === "true",
+    titleEn: fields.titleEn !== undefined ? fields.titleEn : existing.titleEn,
+    titleZh: fields.titleZh !== undefined ? fields.titleZh : existing.titleZh,
+    bodyEn: fields.bodyEn !== undefined ? fields.bodyEn : existing.bodyEn,
+    bodyZh: fields.bodyZh !== undefined ? fields.bodyZh : existing.bodyZh,
+    slug: fields.slug || existing.slug,
+    published: fields.published !== undefined ? fields.published === "true" : existing.published,
   };
-
-  // Check for uploaded file
-  const file = form.find((item) => item.type === "file");
 
   if (file && file.filename) {
     const uploadDir = path.join(process.cwd(), "public/uploads/news");

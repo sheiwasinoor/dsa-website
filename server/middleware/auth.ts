@@ -2,6 +2,7 @@ import { getCookie, sendRedirect, createError } from "h3";
 
 export default defineEventHandler((event) => {
   const url = event.node.req.url || "";
+  const method = (event.node.req.method || "GET").toUpperCase();
 
   const publicRoutes = [
     "/admin/login",
@@ -9,6 +10,18 @@ export default defineEventHandler((event) => {
   ];
 
   if (publicRoutes.some((route) => url.startsWith(route))) {
+    return;
+  }
+
+  // Public read-only API endpoints (used by the public site)
+  const publicReadApiRoutes = [
+    "/api/projects/get",
+    "/api/projects/list",
+    "/api/news/get",
+    "/api/news/list",
+  ];
+
+  if (method === "GET" && publicReadApiRoutes.some((route) => url.startsWith(route))) {
     return;
   }
 

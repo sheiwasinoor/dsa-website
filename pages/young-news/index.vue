@@ -1,55 +1,33 @@
 <template>
-  <div class="min-h-screen bg-[#000C05] text-[#ECEBC7] pt-28 pb-20">
-    <!-- ============================= -->
-    <!-- PAGE HEADER -->
-    <!-- ============================= -->
-    <section class="max-w-6xl mx-auto px-6 mb-10">
-      <h1
-        class="uppercase font-semibold"
-        :style="{
-          fontSize: STYLE.headingSize,
-          letterSpacing: STYLE.headingLetterSpacing,
-          marginBottom: STYLE.headingMarginBottom
-        }"
-      >
-        {{ locale === 'en' ? 'YOUNG NEWS' : 'YOUNG 新闻' }}
-      </h1>
-
-      <p
-        class="max-w-2xl text-sm leading-relaxed"
-        :style="{ color: STYLE.descColor }"
-      >
-        {{
-          locale === 'en'
-            ? 'Short updates about public art, landscape, and lighting projects — all in one place.'
-            : '关于公共艺术、景观与灯光项目的日常更新。'
-        }}
-      </p>
-    </section>
+  <div class="min-h-screen bg-[#000C05] text-[#ECEBC7] pt-28 pb-20 relative overflow-hidden">
+    <!-- Mosaic backdrop -->
+    <div class="pointer-events-none absolute inset-0 opacity-30 mosaic-mask"></div>
 
     <!-- ============================= -->
     <!-- MASONRY GRID -->
     <!-- ============================= -->
     <section class="max-w-6xl mx-auto px-6">
       <!-- Pinterest-style masonry using CSS grid -->
-      <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+      <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6 relative">
+        <div class="absolute inset-0 pointer-events-none neon-grid"></div>
         <article
-          v-for="post in posts"
+          v-for="(post, idx) in posts"
           :key="post.id"
-          class="group break-inside-avoid cursor-pointer"
+          class="group break-inside-avoid cursor-pointer transform transition duration-700 hover:-translate-y-2 hover:scale-[1.04] mosaic-tilt"
+          :style="tileStyle(idx)"
           @click="toggleInline(post)"
         >
           <div
-            class="overflow-hidden rounded-md"
+            class="overflow-hidden rounded-xl shadow-2xl border border-transparent tile-sheen"
             :style="{ backgroundColor: STYLE.tileBg, borderColor: STYLE.tileBorderColor, borderWidth: '1px' }"
             :data-post-id="post.id"
           >
-            <div class="relative">
+            <div class="relative overflow-hidden">
               <img
                 v-if="post.imageUrl"
                 :src="post.imageUrl"
                 :alt="post.title[locale]"
-                class="w-full h-auto object-cover"
+                class="w-full h-auto object-cover transition duration-700 ease-out group-hover:scale-105"
               />
               <div
                 v-else
@@ -60,17 +38,17 @@
 
               <div
                 :class="{ 'always-show-overlay': activePost?.id === post.id }"
-                class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/75 via-black/35 to-transparent p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               >
                 <p
                   :style="{ fontSize: STYLE.overlayTitleSize, letterSpacing: STYLE.overlayTitleLS }"
-                  class="uppercase mb-1"
+                  class="uppercase mb-3 font-bold drop-shadow"
                 >
                   {{ post.title[locale] }}
                 </p>
                 <p
-                  class="text-[#ECEBC7]/80"
-                  :class="activePost?.id === post.id ? '' : 'line-clamp-2'"
+                  class="text-[#ECEBC7]/85 drop-shadow"
+                  :class="activePost?.id === post.id ? '' : 'line-clamp-3'"
                   :style="{ fontSize: STYLE.overlayBodySize }"
                 >
                   {{ post.body[locale] }}
@@ -81,21 +59,59 @@
         </article>
       </div>
     </section>
+
+    <!-- ============================= -->
+    <!-- MODAL: FULL ARTICLE -->
+    <!-- ============================= -->
+    <transition name="fade">
+      <div
+        v-if="activePost"
+        class="fixed inset-0 z-50 flex items-center justify-center px-4"
+        style="background: rgba(0,0,0,0.75); backdrop-filter: blur(6px);"
+        @click.self="activePost = null"
+      >
+        <div class="bg-[#0B1510] rounded-2xl max-w-3xl w-full shadow-2xl border border-[#2f3d34] overflow-hidden modal-pop">
+          <div class="relative">
+            <img
+              v-if="activePost.imageUrl"
+              :src="activePost.imageUrl"
+              :alt="activePost.title[locale]"
+              class="w-full h-64 object-cover"
+            />
+            <button
+              class="absolute top-3 right-3 h-10 w-10 rounded-full bg-black/60 text-[#ECEBC7] flex items-center justify-center hover:bg-black/80 transition"
+              @click="activePost = null"
+              aria-label="Close article"
+            >
+              ✕
+            </button>
+          </div>
+          <div class="p-6 space-y-3">
+            <h3 class="font-bold text-2xl leading-tight">
+              {{ activePost.title[locale] }}
+            </h3>
+            <p class="text-base leading-relaxed text-[#ECEBC7]/90 whitespace-pre-line">
+              {{ activePost.body[locale] }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted, computed, nextTick } from "vue";
+import { ref, onMounted, nextTick } from "vue";
 import { useLocale } from "~/composables/useLocale";
 
 const STYLE = {
-  headingSize: '2.1rem',
+  headingSize: '3rem',
   headingLetterSpacing: '0.22em',
-  headingMarginBottom: '0.75rem',
+  headingMarginBottom: '1.1rem',
   descColor: 'rgba(236,235,199,0.72)',
-  overlayTitleSize: '0.8rem',
-  overlayTitleLS: '0.18em',
-  overlayBodySize: '0.7rem',
+  overlayTitleSize: '0.9rem',
+  overlayTitleLS: '0.2em',
+  overlayBodySize: '0.8rem',
   tileBorderColor: '#29352F',
   tileBg: '#050E0A'
 };
@@ -166,17 +182,6 @@ function toggleInline(post) {
   activePost.value = activePost.value?.id === post.id ? null : post;
 }
 
-// Format date nicely
-const formattedDate = computed(() => {
-  if (!activePost.value?.createdAt) return "";
-  const d = new Date(activePost.value.createdAt);
-  return d.toLocaleDateString(locale.value === "en" ? "en-US" : "zh-CN", {
-    year: "numeric",
-    month: "short",
-    day: "2-digit",
-  });
-});
-
 // ESC to close
 if (import.meta.client) {
   window.addEventListener("keydown", (e) => {
@@ -185,9 +190,76 @@ if (import.meta.client) {
     }
   });
 }
+
+const TILE_GRADIENTS = [
+  "linear-gradient(135deg, rgba(142,178,158,0.4), rgba(102,54,165,0.35))",
+  "linear-gradient(145deg, rgba(236,235,199,0.45), rgba(80,120,255,0.28))",
+  "linear-gradient(155deg, rgba(255,120,180,0.45), rgba(60,255,200,0.25))",
+  "linear-gradient(125deg, rgba(255,200,120,0.4), rgba(120,180,255,0.3))",
+];
+
+function tileStyle(idx: number) {
+  const grad = TILE_GRADIENTS[idx % TILE_GRADIENTS.length];
+  return {
+    borderColor: "transparent",
+    boxShadow: "0 12px 30px rgba(0,0,0,0.45), 0 0 28px rgba(142,178,158,0.35)",
+    backgroundImage: grad,
+  };
+}
 </script>
 
 <style scoped>
 .always-show-overlay { opacity: 1 !important; }
-.always-show-overlay .line-clamp-2 { display: none; }
+.always-show-overlay .line-clamp-3 { display: none; }
+.mosaic-mask {
+  background-image:
+    radial-gradient(circle at 20% 20%, rgba(236,235,199,0.08), transparent 22%),
+    radial-gradient(circle at 80% 10%, rgba(142,178,158,0.12), transparent 28%),
+    radial-gradient(circle at 60% 70%, rgba(64,50,126,0.1), transparent 30%);
+  mix-blend-mode: screen;
+}
+
+.neon-grid {
+  background-image: linear-gradient(rgba(142,178,158,0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(142,178,158,0.08) 1px, transparent 1px);
+  background-size: 44px 44px, 44px 44px;
+  filter: drop-shadow(0 0 6px rgba(142,178,158,0.25));
+  opacity: 0.35;
+}
+
+.tile-sheen {
+  position: relative;
+  overflow: hidden;
+}
+
+.tile-sheen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(130deg, rgba(255,255,255,0.06), transparent 35%);
+  opacity: 0;
+  transition: opacity 600ms ease, transform 600ms ease;
+  transform: translateX(-10%);
+}
+
+.group:hover .tile-sheen::after {
+  opacity: 1;
+  transform: translateX(5%);
+}
+
+.modal-pop {
+  animation: popIn 320ms ease-out;
+}
+
+@keyframes popIn {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 250ms ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
 </style>

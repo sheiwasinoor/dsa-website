@@ -158,19 +158,32 @@ class="uppercase"
           @click="goTo(p.slug)"
           v-for="p in filteredProjects"
           :key="p.id"
-          class="relative group overflow-hidden bg-[#101A14] rounded-md cursor-pointer card-lift"
+          class="relative group overflow-hidden bg-[#101A14] rounded-md cursor-pointer card-lift min-h-[1px]"
           :style="{ height: LANDSCAPE_GRID_CARD_HEIGHT + 'px' }"
         >
           <!-- Thumbnail -->
           <img
-            :src="p.thumbnail"
-            :alt="p.title[locale]"
+            :src="resolveThumb(p.thumbnail)"
+            :alt="p.title?.[locale] || ''"
             class="w-full h-full object-cover transition-transform"
             :style="{
               transitionDuration: LANDSCAPE_GRID_IMAGE_ZOOM_DURATION + 'ms',
               transitionTimingFunction: 'cubic-bezier(0.33,1,0.68,1)'
             }"
+            @error="(e) => markThumbError(e, p.thumbnail)"
           />
+
+          <!-- Debug fallback (only shows when the image fails to load) -->
+          <div
+            class="absolute inset-0"
+            :style="{
+              background:
+                'linear-gradient(135deg, rgba(142,178,158,0.18), rgba(16,26,20,0.92))',
+              opacity: 0,
+              transition: 'opacity 200ms ease-out'
+            }"
+            :data-thumb-fallback="p.id"
+          ></div>
 
           <!-- Hover Overlay -->
           <div
@@ -225,7 +238,7 @@ onMounted(async () => {
 // HERO COLORS + LINES
 const LANDSCAPE_HERO_TEXT_COLOR = "#D8DCDD";          // main hero title + body color
 const LANDSCAPE_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
-const LANDSCAPE_HERO_LINE_COLOR = "#6E8C7C"; // top divider
+const LANDSCAPE_HERO_LINE_COLOR = "#6E8C7C"; // top divider 
 const LANDSCAPE_HERO_LINE_COLOR_BOTTOM = "#6E8C7C"; // bottom divider
 
 // HERO
@@ -261,7 +274,7 @@ const LANDSCAPE_GRID_GAP = 32; // Increased from 28 → 32
 const LANDSCAPE_GRID_CARD_HEIGHT = 336; // 20% bigger (old 280)
 const LANDSCAPE_GRID_IMAGE_ZOOM_DURATION = 500;
 const LANDSCAPE_GRID_HOVER_OVERLAY_DURATION = 450;
-const LANDSCAPE_GRID_HOVER_OVERLAY_HEIGHT = 45;
+const LANDSCAPE_GRID_HOVER_OVERLAY_HEIGHT = 35;
 const LANDSCAPE_GRID_TEXT_FADE_DURATION = 320;
 const LANDSCAPE_GRID_FILTER_ANIMATION_DURATION = 400;
 const LANDSCAPE_GRID_TITLE_SIZE = 1.32; // Increased 15% from 1.15
@@ -287,6 +300,37 @@ function goTo(slug: string) {
   navigateTo(`/${slug}`);
 }
 
+// Normalize thumbnails so relative DB paths don't become route-relative (e.g. /landscape/...) and 404.
+function resolveThumb(src: unknown): string {
+  const s = String(src ?? '').trim();
+  if (!s) return '';
+
+  // Absolute URLs or data/blob URLs — keep as-is
+  if (/^(https?:\/\/|data:|blob:)/i.test(s)) return s;
+
+  // If it already starts with '/', it's root-relative and fine
+  if (s.startsWith('/')) return s;
+
+  // Otherwise make it root-relative
+  return '/' + s;
+}
+
+function markThumbError(e: Event, original: unknown) {
+  // Show a visible fallback overlay when the image fails to load
+  const img = e.target as HTMLImageElement | null;
+  if (!img) return;
+  const card = img.closest('article');
+  const fallback = card?.querySelector('[data-thumb-fallback]') as HTMLElement | null;
+  if (fallback) fallback.style.opacity = '1';
+
+  // Helpful console signal for diagnosing path issues
+  // eslint-disable-next-line no-console
+  console.warn('[Landscape] thumbnail failed to load:', {
+    original,
+    resolved: img.currentSrc || img.src,
+  });
+}
+
 /* Scroll reveals */
 const heroSection = ref<HTMLElement | null>(null);
 const searchSection = ref<HTMLElement | null>(null);
@@ -295,17 +339,22 @@ const gridSection = ref<HTMLElement | null>(null);
 const reveals = ref({
   hero: false,
   search: false,
-  grid: false,
+  grid: false, // start hidden, but fail-safe below will auto-show
 });
 
 const observerRef = ref<IntersectionObserver | null>(null);
 
 onMounted(() => {
+  // Fail-safe: force grid visible shortly after mount so thumbnails never stay hidden.
+  const gridTimeout = setTimeout(() => {
+    reveals.value.grid = true;
+  }, 400);
+
   const observer = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (!entry.isIntersecting) return;
-        const target = entry.target;
+        const target = entry.target as HTMLElement;
         if (target === heroSection.value) reveals.value.hero = true;
         if (target === searchSection.value) reveals.value.search = true;
         if (target === gridSection.value) reveals.value.grid = true;
@@ -320,8 +369,11 @@ onMounted(() => {
   );
 
   observerRef.value = observer;
-});
 
+  onBeforeUnmount(() => {
+    clearTimeout(gridTimeout);
+  });
+});
 onBeforeUnmount(() => {
   observerRef.value?.disconnect();
 });
