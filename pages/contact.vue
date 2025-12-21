@@ -70,7 +70,7 @@
           </h1>
 
           <p class="uppercase tracking-[0.22em] mb-6 text-sm opacity-80">
-            SHENZHEN | SHANGHAI | SINGAPORE
+            SHENZHEN | SHANGHAI | SINGAPORE | PARIS
           </p>
 
           <div class="space-y-8 text-sm leading-relaxed opacity-85">
