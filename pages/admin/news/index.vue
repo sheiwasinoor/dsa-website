@@ -16,11 +16,16 @@
         </NuxtLink>
       </div>
 
+      <p class="text-xs text-[#ECEBC7]/60 mb-3">
+        Drag and drop rows to change the order.
+      </p>
+
       <!-- TABLE -->
       <div class="overflow-x-auto rounded-xl border border-[#334036]/40 bg-[#050F0A]">
         <table class="w-full text-sm">
           <thead class="bg-[#0A1912] text-[#ECEBC7]/70 uppercase tracking-widest text-xs">
             <tr>
+              <th class="p-3 text-left">Order</th>
               <th class="p-3 text-left">Image</th>
               <th class="p-3 text-left">Title (EN)</th>
               <th class="p-3 text-left">Slug</th>
@@ -32,10 +37,15 @@
 
           <tbody>
             <tr
-              v-for="post in news"
+              v-for="(post, idx) in news"
               :key="post.id"
-              class="border-t border-[#334036]/30 hover:bg-[#0A1912]"
+              class="border-t border-[#334036]/30 hover:bg-[#0A1912] cursor-move"
+              draggable="true"
+              @dragstart="startDrag(idx)"
+              @dragover.prevent
+              @drop.prevent="onDrop(idx)"
             >
+              <td class="p-3 text-[#ECEBC7]/50 select-none">⋮⋮</td>
               <td class="p-3">
                 <img
                   v-if="post.imageUrl"
@@ -93,6 +103,10 @@
       >
         No news posts yet.
       </p>
+
+      <p v-if="orderError" class="text-red-400 text-sm mt-4">
+        {{ orderError }}
+      </p>
     </div>
   </div>
 </template>
@@ -102,6 +116,8 @@ import { ref, onMounted } from "vue";
 
 // All posts
 const news = ref<any[]>([]);
+const draggingIndex = ref<number | null>(null);
+const orderError = ref("");
 
 // Format date
 function formatDate(dateString: string) {
@@ -139,4 +155,31 @@ onMounted(() => {
 definePageMeta({
   middleware: "auth",
 });
+
+function startDrag(index: number) {
+  draggingIndex.value = index;
+}
+
+async function onDrop(targetIndex: number) {
+  if (draggingIndex.value === null || draggingIndex.value === targetIndex) return;
+
+  const list = [...news.value];
+  const [moved] = list.splice(draggingIndex.value, 1);
+  list.splice(targetIndex, 0, moved);
+  news.value = list;
+  draggingIndex.value = null;
+
+  orderError.value = "";
+  try {
+    await $fetch("/api/news/reorder", {
+      method: "POST",
+      body: {
+        orderedIds: news.value.map((p) => p.id),
+      },
+    });
+  } catch (err: any) {
+    orderError.value =
+      err?.data?.statusMessage || "Failed to save new order.";
+  }
+}
 </script>
