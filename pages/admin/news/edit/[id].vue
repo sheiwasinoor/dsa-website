@@ -8,8 +8,9 @@
         Edit News Post
       </h1>
 
-      <!-- LOADING -->
+      <!-- LOADING / ERROR -->
       <p v-if="loading" class="text-[#ECEBC7]/60">Loading…</p>
+      <p v-else-if="errorMessage" class="text-red-400">{{ errorMessage }}</p>
 
       <form v-else @submit.prevent="savePost" class="space-y-8">
 
@@ -42,15 +43,35 @@
             <img :src="currentImage" class="h-32 rounded border" />
           </div>
 
-          <input type="file" accept="image/*" @change="handleFile" />
+          <input
+            ref="fileInput"
+            type="file"
+            accept="image/*"
+            @change="handleFile"
+          />
+
+          <div v-if="newImagePreview" class="mt-4">
+            <p class="text-xs mb-2 text-[#ECEBC7]/60">
+              New image preview (will replace current):
+            </p>
+            <img :src="newImagePreview" class="h-32 rounded border" />
+            <button
+              type="button"
+              class="mt-2 text-xs text-[#ECEBC7]/70 underline"
+              @click="clearNewImage"
+            >
+              Clear selected image
+            </button>
+          </div>
         </div>
 
         <!-- SAVE -->
         <button
           type="submit"
-          class="px-8 py-3 bg-[#336341] hover:bg-[#3d7a54] rounded text-[#ECEBC7] tracking-widest"
+          class="px-8 py-3 bg-[#336341] hover:bg-[#3d7a54] rounded text-[#ECEBC7] tracking-widest disabled:opacity-60 disabled:cursor-not-allowed"
+          :disabled="saving"
         >
-          Save Changes
+          {{ saving ? "Saving..." : "Save Changes" }}
         </button>
 
         <p v-if="successMessage" class="text-green-400 mt-3">{{ successMessage }}</p>
@@ -60,7 +81,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
 import { useRoute, navigateTo } from "#imports";
 import TextField from "~/components/admin/TextField.vue";
 import TextArea from "~/components/admin/TextArea.vue";
@@ -70,6 +91,8 @@ const id = route.params.id as string;
 
 const loading = ref(true);
 const successMessage = ref("");
+const errorMessage = ref("");
+const saving = ref(false);
 
 const form = ref({
   titleEn: "",
@@ -82,33 +105,49 @@ const form = ref({
 
 const currentImage = ref<string | null>(null);
 const newImage = ref<File | null>(null);
+const newImagePreview = ref<string | null>(null);
+const fileInput = ref<HTMLInputElement | null>(null);
 
 function handleFile(event: Event) {
   const target = event.target as HTMLInputElement;
-  if (target.files?.length) {
-    newImage.value = target.files[0];
+  if (!target.files?.length) return;
+  newImage.value = target.files[0];
+  if (newImagePreview.value) {
+    URL.revokeObjectURL(newImagePreview.value);
   }
+  newImagePreview.value = URL.createObjectURL(newImage.value);
 }
 
 async function loadPost() {
-  const data = await $fetch("/api/news/get", {
-    query: { id }
-  });
+  try {
+    errorMessage.value = "";
+    const data = await $fetch("/api/news/get", {
+      query: { id },
+    });
 
-  form.value = {
-    titleEn: data.titleEn,
-    titleZh: data.titleZh,
-    bodyEn: data.bodyEn,
-    bodyZh: data.bodyZh,
-    slug: data.slug,
-    published: data.published,
-  };
+    form.value = {
+      titleEn: data.titleEn,
+      titleZh: data.titleZh,
+      bodyEn: data.bodyEn,
+      bodyZh: data.bodyZh,
+      slug: data.slug,
+      published: data.published,
+    };
 
-  currentImage.value = data.imageUrl || null;
-  loading.value = false;
+    currentImage.value = data.imageUrl || null;
+  } catch (err: any) {
+    errorMessage.value =
+      err?.data?.statusMessage || "Failed to load news post.";
+  } finally {
+    loading.value = false;
+  }
 }
 
 async function savePost() {
+  saving.value = true;
+  successMessage.value = "";
+  errorMessage.value = "";
+
   const fd = new FormData();
   fd.append("id", id);
   fd.append("titleEn", form.value.titleEn);
@@ -122,15 +161,46 @@ async function savePost() {
     fd.append("image", newImage.value);
   }
 
-  await $fetch("/api/news/update", {
-    method: "POST",
-    body: fd,
-  });
+  try {
+    await $fetch("/api/news/update", {
+      method: "POST",
+      body: fd,
+    });
 
-  successMessage.value = "Saved successfully!";
+    successMessage.value = "Saved successfully!";
+    if (newImagePreview.value) {
+      URL.revokeObjectURL(newImagePreview.value);
+      newImagePreview.value = null;
+    }
+    newImage.value = null;
+    if (fileInput.value) {
+      fileInput.value.value = "";
+    }
+  } catch (err: any) {
+    errorMessage.value =
+      err?.data?.statusMessage || "Failed to save changes.";
+  } finally {
+    saving.value = false;
+  }
+}
+
+function clearNewImage() {
+  if (newImagePreview.value) {
+    URL.revokeObjectURL(newImagePreview.value);
+  }
+  newImagePreview.value = null;
+  newImage.value = null;
+  if (fileInput.value) {
+    fileInput.value.value = "";
+  }
 }
 
 onMounted(loadPost);
+onUnmounted(() => {
+  if (newImagePreview.value) {
+    URL.revokeObjectURL(newImagePreview.value);
+  }
+});
 
 definePageMeta({
   middleware: "auth",
