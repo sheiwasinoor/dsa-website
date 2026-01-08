@@ -87,8 +87,7 @@
           <img
             src="/images/Wechat.jpg"
             alt="WeChat QR Code"
-            class="object-contain"
-            :style="{ width: '70px', height: '70px' }"
+            class="qr-image"
           />
         </div>
         <div class="flex flex-col items-center text-center">
@@ -101,8 +100,7 @@
           <img
             src="/images/Wechat-video.jpg"
             alt="WeChat Video QR Code"
-            class="object-contain"
-            :style="{ width: '70px', height: '70px' }"
+            class="qr-image"
           />
         </div>
         <div class="flex flex-col items-center text-center">
@@ -112,8 +110,7 @@
           <img
             src="/images/xhs.jpg"
             alt="Xiaohongshu QR Code"
-            class="object-contain"
-            :style="{ width: '70px', height: '70px' }"
+            class="qr-image"
           />
         </div>
       </div>
@@ -143,6 +140,16 @@ const { theme } = useTheme();
 </script>
 
 <style scoped>
+.qr-image {
+  width: 70px;
+  height: 70px;
+  min-width: 70px;
+  min-height: 70px;
+  object-fit: contain;
+  flex-shrink: 0;
+  display: block;
+}
+
 @media (max-width: 768px) {
   .footer-wrap {
     align-items: center;

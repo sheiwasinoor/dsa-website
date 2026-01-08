@@ -1,6 +1,6 @@
 <template>
   <div
-    class="min-h-screen flex flex-col items-center justify-start px-6 text-center"
+    class="min-h-screen flex flex-col items-center justify-start px-6 text-center home-page"
     :style="{
       backgroundColor: HOME_BG_COLOR,
       color: HOME_TEXT_COLOR,
@@ -18,7 +18,9 @@
       <img
         :src="HOME_HERO_SRC"
         alt="DSA Home Hero"
-        class="h-auto"
+        class="h-auto home-hero-img"
+        :width="HOME_HERO_WIDTH"
+        :height="HOME_HERO_HEIGHT"
         :style="{
           width: HOME_HERO_WIDTH + 'px',
           maxWidth: HOME_HERO_MAX_WIDTH + 'px'
@@ -55,7 +57,7 @@
 
     <!-- EN BODY TEXT -->
     <div
-      class="mx-auto text-center"
+      class="mx-auto text-center home-body"
       :style="{
         maxWidth: HOME_BODY_MAX_WIDTH + 'px',
         fontSize: HOME_BODY_SIZE + 'px',
@@ -77,13 +79,14 @@
 
     <!-- CN BODY TEXT -->
     <div
-      class="mx-auto text-center"
+      class="mx-auto text-center home-body"
       :style="{
         maxWidth: HOME_BODY_MAX_WIDTH + 'px',
         fontSize: HOME_BODY_SIZE + 'px',
         lineHeight: HOME_BODY_LINE_HEIGHT,
         marginTop: HOME_BODY_CN_MARGIN_TOP + 'px',
-        color: HOME_TEXT_COLOR_SOFT
+        color: HOME_TEXT_COLOR_SOFT,
+        marginBottom: '100px'
       }"
     >
       <p
@@ -100,7 +103,7 @@
 
 <script setup lang="ts">
 import { ref } from "vue";
-import { useGlobalFade } from "~/composables/useGlobalFade";
+import { useRouter } from "vue-router";
 
 import {
   HOME_BG_COLOR,
@@ -110,6 +113,7 @@ import {
   HOME_HERO_SRC,
   HOME_HERO_WIDTH,
   HOME_HERO_MAX_WIDTH,
+  HOME_HERO_HEIGHT,
   HOME_HERO_HOVER_SCALE,
   HOME_HEADLINE_CN,
   HOME_HEADLINE_EN,
@@ -148,9 +152,8 @@ definePageMeta({
   layout: "default",
 });
 
-// Fade navigation → about page
-const { navigateWithFade } = useGlobalFade();
-const goAbout = () => navigateWithFade("/about");
+const router = useRouter();
+const goAbout = () => router.push("/about");
 
 /* --------------------------------
    PARALLAX HOVER
@@ -176,4 +179,20 @@ function resetTilt() {
 }
 </script>
 
-<style scoped></style>
+<style scoped>
+@media (min-width: 640px) and (max-width: 1100px) {
+  .home-page {
+    padding-left: 2.25rem;
+    padding-right: 2.25rem;
+  }
+
+  .home-hero-img {
+    width: 360px !important;
+    max-width: 420px !important;
+  }
+
+  .home-body {
+    max-width: 640px !important;
+  }
+}
+</style>

@@ -77,7 +77,7 @@ async function handleUpdate(formData: FormData) {
   success.value = false;
   try {
     await $fetch(`/api/projects/${route.params.id}`, {
-      method: "PUT",
+      method: "POST",
       body: formData,
     });
 

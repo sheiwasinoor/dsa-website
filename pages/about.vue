@@ -76,7 +76,7 @@
           :style="{ minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px' }"
         >
           <div
-            class="grid grid-cols-1 lg:grid-cols-2"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 about-letter-grid"
             :style="{
               columnGap: ABOUT_LETTER_COLUMN_GAP + 'rem',
               fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
@@ -122,6 +122,7 @@
         </div>
 
         <!-- Signature -->
+        <!--
         <div
           class="flex justify-end signature-block"
           :style="{
@@ -141,6 +142,7 @@
             }"
           />
         </div>
+        -->
 
         <p
             class="text-right"
@@ -175,7 +177,7 @@
       }"
     >
           <div
-            class="grid grid-cols-1 lg:grid-cols-2"
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 about-main-grid"
             :style="{ gap: ABOUT_MAIN_GRID_GAP + 'px',  }"
           >
         <!-- =============================== -->
@@ -958,6 +960,46 @@ onBeforeUnmount(() => {
   .hero-text-float {
     animation: none !important;
     transition-duration: 0ms !important;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 1100px) {
+  .about-hero {
+    padding-top: 88px !important;
+    padding-bottom: 72px !important;
+  }
+
+  .about-hero-inner {
+    max-width: 92vw !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  .about-hero-video {
+    width: clamp(520px, 68vw, 760px) !important;
+  }
+
+  .about-letter {
+    padding-left: 32px !important;
+    padding-right: 32px !important;
+    padding-top: 72px !important;
+    padding-bottom: 72px !important;
+  }
+
+  .about-letter-grid {
+    column-gap: 1.8rem !important;
+    font-size: 1.05rem !important;
+  }
+
+  .about-main {
+    padding-left: 2rem !important;
+    padding-right: 2rem !important;
+    padding-top: 84px !important;
+    padding-bottom: 96px !important;
+  }
+
+  .about-main-grid {
+    gap: 32px !important;
   }
 }
 

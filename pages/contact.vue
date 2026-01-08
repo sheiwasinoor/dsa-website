@@ -11,9 +11,9 @@
     }"
   >
     <section
-      class="mx-auto grid grid-cols-1 lg:grid-cols-[35%_65%] gap-28 mb-32 items-start contact-hero"
+      class="mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] lg:grid-cols-[35%_65%] gap-16 md:gap-20 lg:gap-28 mb-32 items-start contact-hero"
     >
-      <div class="max-w-[420px]" style="padding-left: 80px; padding-top: 120px;">
+      <div class="max-w-[420px] contact-hero-col">
         <div>
           <h1
             class="mb-10"
@@ -63,7 +63,7 @@
           </template>
         </div>
       </div>
-      <div class="max-w-[520px]" style="padding-top: 120px;">
+      <div class="max-w-[520px] contact-hero-col-right">
         <div>
           <h1 class="font-semibold mb-6" :style="{ color: '#8EB29E',fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
             Address
@@ -113,10 +113,10 @@
     </section>
 
     <section
-      class="mx-auto grid grid-cols-1 lg:grid-cols-[35%_65%] gap-28 items-start contact-body"
+      class="mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] lg:grid-cols-[35%_65%] gap-16 md:gap-20 lg:gap-28 items-start contact-body"
     >
       <div class="max-w-[420px] contact-join">
-        <h1 class="font-semibold mb-6 text-center" :style="{ color: '#8EB29E', fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
+        <h1 class="font-semibold mb-6 join-heading" :style="{ color: '#8EB29E', fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
           Join Us
         </h1>
 
@@ -146,7 +146,10 @@
         </template>
 
         <!-- FILE BUTTONS -->
-        <div class="flex gap-4 file-buttons">
+        <div
+          class="flex gap-4 file-buttons"
+          :style="{ marginTop: UI.JOIN_BUTTON_SPACING + 'px' }"
+        >
           <label
             class="cursor-pointer px-5 py-3 rounded flex items-center justify-center gap-2"
             :style="{
@@ -254,6 +257,7 @@
           <TextArea
             label="Your message"
             v-model="form.message"
+            :rows="6"
             required
           />
 
@@ -263,8 +267,8 @@
             class="w-full font-semibold py-3 rounded transition"
             :disabled="isSubmitting"
             :style="{
-              backgroundColor: UI.SUBMIT_BG,
-              color: UI.SUBMIT_TEXT,
+              backgroundColor: UI.FILE_BUTTON_BG,
+              color: UI.FILE_BUTTON_TEXT,
               letterSpacing: UI.SUBMIT_TRACKING,
               fontWeight: 300,
               opacity: isSubmitting ? 0.7 : 1,
@@ -370,6 +374,7 @@ const UI = {
   SUBMIT_BG: '#617D6E',
   SUBMIT_TEXT: "#D9D9D9",
   SUBMIT_TRACKING: "0.12em",
+  JOIN_BUTTON_SPACING: 30,
 };
 
 //
@@ -501,6 +506,49 @@ async function submitForm() {
   color: #8EB29E;
 }
 
+.contact-hero-col {
+  padding-left: 80px;
+  padding-top: 120px;
+}
+
+.contact-hero-col-right {
+  padding-top: 120px;
+  padding-left: 32px;
+}
+
+.contact-join {
+  padding-left: 80px;
+}
+
+.contact-form {
+  padding-left: 32px;
+}
+
+@media (min-width: 721px) and (max-width: 1100px) {
+  .contact-hero-col {
+    padding-left: 56px;
+    padding-top: 104px;
+  }
+
+  .contact-hero-col-right {
+    padding-top: 104px;
+    padding-left: 24px;
+  }
+
+  .contact-join {
+    padding-left: 56px;
+  }
+
+  .contact-form {
+    padding-left: 24px;
+  }
+
+  .contact-hero,
+  .contact-body {
+    gap: 64px !important;
+  }
+}
+
 @media (max-width: 720px) {
   .contact-hero,
   .contact-body {
@@ -542,12 +590,14 @@ async function submitForm() {
   }
 
   .join-copy {
-    text-align: center !important;
+    text-align: justify !important;
     text-wrap: pretty;
     width: 100% !important;
-    max-width: 640px !important;
-    margin-left: auto !important;
-    margin-right: auto !important;
+    max-width: 100% !important;
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    padding-left: 8px;
+    padding-right: 8px;
   }
 
   .file-buttons {
@@ -559,10 +609,18 @@ async function submitForm() {
     width: 100% !important;
     max-width: 320px;
   }
+
+  .join-heading {
+    text-align: center !important;
+  }
+}
+
+.join-heading {
+  text-align: left;
 }
 
 .join-copy {
-  text-align: center;
+  text-align: left;
   text-wrap: pretty;
   width: 100%;
   max-width: 640px;

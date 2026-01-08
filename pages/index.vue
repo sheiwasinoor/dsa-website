@@ -12,6 +12,8 @@
         :style="{
           '--landing-video-width': LANDING_VIDEO_WIDTH + 'px',
           '--landing-video-max': LANDING_VIDEO_MAX_WIDTH + 'px',
+          '--landing-exit-fade-ms': EXIT_FADE_OUT_MS + 'ms',
+          opacity: isFadingOut ? 0 : 1,
         }"
         class="h-auto landing-video"
         playsinline
@@ -22,8 +24,11 @@
       <!-- TEXT BLOCK -->
       <div
         class="flex flex-col items-center landing-text"
+        :class="{ 'is-text-visible': isTextVisible, 'is-fading-out': isFadingOut }"
         :style="{
           '--landing-text-width': LANDING_TEXT_CONTAINER_WIDTH + 'px',
+          '--landing-text-fade-ms': TEXT_FADE_IN_MS + 'ms',
+          '--landing-exit-fade-ms': EXIT_FADE_OUT_MS + 'ms',
         }"
       >
         <!-- CN Row -->
@@ -31,7 +36,8 @@
           class="flex justify-between w-full"
           :style="{ 
             fontSize: LANDING_TEXT_FONT_SIZE_CN + 'px',
-            color: LANDING_TEXT_COLOR
+            color: LANDING_TEXT_COLOR,
+            marginBottom: LANDING_TEXT_ROW_GAP_CN + 'px',
           }"
         >
           <span
@@ -45,10 +51,11 @@
 
         <!-- EN Row -->
         <div
-          class="flex justify-between w-full mt-3 uppercase tracking-widest"
+          class="flex justify-between w-full uppercase tracking-widest"
           :style="{ 
             fontSize: LANDING_TEXT_FONT_SIZE_EN + 'px',
-            color: LANDING_TEXT_COLOR
+            color: LANDING_TEXT_COLOR,
+            marginTop: LANDING_TEXT_ROW_GAP_EN + 'px',
           }"
         >
           <span
@@ -59,6 +66,19 @@
             {{ char }}
           </span>
         </div>
+
+        <!-- LOCATION Row -->
+        <div
+          class="mt-3 text-center"
+          :style="{ 
+            fontSize: LANDING_TEXT_FONT_SIZE_LOC + 'px',
+            color: LANDING_TEXT_COLOR,
+            fontWeight: LANDING_TEXT_WEIGHT_LOC,
+            letterSpacing: LANDING_TEXT_LETTER_SPACING_LOC + 'px',
+          }"
+        >
+          {{ LOCATION_TEXT }}
+        </div>
       </div>
 
     </main>
@@ -67,6 +87,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from "vue";
+import { useRouter } from "vue-router";
 import {
   LANDING_BG_COLOR,
   LANDING_TEXT_COLOR,
@@ -82,11 +103,20 @@ import {
   landingCopy,
 } from "~/content/index";
 
-import { useGlobalFade } from "~/composables/useGlobalFade";
-
-const { navigateWithFade } = useGlobalFade();
+const router = useRouter();
 
 const videoEl = ref<HTMLVideoElement | null>(null);
+const isFadingOut = ref(false);
+const isTextVisible = ref(false);
+
+const TEXT_FADE_IN_MS = 1200;
+const EXIT_FADE_OUT_MS = 900;
+const LANDING_TEXT_ROW_GAP_CN = 8;
+const LANDING_TEXT_ROW_GAP_EN = 0;
+const LOCATION_TEXT = "Shenzhen | Shanghai | Singapore";
+const LANDING_TEXT_FONT_SIZE_LOC = LANDING_TEXT_FONT_SIZE_EN - 3;
+const LANDING_TEXT_LETTER_SPACING_LOC = 1;
+const LANDING_TEXT_WEIGHT_LOC = 100;
 
 // Split characters
 const spacedCN = computed(() => landingCopy.cn.split(""));
@@ -96,8 +126,17 @@ onMounted(() => {
   if (!videoEl.value) return;
   videoEl.value.currentTime = 0;
 
+  if (process.client) {
+    window.requestAnimationFrame(() => {
+      isTextVisible.value = true;
+    });
+  }
+
   videoEl.value.onended = () => {
-    navigateWithFade("/home");
+    isFadingOut.value = true;
+    window.setTimeout(() => {
+      router.push("/home");
+    }, EXIT_FADE_OUT_MS);
   };
 });
 
@@ -115,6 +154,21 @@ definePageMeta({
 
 .landing-text {
   width: var(--landing-text-width) !important;
+  opacity: 0;
+  transition: opacity var(--landing-text-fade-ms) ease-out;
+}
+
+.landing-text.is-text-visible {
+  opacity: 1;
+}
+
+.landing-text.is-fading-out {
+  opacity: 0;
+  transition-duration: var(--landing-exit-fade-ms);
+}
+
+.landing-video {
+  transition: opacity var(--landing-exit-fade-ms) ease-out;
 }
 
 @media (max-width: 960px) {

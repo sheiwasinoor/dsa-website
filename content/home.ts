@@ -20,6 +20,7 @@ export const HOME_HERO_SRC = "/images/home-hero.png";
 export const HOME_HERO_WIDTH = 320;               // px
 export const HOME_HERO_MAX_WIDTH = 320;           // px
 export const HOME_HERO_HOVER_SCALE = 1.02;
+export const HOME_HERO_HEIGHT = 131;              // px (based on 2267x930)
 
 /* ---------- HEADLINE TEXT ---------- */
 export const HOME_HEADLINE_CN = "系统化的场景营造";

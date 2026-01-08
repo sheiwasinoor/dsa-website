@@ -48,7 +48,7 @@
             }"
             @click="goTo('/about')"
           >
-            {{ locale === 'en' ? 'ABOUT' : '关于我们' }}
+            {{ locale === 'en' ? 'ABOUT DSA' : '关于我们 DSA' }}
           </button>
         </li>
 
@@ -172,7 +172,7 @@
               :class="{ 'active-link': isRouteActive('/about') }"
               @click="navAndClose('/about')"
             >
-              {{ locale === 'en' ? 'ABOUT' : '关于我们' }}
+              {{ locale === 'en' ? 'ABOUT DSA' : '关于我们 DSA' }}
             </button>
 
             <button
@@ -245,7 +245,6 @@ import {
 } from "vue";
 import { useTheme } from "~/composables/useTheme";
 import { useLocale } from "~/composables/useLocale";
-import { useGlobalFade } from "~/composables/useGlobalFade";
 
 const router = useRouter();
 const route = useRoute();
@@ -263,7 +262,6 @@ watch(
   }
 );
 const { locale, startLocaleTransition } = useLocale();
-const { navigateWithFade } = useGlobalFade();
 
 const hasSolidBg = ref(false);
 const isDropdownOpen = ref(false);
@@ -387,20 +385,20 @@ function isRouteActive(to: string) {
 }
 
 function goHome() {
-  navigateWithFade("/home");
+  router.push("/home");
 }
 
 function goTo(to: string) {
-  navigateWithFade(to);
+  router.push(to);
 }
 
 function navAndClose(to: string) {
-  navigateWithFade(to);
+  router.push(to);
   mobileMenuOpen.value = false;
 }
 
 function handleDesignChildClick(to: string) {
-  navigateWithFade(to);
+  router.push(to);
   isDropdownOpen.value = false;
 }
 
