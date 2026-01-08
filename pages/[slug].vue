@@ -468,7 +468,23 @@ const slugKey = computed(() => `project:${String(route.params.slug || "")}`);
 
 const { data: projectData, error, refresh } = await useAsyncData(
   slugKey,
-  () => $fetch(`/api/projects/get?slug=${encodeURIComponent(String(route.params.slug || ""))}`),
+  async () => {
+    try {
+      return await $fetch(
+        `/api/projects/get?slug=${encodeURIComponent(String(route.params.slug || ""))}`
+      );
+    } catch (err: any) {
+      const status =
+        err?.statusCode ||
+        err?.response?.status ||
+        err?.cause?.statusCode;
+      if (status === 404) {
+        loadError.value = "Project not found.";
+        return null;
+      }
+      throw err;
+    }
+  },
   {
     watch: [() => route.params.slug],
   }
