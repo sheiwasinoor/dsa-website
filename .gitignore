@@ -25,3 +25,8 @@ logs
 
 /generated/prisma
 .env
+
+# CMS local data
+public/uploads
+prisma/*.db
+prisma/*.db.*
