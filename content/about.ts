@@ -2,34 +2,25 @@
 
 export const letterText = {
   en: [
-    "Stay true to our original aspirations, fearless in exploration. Born amidst the torrent of our era and nurtured through industry transformation, DAYOUNG has undergone multiple metamorphoses, continually breaking down sector barriers to forge its own distinctive path forward.",
+    "Staying true to our founding mission, we fear no exploration. Born in the torrent of our era and raised amid industry transformation, Dayang has undergone multiple metamorphoses, continually breaking through sector barriers to forge our own unique path forward.",
 
-    "DSA Dayoung is an innovative design platform dedicated to the creation of public environment spaces, guided by the aesthetics of new ecological culture and art. By integrating landscape architecture, dynamic lighting, and public art through collaborative practice, we craft multidimensional, high-quality spatial experiences. Our integrated design approach unites three flagship disciplines—DA Landscape, TS Lighting, and Young ART—to generate transformative spatial vitality. In systematically reshaping public environments, we establish a methodology centered on the symbiotic integration of landscape, light, and art. Through the orchestrated interplay of sound, light, and form, we deliver immersive visual, interactive, and performative experiences. Employing a value-multiplication formula of spatial revitalization, technology-driven empowerment, and artistic operation, we cultivate enduring value that nurtures the organic growth of spaces.",
+    "All human imagination and aesthetic sensibility stem from art and interdisciplinary thinking—the unfettered freedom to envision and create endless possibilities. Guided by a new ecological cultural and artistic aesthetic, Dayang is dedicated to innovative design in public environmental spaces. We champion human-centered, nature-friendly design philosophies that transcend formal constraints. Rooted in a profound understanding of Eastern culture and committed to its inheritance and innovation, we blend Chinese creativity with a global perspective.",
 
-    "Mr. Wu Guanzhong once said, “Those who pursue beauty are always warriors.” Art should be a form of spiritual education, nurturing imagination and aesthetic discernment. All our imagination springs from art and interdisciplinary thinking—the freedom to fully envision and create endless possibilities. Today, aesthetic discernment remains an irreplaceable skill even in the age of AI. For us, art within spaces is not something placed on a high pedestal, but rather the sublimation of everyday life.",
+    "Amidst the wave of urban renewal, Dayang, as a creator of public spaces, approaches design from our own perspective. We reject the notion of relying solely on “masters” or treating everyone as mere “cogs in the machine.” Instead, we strive to ensure every dreamer in our team has the opportunity to take on every role within a project, embracing challenges and scrutiny. We actively seek out our own shortcomings—whether stemming from youth or inexperience—for therein lies the source of our hope, strength, and unwavering conviction.With warmth, steadfastness, sincerity, and kindness, we convey the warmth of design and the depth of life. We pursue a “high-quality flow state” in every project—a sustained presence of feeling, a continuous surge of spiritual vitality, and an inexhaustible inner drive, mirroring our dedicated creation in every endeavor. This stems from the cyclical empowerment of cognition, ambition, courage, and execution. We may not excel at marketing, but conveying value is our mission. I firmly believe: “Those who know it are not as good as those who love it, and those who love it are not as good as those who delight in it.” For us, design is not merely a career—it is passion and purpose, the embodiment of self-worth. With nature, light, and the brush of artistry, we invite you to explore the beauty of design and the joy of living.",
 
-    "We champion a human-centered design philosophy that embraces nature, transcending formal constraints. Rooted in a profound understanding of Eastern culture and its legacy of innovation, we blend Chinese creativity with a global perspective. In this era of relentless technological evolution and product iteration, the essence of landscape, light, and art design lies not merely in the layered application of technological products, but in conveying new creative thinking, technological thinking, and artistic thinking—a concept that endlessly evolves.",
-
-    "In the era of urban renewal and the rebirth of all things, as innovators of public spaces, our philosophy of renewal must begin with ourselves. We reject the notion of relying solely on “masters” or treating everyone as mere “cogs in a machine.” We aspire to empower every dreamer in our team to take on every role within a project, embracing challenges and scrutiny. We actively seek out our own shortcomings—whether stemming from youth or inexperience—for therein lies the wellspring of hope and unwavering conviction. With warmth, steadfastness, sincerity, and kindness, we aim to convey the warmth of design and the depth of life.",
-
-    "Nature is the ultimate healing force, and flow is the ultimate experience. We pursue “high-quality flow”—the sustained presence of sensation, the ceaseless surge of spiritual vitality, and the inexhaustible wellspring of inner drive. This mirrors every heartfelt creation we produce. All this stems from the cyclical empowerment of cognition, ambition, courage, and execution. We may not excel at marketing, but conveying value is our mission. I firmly believe: “Those who know it are not as good as those who love it, and those who love it are not as good as those who delight in it.” For us, design is not merely a profession—it is passion and purpose, the embodiment of self-worth. May we wield nature and light as our brushes to converse with you about design's beauty and life's joys.",
-
-    "True friendship is mutual enlightenment. Whether in work or leisure, we cherish and anticipate each encounter—conveying value and sharing warmth."
+    "Friendship between kindred spirits is a mutual enrichment. Whether in work or shared pursuits, we cherish and anticipate each exploration, each gathering—conveying value and sharing warmth.",
   ],
 
   zh: [
-    "不忘初心，不畏探索。生在时代洪流，长在行业变革，大漾的成长经历了数次蜕变，不断打破行业壁垒，摸索出属于自己的独特发展之道。DSA大漾，是一家以新生态艺术美学为导向、系统化营造公共空间的跨学科设计平台。通过景观建筑、动态光影、公共艺术专业共创实践，营造极具体验感的空间整体氛围。并形成了以 DA Landscape、TS Lighting、Young ART 三大王牌专业整体统筹设计，营造空间新生力。在公共环境的系统重塑中，我们构建以景观、光影、艺术为核心共生的方法论，通过声、光、形的有序联动，为人们带来视觉、互动、表演的沉浸体验；以“空间活化 + 科技赋能 + 艺术运营”的价值倍增方程式，营造空间生长的长效价值。",
+    "不忘初心，不畏探索。生在时代洪流，长在行业变革，大漾的成长经历了数次蜕变，不断打破行业壁垒，摸索出属于自己的独特发展之道。",
 
-    "吴冠中先生曾说：“追求美的人从来都是勇士。”艺术应当是一种灵魂的素质教育，关乎想象力与审美力。我们所有的想象力源于艺术和跨学科思维，是自由而充分地去想象、创造各种可能性。即便在 AI 时代，审美判断力依然是一种无法被取代的能力。于我们而言，空间里的艺术并非高阁之物，而是人间烟火的升华。",
+    "人类所有的想象力、审美力源于艺术和跨学科思维，是自由的充分的去想象和创造各种可能性。大漾以新生态文化艺术美学为导向，致力于公共环境空间营造的创新设计，倡导人性化、亲近自然的设计理念，突破形式的限制，以中国创意、全球视野的格局，扎根于对东方文化的深厚理解与传承创新。",
 
-    "我们倡导人性化、亲近自然的设计理念，突破形式限制，以中国创意与全球视野为格局，扎根于对东方文化的深刻理解与创新传承。在当今技术高速迭代、产品层出不穷的时代，景观、光影与艺术设计的本质并非单纯的技术叠加，而是新的创意思维、科技思维与艺术思维的表达——是一个永远生长的概念。",
+    "在城市更新的浪潮中，大漾作为公共空间的营造者，营造的理念从我们自身出发，不以唯“大师”论或人人“螺丝钉”，只愿团队的每一位有梦想的设计师都有机会担当项目的所有角色并且接受质疑与考验，也从积极自身寻找问题“年轻亦或经验不足，也是希望力量或坚定信念所在。”愿以温暖、踏实、真诚与善良，传递设计的温度，传递生命的厚度。我们追求每一个项目“高质量的心流”，那是感觉的持续存在、精神生命的持续涌动、内在驱动力的永不枯竭，正如我们每一次的用心创作。这一切，源于认知、野心、勇气与执行力的循环赋能。我们或许不善营销，但传达价值是我们的使命，我始终坚信：“知之者不如好之者，好之者不如乐之者。” 设计于我们 ,不仅是事业，更是热爱与使命，是自我价值的体现。愿以自然与光影、艺术之笔，与您共话设计之美、生活之趣。",
 
-    "在城市更新与万物更生的时代浪潮中，作为公共空间的更新者，更新理念应从自身出发。我们反对唯“大师”论或将个体视为“机器中的螺丝钉”。我们希望团队中每一位怀抱梦想的设计师，都能在项目中承担不同角色并接受质疑与考验，也从积极之中寻找自身问题。“年轻亦或经验不足，或许正是希望力量或坚定信念所在。”愿以温暖、踏实、真诚与善良，传递设计的温度，传递生命的厚度。",
+    "与朋之交，君子相生。无论工作或谈趣， 重视且期待我们的每一次探索，每一次相会，传达价值，传递温情。",
 
-    "大自然是最好的疗愈，心流是最好的体验。我们追求“高质量心流”——那是感觉的持续存在、精神生命的不断涌动、内在驱动力的永不枯竭，正如我们每一次用心的创作。这一切源于认知、野心、勇气与执行力的循环赋能。我们或许不擅长营销，但传达价值是我们的使命。我始终相信：“知之者不如好之者，好之者不如乐之者。”设计于我们，不仅是职业，更是热爱与使命，是自我价值的体现。愿以自然与光影之笔，与您共话设计之美、生活之趣。",
-
-    "与朋之交，君子相教。无论工作或谈趣，我们都珍视并期待每一次相会——传达价值，传递温情。"
-  ]
+  ],
 };
 
 /**
@@ -77,7 +68,7 @@ export interface Member {
 
 export const members: Member[] = [
   {
-    id: "demi",
+    id: "bitch",
     group: "chinese",
     nameEn: "DEMI",
     nameCn: "欧阳小平",
@@ -104,20 +95,18 @@ export const members: Member[] = [
   },
 
     {
-    id: "stone",
+    id: "dumbass",
     group: "chinese",
     nameEn: "STONE",
     nameCn: "石祐嘉",
-    role: { en: "Chief Architect", zh: "首席建筑师" },
+    role: { en: "Partner | Chief Architect", zh: "首席建筑师" },
     avatar: "/images/team/stone.png",
     bio: {
       en: [
-        "Stone contributes general pivotal basic architectural support.",
-        "His work mainly involves routine and expansive coordination tasks."
+        "As a designer in Taiwan, Stone consistently strives to deliver the appropriate design for each project. He is dedicated to expressing spatial aesthetics and vitality through design, bridging the connections between environment, technology, and cultural arts, while bringing innovative approaches to every project and challenge. While focusing on landscape and cultural architecture design, he possesses the integrated design capabilities to oversee projects from concept to completion across architecture, landscape, and interiors.",
       ],
       zh: [
-        "Stone 在项目中提供基础建筑支持。",
-        "主要负责日常协调工作。"
+        "台湾优秀青年设计师，stone始终坚持为每个项目进行最适当的设计，致力于透过设计来表达我们对环境、科技与文化艺术之间的空间美学与活力，为每个项目和挑战带来创新的呈现方式。他专注于景观、文化建筑设计方案创作的同时具备对建筑、景观、室内等专业一体化设计到落地的把控能力。",
       ]
     }
   },
@@ -131,10 +120,10 @@ export const members: Member[] = [
     avatar: "/images/team/zhong.png",
     bio: {
       en: [
-        "Nearly 18 years of extensive project design and management experience, specializing in urban renewal projects involving historic preservation buildings, commercial complexes, and super-high-rise lighting design",
+        "A renowned lighting designer and founder of TS Lighting, he is dedicated to reshaping cities' nocturnal identities through light. His work—from the legendary Shanghai Bund to the revitalized Suzhou River, and across numerous international landmark complexes—transcends mere illumination to narrate profound regional narratives. At the core of his design philosophy lies the use of light and shadow dialogue to invigorate public spaces, creating timeless and emotionally resonant theatrical experiences for cities.",
       ],
       zh: [
-        "近18年丰富的项目设计实践与管理经验, 擅长城市更新类历史文保建筑, 商业综合体, 超高层照明设计。",
+        "业界知名照明设计师，TS照明创办人，致力于通过光重塑城市的夜间身份。作品从传奇的上海外滩到焕新的苏州河，再到众多国际地标综合体，超越了单纯的照明，转而讲述深厚的地域故事。他的设计哲学核心在于利用光影对话，增强公共空间活力，为城市创造永恒且充满情感的情绪剧场。",
       ]
     }
   },
@@ -149,10 +138,10 @@ export const members: Member[] = [
     avatar: "/images/team/zhixiong.png",
     bio: {
       en: [
-        "Specially Appointed Expert of the Shenzhen Real Estate Association and Shenzhen Urban Renewal Development Enterprises Association, with 18 years of experience in the real estate industry. Previously served in multiple government departments, including Shenzhen Planning and Land Resources, Urban Construction, and Land Development, undertaking extensive policy drafting work. Well-versed in various policies related to urban renewal and land consolidation. Specializes in resolving complex projects, addressing various legacy land issues, and handling non-agricultural land and land expropriation compensation transactions."
+        "He has served as chief editor for multiple urban renewal policy development projects and currently acts as an expert advisor to Shenzhen district governments and several real estate groups. Specializing in resolving urban renewal challenges through land use analysis and intelligent computation, he balances the economic interests of all parties to ensure precise preliminary project assessments. Having independently developed an urban spatial diagnosis system application, his next step involves collaborating with DSA to create a system that integrates spatial diagnosis reports with AI-powered one-click generation of tailored design solutions. This initiative aims to establish efficient public space design implementation and operational solutions."
       ],
       zh: [
-        "深圳市房地产业协会、深圳市城市更新开发企业协会特聘专家，拥有18年房地产行业工作经验，曾供职于深圳规划国土、城市建设、土地开发等多个政府部门承担了大量政策起草工作，熟悉城市更新及土地整备各类政策，擅长解决各式疑难项目及各种土地遗留问题处置、非农与征地返还用交易等。"
+        "曾主编多个城市更新政策制定工作，现为深圳各区政府及多家地产集团专家顾问，擅长解决城市更新类通过用地梳理、智慧运算,平衡各方经济利益，为项目前期精准研判提供保障，已自主研发城市空间诊断系统应用软件，下一步将与DSA联合研发结合空间诊断报告，AI一键生成对症设计多方案系统，制定高效的公共空间设计落地运营解决方案。"
       ]
     }
   },
@@ -166,12 +155,10 @@ export const members: Member[] = [
     avatar: "/images/team/adrian.png",
     bio: {
       en: [
-        "Adrian manages timelines with clarity.",
-        "Ensures accurate deliveries."
+        "Director of Ecological Projects at DSA, he has dedicated himself to the field of new ecological greenery since returning to China after graduating from the University of New South Wales in Australia in 2013. Leading his team in specialized research on artistic greenery design and technological development, he has pioneered boundary-free landscape planting techniques that surpass domestic industry standards by optimizing traditional landscaping construction methods, integrating smart devices, and utilizing innovative materials. This breakthrough breaks down barriers between architecture and natural ecosystems. He provides specialized ecological art implementation solutions to ensure the successful execution of DSA projects.",
       ],
       zh: [
-        "Adrian 管理项目进度。",
-        "确保设计落地。"
+        "DSA生态项目总监，自2013年澳洲University of NSW毕业回国后,便深耕于新生态绿植领域，带领团队专研艺术绿植设计与技术研发，通过优化传统的景观施工技术、智能设备和创新材料运用，打破建筑与自然生态的屏障，率先实现无边界景观种植技术领先国内同行业水平；为DSA项目提供专项生态艺术落地解决方案保障。",
       ]
     }
   },
@@ -185,10 +172,10 @@ export const members: Member[] = [
     avatar: "/images/team/lunker.png",
     bio: {
       en: [
-        "Over a decade of extensive project design and management experience Specializing in integrated design across real estate, cultural tourism, and commercial sectors."
+        "With 12 years of extensive project design and management experience, I specialize in overseeing integrated landscape and lighting design for urban renewal real estate, cultural tourism, and commercial projects. I ensure quality control during detailed design implementation, coordinate across design disciplines, construction teams, and client departments including operations, and manage overall communication and execution."
       ],
       zh: [
-        "近10年丰富的项目设计实践与管理经验擅长地产、文旅、商业等领域综合设计。"
+        "12年丰富的项目设计实践与管理经验，擅长城市更新类地产、文旅、商业等领域景观与灯光综合设计统筹负责，深化设计落地品质管控,协调各设计专业与施工落地方、运营方等业主各部门进行统筹协调沟通与执行工作。"
       ]
     }
   },
@@ -197,15 +184,15 @@ export const members: Member[] = [
     id: "chelsea",
     group: "chinese",
     nameEn: "CHELSEA",
-    nameCn: "吴贞",
+    nameCn: "吴粤",
     role: { en: "Project Director", zh: "项目总监" },
     avatar: "/images/team/chelsea.png",
     bio: {
       en: [
-        "Over the past five years, Chelsea has gained extensive experience in project design and management, specializing in integrated design across landscape, lighting, and art disciplines."
+        "Graduated with a Master of Landscape Architecture from RMIT University in Australia, specializing in integrated design applications of landscape, light and shadow, and public art. Has participated in conceptual design for multiple prestigious real estate flagship projects, possessing extensive experience in conceptual design creation. Focuses on exploring new pathways for sustainable urban development and ecological restoration methods, dedicated to advancing the creation of green, intelligent, and human-centered spatial environments."
       ],
       zh: [
-        "近5年丰富的项目设计实践与管理经验擅长景观、光影、艺术等领域综合设计。"
+        "毕业于澳洲RMIT大学风景园林专业硕士，擅长景观、光影与公共艺术的综合应用设计，曾参与多个知名地产顶级项目方案设计，拥有丰富的方案设计创作经验，专注探索新生态可持续城市发展路径与生态环境修复方法，致力于推动绿色、智能和人性化的空间营造创作。"
       ]
     }
   },
@@ -214,11 +201,11 @@ export const members: Member[] = [
     id: "julien",
     group: "international",
     nameEn: "JULIEN ALBERTINI",
-    role: { en: "Director", zh: "设计总监" },
+    role: { en: "Design Partner", zh: "设计合伙人" },
     avatar: "/images/team/julien.png",
     bio: {
       en: [
-        ""
+        "Mr. Julien, a designer with DSA International Group hailing from the United States, holds a Master of Arts degree from the City University of New York. With extensive experience in architectural renovation and spatial transformation, he serves as the exclusive landscape architect and luxury aesthetic designer for numerous internationally renowned European and American brands. In 2019, Julien's team and DSA formally upgraded their project collaboration to a design partnership—marking the sole partnership established since DSA's entry into the Chinese market."
       ],
       zh: [
         ""
@@ -234,10 +221,10 @@ export const members: Member[] = [
     avatar: "/images/team/alina.png",
     bio: {
       en: [
-        ""
+        "Alina, as Julien's international design partner, brings vitality and inspiration to every project. Born into a Russian artistic family, her creativity is fueled by the world around her. She excels in delivering comprehensive professional renovation designs for luxury hotel brands, corporate headquarters, exclusive clubs, and high-profile venues—all approached from a brand-building perspective."
       ],
       zh: [
-        ""
+        "Alina，作为Julien国际组设计拍档，她为每一个项目带来活力和灵感。Alina生于俄罗斯艺术世家，她的创造力都是由她周围世界所激发，擅长从品牌打造的视角为高端品牌酒店、总部大楼、顶级会所、名利场所进行全域专业升级改造设计。​"
       ]
     }
   }

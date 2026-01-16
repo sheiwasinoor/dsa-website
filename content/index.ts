@@ -8,9 +8,9 @@ export const LANDING_BG_COLOR = "#000C05";
 export const LANDING_TEXT_COLOR = "#ECEBC7";
 
 /* ---------- VIDEO ---------- */
-export const LANDING_VIDEO_SRC = "/videos/output.webm";
-export const LANDING_VIDEO_WIDTH = 535;
-export const LANDING_VIDEO_MAX_WIDTH = 535;
+export const LANDING_VIDEO_SRC = "/videos/landing-alpha.webm";
+export const LANDING_VIDEO_WIDTH = 350;
+export const LANDING_VIDEO_MAX_WIDTH = 350;
 export const LANDING_VIDEO_FADE_OUT_DURATION = 900; // ms
 
 /* ---------- TEXT BLOCK LAYOUT ---------- */
@@ -21,6 +21,25 @@ export const LANDING_TEXT_LETTER_SPACING_CN = 8;
 
 export const LANDING_TEXT_FONT_SIZE_EN = 18;
 export const LANDING_TEXT_LETTER_SPACING_EN = 3;
+
+/* ---------- TEXT BLOCK SPACING ---------- */
+export const LANDING_MAIN_GAP_DESKTOP = 32; // px
+export const LANDING_MAIN_GAP_TABLET = 20; // px
+export const LANDING_MAIN_GAP_MOBILE = 16; // px
+
+export const LANDING_TEXT_ROW_GAP_CN = -2;
+export const LANDING_TEXT_ROW_GAP_EN = 0;
+export const LANDING_TEXT_LETTER_SPACING_CN_ROW = 20;
+
+export const LANDING_LOCATION_BOTTOM_DESKTOP = "2rem";
+export const LANDING_LOCATION_BOTTOM_TABLET = "1.75rem";
+export const LANDING_LOCATION_BOTTOM_MOBILE = "1.5rem";
+
+/* ---------- LOCATION ---------- */
+export const LOCATION_TEXT = "Shenzen | Shanghai | Singapore";
+export const LANDING_TEXT_FONT_SIZE_LOC = LANDING_TEXT_FONT_SIZE_EN - 3;
+export const LANDING_TEXT_LETTER_SPACING_LOC = 1;
+export const LANDING_TEXT_WEIGHT_LOC = 100;
 
 /* ---------- TEXT COPY ---------- */
 export const landingCopy = {

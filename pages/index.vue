@@ -3,7 +3,14 @@
     class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
     :style="{ backgroundColor: LANDING_BG_COLOR, color: LANDING_TEXT_COLOR }"
   >
-    <main class="flex flex-col items-center justify-center gap-10 px-4 z-30">
+    <main
+      class="landing-main flex flex-col items-center justify-center px-4 z-30"
+      :style="{
+        '--landing-main-gap-desktop': LANDING_MAIN_GAP_DESKTOP + 'px',
+        '--landing-main-gap-tablet': LANDING_MAIN_GAP_TABLET + 'px',
+        '--landing-main-gap-mobile': LANDING_MAIN_GAP_MOBILE + 'px',
+      }"
+    >
       
       <!-- VIDEO -->
       <video
@@ -12,24 +19,24 @@
         :style="{
           '--landing-video-width': LANDING_VIDEO_WIDTH + 'px',
           '--landing-video-max': LANDING_VIDEO_MAX_WIDTH + 'px',
-          '--landing-exit-fade-ms': EXIT_FADE_OUT_MS + 'ms',
-          opacity: isFadingOut ? 0 : 1,
         }"
+        :class="{ 'is-clickable': isVideoEnded }"
         class="h-auto landing-video"
         playsinline
         autoplay
         muted
+        @click="onVideoClick"
       ></video>
 
       <!-- TEXT BLOCK -->
       <div
         class="flex flex-col items-center landing-text"
-        :class="{ 'is-text-visible': isTextVisible, 'is-fading-out': isFadingOut }"
+        :class="{ 'is-text-visible': isTextVisible }"
         :style="{
           '--landing-text-width': LANDING_TEXT_CONTAINER_WIDTH + 'px',
           '--landing-text-fade-ms': TEXT_FADE_IN_MS + 'ms',
-          '--landing-exit-fade-ms': EXIT_FADE_OUT_MS + 'ms',
         }"
+        @click="goHome"
       >
         <!-- CN Row -->
         <div
@@ -43,7 +50,7 @@
           <span
             v-for="(char, i) in spacedCN"
             :key="'cn-' + i"
-            :style="{ letterSpacing: LANDING_TEXT_LETTER_SPACING_CN + 'px' }"
+            :style="{ letterSpacing: LANDING_TEXT_LETTER_SPACING_CN_ROW + 'px' }"
           >
             {{ char }}
           </span>
@@ -67,21 +74,27 @@
           </span>
         </div>
 
-        <!-- LOCATION Row -->
-        <div
-          class="mt-3 text-center"
-          :style="{ 
-            fontSize: LANDING_TEXT_FONT_SIZE_LOC + 'px',
-            color: LANDING_TEXT_COLOR,
-            fontWeight: LANDING_TEXT_WEIGHT_LOC,
-            letterSpacing: LANDING_TEXT_LETTER_SPACING_LOC + 'px',
-          }"
-        >
-          {{ LOCATION_TEXT }}
-        </div>
       </div>
 
     </main>
+
+    <!-- LOCATION Row -->
+    <div
+      class="landing-location text-center"
+      :class="{ 'is-text-visible': isTextVisible }"
+      :style="{ 
+        fontSize: LANDING_TEXT_FONT_SIZE_LOC + 'px',
+        color: LANDING_TEXT_COLOR,
+        fontWeight: LANDING_TEXT_WEIGHT_LOC,
+        letterSpacing: LANDING_TEXT_LETTER_SPACING_LOC + 'px',
+        '--landing-location-bottom-desktop': LANDING_LOCATION_BOTTOM_DESKTOP,
+        '--landing-location-bottom-tablet': LANDING_LOCATION_BOTTOM_TABLET,
+        '--landing-location-bottom-mobile': LANDING_LOCATION_BOTTOM_MOBILE,
+      }"
+      @click="goHome"
+    >
+      {{ LOCATION_TEXT }}
+    </div>
   </div>
 </template>
 
@@ -94,30 +107,34 @@ import {
   LANDING_VIDEO_SRC,
   LANDING_VIDEO_WIDTH,
   LANDING_VIDEO_MAX_WIDTH,
-  LANDING_VIDEO_FADE_OUT_DURATION,
   LANDING_TEXT_CONTAINER_WIDTH,
   LANDING_TEXT_FONT_SIZE_CN,
   LANDING_TEXT_FONT_SIZE_EN,
   LANDING_TEXT_LETTER_SPACING_CN,
   LANDING_TEXT_LETTER_SPACING_EN,
+  LANDING_MAIN_GAP_DESKTOP,
+  LANDING_MAIN_GAP_TABLET,
+  LANDING_MAIN_GAP_MOBILE,
+  LANDING_TEXT_ROW_GAP_CN,
+  LANDING_TEXT_ROW_GAP_EN,
+  LANDING_TEXT_LETTER_SPACING_CN_ROW,
+  LANDING_LOCATION_BOTTOM_DESKTOP,
+  LANDING_LOCATION_BOTTOM_TABLET,
+  LANDING_LOCATION_BOTTOM_MOBILE,
+  LOCATION_TEXT,
+  LANDING_TEXT_FONT_SIZE_LOC,
+  LANDING_TEXT_LETTER_SPACING_LOC,
+  LANDING_TEXT_WEIGHT_LOC,
   landingCopy,
 } from "~/content/index";
 
 const router = useRouter();
 
 const videoEl = ref<HTMLVideoElement | null>(null);
-const isFadingOut = ref(false);
 const isTextVisible = ref(false);
+const isVideoEnded = ref(false);
 
-const TEXT_FADE_IN_MS = 1200;
-const EXIT_FADE_OUT_MS = 900;
-const LANDING_TEXT_ROW_GAP_CN = 8;
-const LANDING_TEXT_ROW_GAP_EN = 0;
-const LOCATION_TEXT = "Shenzhen | Shanghai | Singapore";
-const LANDING_TEXT_FONT_SIZE_LOC = LANDING_TEXT_FONT_SIZE_EN - 3;
-const LANDING_TEXT_LETTER_SPACING_LOC = 1;
-const LANDING_TEXT_WEIGHT_LOC = 100;
-
+const TEXT_FADE_IN_MS = 3000;
 // Split characters
 const spacedCN = computed(() => landingCopy.cn.split(""));
 const spacedEN = computed(() => landingCopy.en.split(""));
@@ -126,19 +143,20 @@ onMounted(() => {
   if (!videoEl.value) return;
   videoEl.value.currentTime = 0;
 
-  if (process.client) {
-    window.requestAnimationFrame(() => {
-      isTextVisible.value = true;
-    });
-  }
-
   videoEl.value.onended = () => {
-    isFadingOut.value = true;
-    window.setTimeout(() => {
-      router.push("/home");
-    }, EXIT_FADE_OUT_MS);
+    isVideoEnded.value = true;
+    isTextVisible.value = true;
   };
 });
+
+function goHome() {
+  router.push("/about");
+}
+
+function onVideoClick() {
+  if (!isVideoEnded.value) return;
+  goHome();
+}
 
 // Use landing layout
 definePageMeta({
@@ -152,23 +170,70 @@ definePageMeta({
   max-width: var(--landing-video-max);
 }
 
+.landing-video.is-clickable {
+  cursor: pointer;
+}
+
 .landing-text {
   width: var(--landing-text-width) !important;
   opacity: 0;
-  transition: opacity var(--landing-text-fade-ms) ease-out;
+  transition:
+    opacity var(--landing-text-fade-ms) ease-out,
+    transform 920ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 520ms ease;
+  cursor: pointer;
 }
 
 .landing-text.is-text-visible {
   opacity: 1;
+  animation: landingGlow 2.4s ease-in-out var(--landing-text-fade-ms) infinite;
 }
 
-.landing-text.is-fading-out {
+.landing-text:hover {
+  filter: drop-shadow(0 0 10px rgba(236, 235, 199, 0.45));
+  transform: translateY(-6px);
+}
+
+.landing-main {
+  gap: var(--landing-main-gap-desktop);
+}
+
+.landing-location {
+  position: absolute;
+  left: 50%;
+  bottom: var(--landing-location-bottom-desktop);
+  transform: translateX(-50%);
+  width: 100%;
   opacity: 0;
-  transition-duration: var(--landing-exit-fade-ms);
+  transition: opacity var(--landing-text-fade-ms) ease-out;
+  cursor: pointer;
+}
+
+.landing-location.is-text-visible {
+  opacity: 1;
 }
 
 .landing-video {
-  transition: opacity var(--landing-exit-fade-ms) ease-out;
+}
+
+@keyframes landingGlow {
+  0% {
+    filter: drop-shadow(0 0 0 rgba(236, 235, 199, 0));
+  }
+  50% {
+    filter: drop-shadow(0 0 8px rgba(236, 235, 199, 0.55));
+  }
+  100% {
+    filter: drop-shadow(0 0 0 rgba(236, 235, 199, 0));
+  }
+}
+@media (max-width: 1200px) {
+  .landing-main {
+    gap: var(--landing-main-gap-tablet);
+  }
+  .landing-location {
+    bottom: var(--landing-location-bottom-tablet);
+  }
 }
 
 @media (max-width: 960px) {
@@ -178,6 +243,12 @@ definePageMeta({
   }
   .landing-text {
     width: 92vw !important;
+  }
+  .landing-main {
+    gap: var(--landing-main-gap-mobile);
+  }
+  .landing-location {
+    bottom: var(--landing-location-bottom-mobile);
   }
 }
 

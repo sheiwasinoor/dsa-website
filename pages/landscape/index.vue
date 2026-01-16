@@ -151,7 +151,7 @@ class="uppercase"
       <TransitionGroup
         name="landscape-grid"
         tag="div"
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2"
+        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
         :style="{
           gap: LANDSCAPE_GRID_GAP + 'px',
           '--filter-duration': LANDSCAPE_GRID_FILTER_ANIMATION_DURATION + 'ms'
@@ -239,7 +239,7 @@ onMounted(async () => {
 //
 
 // HERO COLORS + LINES
-const LANDSCAPE_HERO_TEXT_COLOR = "#D8DCDD";          // main hero title + body color
+const LANDSCAPE_HERO_TEXT_COLOR = "#ECEBC7";          // main hero title + body color
 const LANDSCAPE_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
 const LANDSCAPE_HERO_LINE_COLOR = "#6E8C7C"; // top divider 
 const LANDSCAPE_HERO_LINE_COLOR_BOTTOM = "#6E8C7C"; // bottom divider
@@ -247,13 +247,13 @@ const LANDSCAPE_HERO_LINE_COLOR_BOTTOM = "#6E8C7C"; // bottom divider
 // HERO
 const LANDSCAPE_HERO_MIN_HEIGHT = 100;
 const LANDSCAPE_HERO_IMAGE_SCALE = 1.04;
-const LANDSCAPE_HERO_OVERLAY_OPACITY = 0.65;
+const LANDSCAPE_HERO_OVERLAY_OPACITY = 0.5;
 const LANDSCAPE_HERO_LINE_WIDTH = 656;
 const LANDSCAPE_HERO_LINE_SPACING = 3;
-const LANDSCAPE_HERO_TITLE_SIZE = 32;
+const LANDSCAPE_HERO_TITLE_SIZE = 28;
 const LANDSCAPE_HERO_TITLE_SPACING = 0.5;
 const LANDSCAPE_HERO_TITLE_TRACKING = 0.14; // em — adjust to taste
-const LANDSCAPE_HERO_PARAGRAPH_SIZE = 18;
+const LANDSCAPE_HERO_PARAGRAPH_SIZE = 16;
 const LANDSCAPE_HERO_PARAGRAPH_WIDTH = 580;
 
 // HERO — EXTRA SPACING
@@ -388,6 +388,24 @@ onBeforeUnmount(() => {
   text-wrap: pretty;
 }
 
+.hero-line {
+  display: block;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+@media (min-width: 1024px) {
+  .hero-section {
+    min-height: 80vh !important;
+  }
+
+  .hero-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+}
+
 @media (max-width: 720px) {
   .hero-section {
     min-height: 68vh !important;
@@ -412,7 +430,7 @@ onBeforeUnmount(() => {
 
   .hero-body {
     font-size: 14px !important;
-    max-width: 92vw !important;
+    max-width: 80vw !important;
     line-height: 22px !important;
     padding-top: 12px !important;
     padding-bottom: 14px !important;

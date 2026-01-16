@@ -8,12 +8,6 @@
           News Posts
         </h1>
 
-        <NuxtLink
-          to="/admin/news/create"
-          class="px-5 py-2 bg-[#336341] hover:bg-[#3f7a4d] rounded text-[#ECEBC7] tracking-widest"
-        >
-          + New Post
-        </NuxtLink>
       </div>
 
       <p class="text-xs text-[#ECEBC7]/60 mb-3">

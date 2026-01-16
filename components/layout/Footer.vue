@@ -4,7 +4,7 @@
     style="
       position: relative;
       z-index: 0;
-      margin-top: var(--footer-margin-top, 6rem);
+      margin-top: var(--footer-margin-top, 0rem);
       border-color: var(--footer-border, rgba(93,103,98,0.40));
       background-color: var(--footer-bg, #000C05);
       color: var(--footer-text, #F1F5F7);
@@ -12,12 +12,20 @@
   >
     <div class="mx-auto max-w-6xl px-6 py-10 flex flex-col md:flex-row md:justify-between gap-8 footer-wrap">
       <!-- Left: Logo -->
-      <div class="flex items-start footer-logo">
+      <div class="flex flex-col items-start gap-9 footer-logo">
         <img
           src="/images/navbar-logo.png"
           alt="DSA Logo"
           class="h-8 w-auto object-contain"
         />
+        <a
+          href="https://www.dazhiyuan.cn"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="text-[10px] tracking-[0.04em] text-[#D9D9D9]/70 hover:text-[#D9D9D9] transition"
+        >
+          www.dazhiyuan.cn
+        </a>
       </div>
 
       <!-- Middle: Locations -->
@@ -150,6 +158,10 @@ const { theme } = useTheme();
   display: block;
 }
 
+.footer-qr > div {
+  width: 90px;
+}
+
 @media (max-width: 768px) {
   .footer-wrap {
     align-items: center;
@@ -158,6 +170,7 @@ const { theme } = useTheme();
 
   .footer-logo {
     justify-content: center;
+    align-items: center;
   }
 
   .footer-locations {

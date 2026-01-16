@@ -48,7 +48,7 @@
             }"
             @click="goTo('/about')"
           >
-            {{ locale === 'en' ? 'ABOUT DSA' : '关于我们 DSA' }}
+            {{ locale === 'en' ? 'ABOUT DSA' : '关于我们' }}
           </button>
         </li>
 

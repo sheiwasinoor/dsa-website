@@ -1,6 +1,9 @@
 <!-- pages/about.vue -->
 <template>
-  <div class="bg-[#000C05] text-[#ECEBC7] min-h-screen">
+  <div
+    class="bg-[#000C05] text-[#ECEBC7] min-h-screen"
+    :style="{ '--footer-margin-top': '0px' }"
+  >
     <!-- =================================================== -->
     <!-- 1. HERO (TRANSPARENT PNG, FULL-HEIGHT SECTION)      -->
     <!-- =================================================== -->
@@ -41,124 +44,172 @@
     </section>
 
     <!-- =================================================== -->
-    <!-- 2. LETTER SECTION                                   -->
+    <!-- 1B. INTRO HERO                                      -->
     <!-- =================================================== -->
     <section
-      ref="letterSection"
-      class="w-full bg-cover bg-center relative about-letter"
+      class="w-full about-intro-hero bg-[#151E17]"
       :style="{
-        backgroundImage: `url('/images/about-letter-bg.png')`,
-        paddingLeft: ABOUT_LETTER_PADDING_X + 'px',
-        paddingRight: ABOUT_LETTER_PADDING_X + 'px',
-        paddingTop: ABOUT_LETTER_PADDING_Y + 'px',
-        paddingBottom: ABOUT_LETTER_PADDING_Y + 'px'
+        paddingTop: ABOUT_INTRO_HERO_PADDING_Y + 'px',
+        paddingBottom: ABOUT_INTRO_HERO_PADDING_Y + 'px',
+        paddingLeft: ABOUT_INTRO_HERO_PADDING_LEFT + 'px',
+        paddingRight: ABOUT_INTRO_HERO_PADDING_RIGHT + 'px'
       }"
     >
       <div
-        class="mx-auto transition-opacity duration-500"
-        :style="{ maxWidth: ABOUT_LETTER_MAX_WIDTH + 'px' }"
+        class="mx-auto about-intro-hero-inner about-intro-hero-anim"
+        :style="{
+          maxWidth: ABOUT_INTRO_HERO_MAX_WIDTH + 'px',
+          columnGap: ABOUT_INTRO_HERO_GAP + 'px',
+          width: '100%'
+        }"
       >
-      <!-- LETTER TITLE -->
-<h2
-  class="tracking-[0.02em]"
-  :style="{
-    fontSize: ABOUT_LETTER_TITLE_SIZE + 'rem',
-    fontWeight: ABOUT_LETTER_TITLE_WEIGHT,
-    opacity: ABOUT_LETTER_TITLE_OPACITY,
-    marginBottom: ABOUT_LETTER_TITLE_MARGIN_BOTTOM + 'px',
-    color: ABOUT_TEXT_COLORS.letterTitle[locale]
-  }"
->
-  {{ locale === 'en' ? ABOUT_LETTER_TITLE_EN : ABOUT_LETTER_TITLE_ZH }}
-</h2>
-        <div
-          class="w-full stagger-parent"
-          :style="{ minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px' }"
-        >
-          <div
-            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 about-letter-grid"
+        <div class="about-intro-hero-text">
+          <p
             :style="{
-              columnGap: ABOUT_LETTER_COLUMN_GAP + 'rem',
-              fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
-              fontWeight: ABOUT_LETTER_BODY_WEIGHT,
-              lineHeight: ABOUT_LETTER_LINE_HEIGHT,
-              color: ABOUT_TEXT_COLORS.letterBody[locale]
+              fontSize: ABOUT_INTRO_HERO_TITLE_SIZE + 'rem',
+              marginBottom: ABOUT_INTRO_HERO_TITLE_SPACING + 'px',
+              paddingTop: ABOUT_INTRO_HERO_TITLE_PADDING_TOP + 'px',
+              letterSpacing: ABOUT_INTRO_HERO_TITLE_TRACKING + 'em',
+              color: '#8C8C8C',
+              fontWeight: 100,
+              fontStyle: 'italic'
             }"
           >
-            <!-- LEFT COLUMN -->
-            <div
-              :class="[
-                'flex flex-col text-justify stagger-item reveal-block',
-                { 'reveal-visible': reveals.letter }
-              ]"
-              style="--reveal-delay: 120ms;"
-            >
-              <p
-                v-for="(p, i) in letterParagraphs[locale].left"
-                :key="'letter-left-' + i"
-                :style="{ marginBottom: ABOUT_LETTER_PARAGRAPH_GAP + 'px' }"
-              >
-                {{ p }}
-              </p>
-            </div>
+            简介 | INTRODUCTION
+          </p>
+          <h3
+            class="font-semibold"
+            :style="{
+              fontSize: ABOUT_INTRO_HERO_NAME_SIZE + 'rem',
+              marginBottom: ABOUT_INTRO_HERO_NAME_SPACING + 'px',
+              color: ABOUT_TEXT_COLORS.introHeading[locale]
+            }"
+          >
+            DSA Dayoung
+          </h3>
 
-            <!-- RIGHT COLUMN -->
-            <div
-              :class="[
-                'flex flex-col text-justify stagger-item reveal-block',
-                { 'reveal-visible': reveals.letter }
-              ]"
-              style="--reveal-delay: 220ms;"
-            >
-              <p
-                v-for="(p, i) in letterParagraphs[locale].right"
-                :key="'letter-right-' + i"
-                :style="{ marginBottom: ABOUT_LETTER_PARAGRAPH_GAP + 'px' }"
-              >
-                {{ p }}
-              </p>
-            </div>
+          <div
+            class="flex flex-col text-justify"
+            :style="{
+              fontSize: ABOUT_INTRO_HERO_TEXT_SIZE + 'rem',
+              lineHeight: ABOUT_INTRO_HERO_LINE_HEIGHT,
+              color: ABOUT_TEXT_COLORS.introHeading[locale],
+              rowGap: ABOUT_INTRO_HERO_PARAGRAPH_GAP + 'px',
+              textAlign: 'justify',
+              textWrap: 'pretty',
+              textJustify: 'inter-word',
+              fontWeight: 100
+            }"
+          >
+            <p>
+              DSA大漾一家以新生态文化艺术美学为导向，致力于公共环境空间营造的创新设计平台。通过景观建筑、动态光影、公共艺术专业共创实践，创造多维度高价值空间使用体验。大以中国创意 +国际视野，系统重塑公共环境空间价值，即可提供从环境更新、光环境到环境艺术的全过程综合解决方案，实现空间活化、长效运营与生态可持续发展。
+            </p>
+            <p>
+              DSA Dayoung is an innovative design platform guided by a new ecological art aesthetic, dedicated to creating public environmental spaces. Through collaborative practice in landscape architecture, dynamic lighting, and public art, we create multi-dimensional, high-value spatial experiences. With Chinese creativity and an international perspective, Danyang systemically reshapes the value of public environmental spaces, providing comprehensive solutions for the entire process, from environmental renewal and lighting environments to environmental art, achieving spatial revitalization, long-term operation, and ecological sustainability.
+            </p>
           </div>
         </div>
 
-        <!-- Signature -->
-        <!--
-        <div
-          class="flex justify-end signature-block"
-          :style="{
-            marginTop: isMobile
-              ? (locale === 'zh' ? '-200px' : '4px')
-              : ABOUT_SIGNATURE_TOP_MARGIN[locale] + 'px',
-            marginBottom: isMobile ? '10px' : ABOUT_SIGNATURE_BOTTOM_MARGIN + 'px'
-          }"
-        >
+        <div class="about-intro-hero-image">
+            <img
+              src="/images/Introduction-Background-Image.jpg"
+              alt="Introduction background"
+            />
+        </div>
+      </div>
+    </section>
+
+    <!-- =================================================== -->
+    <!-- 2. HOME ECHO SECTION                                -->
+    <!-- =================================================== -->
+    <section
+      class="w-full about-home-echo"
+      :style="{
+        paddingTop: ABOUT_HOME_ECHO_PADDING_TOP + 'px',
+        paddingBottom: ABOUT_HOME_ECHO_PADDING_BOTTOM + 'px',
+        paddingLeft: ABOUT_HOME_ECHO_PADDING_X + 'px',
+        paddingRight: ABOUT_HOME_ECHO_PADDING_X + 'px'
+      }"
+    >
+      <div
+        class="mx-auto about-home-echo-inner about-home-echo-anim"
+        :style="{
+          maxWidth: ABOUT_HOME_ECHO_MAX_WIDTH + 'px',
+          columnGap: ABOUT_HOME_ECHO_GAP + 'px'
+        }"
+      >
+        <div class="about-home-echo-left about-home-echo-anim">
           <img
-            src="/images/signature.png"
-            alt="Signature"
+            :src="HOME_HERO_SRC"
+            alt="DSA Home Hero"
             :style="{
-              height: (isMobile ? ABOUT_SIGNATURE_HEIGHT * 0.75 : ABOUT_SIGNATURE_HEIGHT) + 'px',
-              width: 'auto',
-              opacity: ABOUT_SIGNATURE_OPACITY
+              width: HOME_HERO_WIDTH + 'px',
+              maxWidth: HOME_HERO_MAX_WIDTH + 'px',
+              height: HOME_HERO_HEIGHT + 'px'
             }"
           />
-        </div>
-        -->
-
-        <p
-            class="text-right"
+          <h3
             :style="{
-              fontSize: (isMobile ? ABOUT_SIGNATURE_TEXT_SIZE * 0.9 : ABOUT_SIGNATURE_TEXT_SIZE) + 'rem',
-              lineHeight: ABOUT_SIGNATURE_LINE_HEIGHT,
-              marginBottom: (isMobile ? 12 : ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN) + 'px',
-              color: ABOUT_TEXT_COLORS.signatureText[locale]
+              fontSize: HOME_HEADLINE_CN_SIZE + 'px',
+              letterSpacing: HOME_HEADLINE_CN_SPACING + 'em',
+              marginTop: ABOUT_HOME_ECHO_HEADLINE_MARGIN_TOP + 'px',
+              color: HOME_TEXT_COLOR
             }"
+          >
+            {{ ABOUT_HOME_ECHO_HEADLINE_CN }}
+          </h3>
+          <p
+            :style="{
+              fontSize: HOME_HEADLINE_EN_SIZE + 'px',
+              letterSpacing: HOME_HEADLINE_EN_SPACING + 'em',
+              marginTop: HOME_HEADLINE_EN_MARGIN_TOP + 'px',
+              color: HOME_TEXT_COLOR
+            }"
+          >
+            {{ HOME_HEADLINE_EN }}
+          </p>
+        </div>
+
+        <div
+          class="about-home-echo-right about-home-echo-anim"
+          :style="{
+            maxWidth: HOME_BODY_MAX_WIDTH * 0.85 + 'px',
+            fontSize: HOME_BODY_SIZE + 'px',
+            lineHeight: HOME_BODY_LINE_HEIGHT,
+            color: HOME_TEXT_COLOR_SOFT
+          }"
         >
-          {{ ABOUT_FOOTER_TEXT[locale].regards }}<br />
-          <span class="font-semibold tracking-wide">
-            {{ ABOUT_FOOTER_TEXT[locale].name }}
-          </span><br />
-          {{ ABOUT_FOOTER_TEXT[locale].location }}
-        </p>
+          <p
+            v-for="(p, i) in HOME_BODY_CN"
+            :key="'home-cn-' + i"
+            class="text-justify"
+            :style="{
+              marginBottom: HOME_BODY_PARAGRAPH_GAP + 'px',
+              fontWeight: HOME_BODY_WEIGHT_CN,
+              letterSpacing: HOME_BODY_SPACING_CN + 'px',
+              textWrap: 'pretty',
+              textAlign: 'justify',
+              textJustify: 'inter-word'
+            }"
+          >
+            {{ p }}
+          </p>
+          <p
+            v-for="(p, i) in HOME_BODY_EN"
+            :key="'home-en-' + i"
+            class="text-justify"
+            :style="{
+              marginBottom: HOME_BODY_PARAGRAPH_GAP + 'px',
+              fontWeight: HOME_BODY_WEIGHT,
+              letterSpacing: HOME_BODY_SPACING_EN + 'px',
+              textWrap: 'pretty',
+              textAlign: 'justify',
+              textJustify: 'inter-word'
+            }"
+          >
+            {{ p }}
+          </p>
+        </div>
       </div>
     </section>
 
@@ -198,35 +249,13 @@
               :style="{
                 fontSize: ABOUT_INTRO_HEADING_SIZE + 'rem',
                 marginBottom: ABOUT_INTRO_HEADING_SPACING + 'px',
-                color: ABOUT_TEXT_COLORS.introHeading[locale],
+                color: '#8C8C8C',
                 fontWeight: 100,
                 fontStyle: 'italic'
               }"
             >
-              简介 | INTRODUCTION
+              团队 | TEAM
             </p>
-
-            <div
-              class="flex flex-col text-justify"
-              :style="{
-                fontSize: ABOUT_INTRO_TEXT_SIZE + 'rem',
-                lineHeight: ABOUT_INTRO_LINE_HEIGHT,
-                color: ABOUT_TEXT_COLORS.introHeading[locale],
-                rowGap: ABOUT_INTRO_PARAGRAPH_GAP + 'px',
-                textAlign: 'justify',
-                textJustify: 'inter-word',
-                fontWeight: 100,
-                maxWidth: 510 + 'px',
-                paddingLeft: 10 + 'px'
-              }"
-            >
-              <p
-                v-for="(p, i) in introText[locale]"
-                :key="'intro-' + i"
-              >
-                {{ p }}
-              </p>
-            </div>
           </div>
 
           <!-- BIO CARD -->
@@ -478,13 +507,16 @@
     class="flex items-start"
     :style="{ gap: ABOUT_TEAM_GRID_GAP * 2 + 'px' }"
   >
-    <div
+    <button
       v-for="m in internationalMembers"
       :key="m.id"
-      class="flex flex-col items-center text-center"
+      type="button"
+      class="flex flex-col items-center text-center group focus:outline-none"
+      @click="selectMember(m.id)"
     >
       <div
         class="rounded-full transition-all duration-500 ease-out"
+        :class="avatarClass(m.id)"
         :style="{
           width: ABOUT_AVATAR_SIZE + 'px',
           height: ABOUT_AVATAR_SIZE + 'px'
@@ -504,7 +536,7 @@
         :style="{
           fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
           marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
-          color: ABOUT_TEXT_COLORS.avatarName[locale],
+          color: activeId === m.id ? '#ECEBC7' : ABOUT_TEXT_COLORS.avatarName[locale],
           paddingBottom: 3 + 'px'
         }"
       >
@@ -521,7 +553,7 @@
       >
         {{ m.role[locale] }}
       </p>
-    </div>
+    </button>
   </div>
 </div>
 
@@ -587,6 +619,106 @@
       </div> <!-- END RIGHT COLUMN -->
     </div> <!-- END MAIN GRID -->
   </main>
+
+    <!-- =================================================== -->
+    <!-- 4. LETTER SECTION                                   -->
+    <!-- =================================================== -->
+    <section
+      ref="letterSection"
+      class="w-full bg-cover bg-center relative about-letter"
+      :style="{
+        backgroundImage: `url('/images/about-letter-bg.png')`,
+        paddingLeft: ABOUT_LETTER_PADDING_X + 'px',
+        paddingRight: ABOUT_LETTER_PADDING_X + 'px',
+        paddingTop: ABOUT_LETTER_PADDING_TOP + 'px',
+        paddingBottom: ABOUT_LETTER_PADDING_BOTTOM + 'px'
+      }"
+    >
+      <div
+        class="mx-auto transition-opacity duration-500"
+        :style="{ maxWidth: ABOUT_LETTER_MAX_WIDTH + 'px' }"
+      >
+      <!-- LETTER TITLE -->
+<h2
+  class="tracking-[0.02em]"
+  :style="{
+    fontSize: ABOUT_LETTER_TITLE_SIZE + 'rem',
+    fontWeight: ABOUT_LETTER_TITLE_WEIGHT,
+    opacity: ABOUT_LETTER_TITLE_OPACITY,
+    marginBottom: ABOUT_LETTER_TITLE_MARGIN_BOTTOM + 'px',
+    color: ABOUT_TEXT_COLORS.letterTitle[locale]
+  }"
+>
+  {{ locale === 'en' ? ABOUT_LETTER_TITLE_EN : ABOUT_LETTER_TITLE_ZH }}
+</h2>
+        <div
+          class="w-full stagger-parent about-letter-flow"
+          :style="{
+            minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px',
+            fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
+            fontWeight: ABOUT_LETTER_BODY_WEIGHT,
+            lineHeight: ABOUT_LETTER_LINE_HEIGHT,
+            color: ABOUT_TEXT_COLORS.letterBody[locale]
+          }"
+        >
+          <div
+            :class="[
+              'flex flex-col text-justify stagger-item reveal-block',
+              { 'reveal-visible': reveals.letter }
+            ]"
+            style="--reveal-delay: 120ms;"
+          >
+            <p
+              v-for="(p, i) in letterParagraphsCombined[locale]"
+              :key="'letter-' + i"
+              :style="{ marginBottom: ABOUT_LETTER_PARAGRAPH_GAP + 'px' }"
+            >
+              {{ p }}
+            </p>
+
+            <p
+              class="about-letter-signature text-right"
+              :style="{
+                fontSize: (isMobile ? ABOUT_SIGNATURE_TEXT_SIZE * 0.9 : ABOUT_SIGNATURE_TEXT_SIZE) + 'rem',
+                lineHeight: ABOUT_SIGNATURE_LINE_HEIGHT,
+                marginBottom: (isMobile ? 12 : ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN) + 'px',
+                color: ABOUT_TEXT_COLORS.signatureText[locale]
+              }"
+            >
+              {{ ABOUT_FOOTER_TEXT[locale].regards }}<br />
+              <span class="font-semibold tracking-wide">
+                {{ ABOUT_FOOTER_TEXT[locale].name }}
+              </span><br />
+              {{ ABOUT_FOOTER_TEXT[locale].location }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Signature -->
+        <!--
+        <div
+          class="flex justify-end signature-block"
+          :style="{
+            marginTop: isMobile
+              ? (locale === 'zh' ? '-200px' : '4px')
+              : ABOUT_SIGNATURE_TOP_MARGIN[locale] + 'px',
+            marginBottom: isMobile ? '10px' : ABOUT_SIGNATURE_BOTTOM_MARGIN + 'px'
+          }"
+        >
+          <img
+            src="/images/signature.png"
+            alt="Signature"
+            :style="{
+              height: (isMobile ? ABOUT_SIGNATURE_HEIGHT * 0.75 : ABOUT_SIGNATURE_HEIGHT) + 'px',
+              width: 'auto',
+              opacity: ABOUT_SIGNATURE_OPACITY
+            }"
+          />
+        </div>
+        -->
+
+      </div>
+    </section>
   </div>
 </template>
 
@@ -618,6 +750,31 @@ const ABOUT_HERO_VIDEO_WIDTH = 1000;          // video width (20% larger)
 const ABOUT_HERO_VIDEO_PADDING_LEFT = 10;    // spacing from center
 const ABOUT_HERO_VIDEO_SCALE = 1; // 👈 THIS is your 20%
 
+// INTRO HERO (NEW SECTION BELOW HERO)
+const ABOUT_INTRO_HERO_MAX_WIDTH = 1600;
+const ABOUT_INTRO_HERO_PADDING_LEFT = 24;
+const ABOUT_INTRO_HERO_PADDING_RIGHT = 0;
+const ABOUT_INTRO_HERO_PADDING_Y = 0;
+const ABOUT_INTRO_HERO_GAP = 30;
+const ABOUT_INTRO_HERO_TITLE_SIZE = 1.05;
+const ABOUT_INTRO_HERO_TITLE_SPACING = 150;
+const ABOUT_INTRO_HERO_TITLE_PADDING_TOP = 50;
+const ABOUT_INTRO_HERO_TITLE_TRACKING = 0.02;
+const ABOUT_INTRO_HERO_NAME_SIZE = 1.35;
+const ABOUT_INTRO_HERO_NAME_SPACING = 18;
+const ABOUT_INTRO_HERO_TEXT_SIZE = 0.9;
+const ABOUT_INTRO_HERO_LINE_HEIGHT = 1.7;
+const ABOUT_INTRO_HERO_PARAGRAPH_GAP = 18;
+
+// HOME ECHO SECTION (BELOW INTRO HERO)
+const ABOUT_HOME_ECHO_MAX_WIDTH = 1400;
+const ABOUT_HOME_ECHO_PADDING_X = 24;
+const ABOUT_HOME_ECHO_PADDING_TOP = 220;
+const ABOUT_HOME_ECHO_PADDING_BOTTOM = 80;
+const ABOUT_HOME_ECHO_GAP = 90;
+const ABOUT_HOME_ECHO_HEADLINE_MARGIN_TOP = HOME_HEADLINE_MARGIN_TOP * 0.4;
+const ABOUT_HOME_ECHO_HEADLINE_CN = "系统化营造空间整体氛围";
+
 // ===== LETTER TITLE =====
 const ABOUT_LETTER_TITLE_EN = "To My Friends and Partners,";
 const ABOUT_LETTER_TITLE_ZH = "致我的朋友伙伴，";
@@ -628,9 +785,10 @@ const ABOUT_LETTER_TITLE_OPACITY = 0.92;
 const ABOUT_LETTER_TITLE_MARGIN_BOTTOM = 74; // px
 
 /* ---------- LETTER SECTION ---------- */
-const ABOUT_LETTER_PADDING_Y = 100;
+const ABOUT_LETTER_PADDING_TOP = 120;
+const ABOUT_LETTER_PADDING_BOTTOM = 40;
 const ABOUT_LETTER_PADDING_X = 24;
-const ABOUT_LETTER_MIN_HEIGHT = 1000;
+const ABOUT_LETTER_MIN_HEIGHT = 700;
 const ABOUT_LETTER_MAX_WIDTH = 900;
 const ABOUT_LETTER_COLUMN_GAP = 4;
 const ABOUT_LETTER_FONT_SIZE = 1;
@@ -641,14 +799,14 @@ const ABOUT_LETTER_PARAGRAPH_GAP = 16;
 /* ---------- LETTER FOOTER ---------- */
 const ABOUT_FOOTER_TEXT = {
   en: {
-    regards: "Regards,",
-    name: "Demi Young",
-    location: "Shenzhen, 2025",
+    regards: "",
+    name: "Ouyang Xiaoping",
+    location: "2026 · Shenzhen",
   },
   zh: {
-    regards: "致敬，",
-    name: "Demi Young",
-    location: "深圳，2025",
+    regards: "",
+    name: "欧阳小平",
+    location: "2026 年 · 深圳",
   },
 } as const;
 
@@ -659,7 +817,7 @@ const ABOUT_SIGNATURE_TOP_MARGIN = {en:-180 , zh:-450};
 const ABOUT_SIGNATURE_BOTTOM_MARGIN = 8;
 const ABOUT_SIGNATURE_TEXT_SIZE = 0.9;
 const ABOUT_SIGNATURE_LINE_HEIGHT = 1.5;
-const ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN = 100;
+const ABOUT_SIGNATURE_TEXT_BOTTOM_MARGIN = 40;
 
 /* ---------- MAIN CONTENT ---------- */
 const ABOUT_MAIN_MAX_WIDTH = 1200;
@@ -674,9 +832,6 @@ const ABOUT_LEFT_COLUMN_SECTION_SPACING = 80;
 /* ---------- INTRO ---------- */
 const ABOUT_INTRO_HEADING_SIZE = 1.05;
 const ABOUT_INTRO_HEADING_SPACING = 24;
-const ABOUT_INTRO_TEXT_SIZE = 0.8;
-const ABOUT_INTRO_LINE_HEIGHT = 1.6;
-const ABOUT_INTRO_PARAGRAPH_GAP = 16;
 
 /* ---------- BIO CARD ---------- */
 const ABOUT_BIO_MAX_WIDTH = 530;
@@ -731,6 +886,17 @@ const ABOUT_TEAM_LABEL_KERNING = { en: -0.3, zh: -0.3}
 const ABOUT_TEAM_LABEL_KERNING_ZH = '8px'; // Chinese wants tighter
 const ABOUT_TEAM_LABEL_KERNING_EN = '0.1em';  // English wants air
 
+const letterParagraphsCombined = {
+  en: [
+    ...letterParagraphs.en.left,
+    ...letterParagraphs.en.right,
+  ],
+  zh: [
+    ...letterParagraphs.zh.left,
+    ...letterParagraphs.zh.right,
+  ],
+};
+
 
 /* =============================================================
    LOGIC (UNCHANGED)
@@ -739,9 +905,34 @@ import { ref, computed, nextTick, onMounted, onBeforeUnmount } from "vue";
 import { useLocale } from "~/composables/useLocale";
 import {
   letterParagraphs,
-  introText,
   members as membersData,
 } from "~/content/about";
+import {
+  HOME_BODY_CN,
+  HOME_BODY_EN,
+  HOME_BODY_LINE_HEIGHT,
+  HOME_BODY_MAX_WIDTH,
+  HOME_BODY_PARAGRAPH_GAP,
+  HOME_BODY_SIZE,
+  HOME_BODY_SPACING_CN,
+  HOME_BODY_SPACING_EN,
+  HOME_BODY_WEIGHT,
+  HOME_BODY_WEIGHT_CN,
+  HOME_HEADLINE_CN,
+  HOME_HEADLINE_CN_SIZE,
+  HOME_HEADLINE_CN_SPACING,
+  HOME_HEADLINE_EN,
+  HOME_HEADLINE_EN_SIZE,
+  HOME_HEADLINE_EN_SPACING,
+  HOME_HEADLINE_EN_MARGIN_TOP,
+  HOME_HEADLINE_MARGIN_TOP,
+  HOME_HERO_HEIGHT,
+  HOME_HERO_MAX_WIDTH,
+  HOME_HERO_SRC,
+  HOME_HERO_WIDTH,
+  HOME_TEXT_COLOR,
+  HOME_TEXT_COLOR_SOFT,
+} from "~/content/home";
 
 definePageMeta({
   layout: "default",
@@ -752,7 +943,7 @@ const { locale } = useLocale();
 
 /* TEAM + BIOS */
 const members = ref(membersData);
-const activeId = ref("demi");
+const activeId = ref("bitch");
 const isMobile = ref(false);
 const hydrated = ref(false);
 
@@ -929,6 +1120,145 @@ onBeforeUnmount(() => {
   transition-delay: var(--reveal-delay, 0ms);
 }
 
+.about-intro-hero-inner {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+}
+
+.about-intro-hero-text {
+  max-width: 620px;
+  padding-left: 130px;
+}
+
+.about-intro-hero-image {
+  width: 50vw;
+  max-width: 50vw;
+  overflow: hidden;
+  flex-shrink: 0;
+  margin-right: calc(50% - 50vw);
+}
+
+.about-intro-hero-image img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-home-echo-inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  align-items: center;
+}
+
+.about-home-echo-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding-bottom: 20px;
+}
+
+.about-home-echo-left img {
+  display: block;
+  margin: 0 auto;
+}
+
+.about-letter-flow {
+  column-gap: 0;
+}
+
+.about-letter-signature {
+  break-inside: avoid;
+  margin-top: 24px;
+}
+
+.about-home-echo-anim {
+  opacity: 0;
+  transform: translateY(16px);
+  animation: homeEchoFade 1s ease-out forwards;
+}
+
+.about-home-echo-left.about-home-echo-anim {
+  animation-delay: 120ms;
+}
+
+.about-home-echo-right.about-home-echo-anim {
+  animation-delay: 240ms;
+}
+
+.about-home-echo-left.about-home-echo-anim img {
+  animation: homeEchoFloat 9s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+@keyframes homeEchoFade {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes homeEchoFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+.about-intro-hero-anim {
+  opacity: 0;
+  transform: translateY(18px);
+  animation: introFadeUp 1.1s ease-out forwards;
+}
+
+.about-intro-hero-text.about-intro-hero-anim {
+  animation-delay: 120ms;
+}
+
+.about-intro-hero-image.about-intro-hero-anim {
+  animation-delay: 240ms;
+  animation-name: introFadeUp, introFloat;
+  animation-duration: 1.1s, 10s;
+  animation-timing-function: ease-out, ease-in-out;
+  animation-iteration-count: 1, infinite;
+  animation-fill-mode: forwards, none;
+  animation-delay: 240ms, 1.1s;
+}
+
+@keyframes introFadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes introFloat {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
 /* Ring draw animation */
 @keyframes ringDraw {
   from {
@@ -957,7 +1287,9 @@ onBeforeUnmount(() => {
 @media (prefers-reduced-motion: reduce) {
   .reveal-block,
   .stagger-item,
-  .hero-text-float {
+  .hero-text-float,
+  .about-intro-hero-anim,
+  .about-home-echo-anim {
     animation: none !important;
     transition-duration: 0ms !important;
   }
@@ -1000,6 +1332,53 @@ onBeforeUnmount(() => {
 
   .about-main-grid {
     gap: 32px !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-letter-flow {
+    column-count: 2;
+    column-gap: 1.8rem;
+  }
+
+  .about-letter-signature {
+    column-span: all;
+  }
+}
+
+@media (max-width: 900px) {
+  .about-intro-hero {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .about-intro-hero-inner {
+    flex-direction: column;
+    row-gap: 32px;
+  }
+
+  .about-intro-hero-text {
+    max-width: 100%;
+    padding-left: 30px;
+    padding-right: 30px;
+  }
+
+  .about-intro-hero-image {
+    width: 100vw;
+    max-width: 100vw;
+    margin-left: calc(50% - 50vw);
+    margin-right: calc(50% - 50vw);
+  }
+
+  .about-home-echo-inner {
+    grid-template-columns: 1fr;
+    row-gap: 40px;
+  }
+}
+
+@media (min-width: 1101px) {
+  .about-home-echo-left {
+    padding-left: 55px;
   }
 }
 

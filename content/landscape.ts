@@ -23,7 +23,7 @@ export interface LandscapeProject {
 export const heroCopy: LandscapeHeroCopy = {
   title: {
     en: 'LANDSCAPE ARCHITECTURE',
-    zh: 'LANDSCAPE ARCHITECTUR'
+    zh: 'LANDSCAPE ARCHITECTURE'
   },
   body: {
     en:

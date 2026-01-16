@@ -70,7 +70,7 @@
           </h1>
 
           <p class="uppercase tracking-[0.22em] mb-6 text-sm opacity-80">
-            SHENZHEN | SHANGHAI | SINGAPORE | PARIS
+            SHENZHEN | SHANGHAI | SINGAPORE
           </p>
 
           <div class="space-y-8 text-sm leading-relaxed opacity-85">
@@ -174,7 +174,9 @@
                 <polyline points="7 10 12 5 17 10"/>
                 <line x1="12" y1="5" x2="12" y2="21"/>
               </svg>
-              <span :style="{ letterSpacing: UI.SUBMIT_TRACKING , fontWeight: 300,}">Resume</span>
+              <span :style="{ letterSpacing: UI.SUBMIT_TRACKING , fontWeight: 300,}">
+                {{ locale === 'en' ? 'Resume' : '简历' }}
+              </span>
             </span>
           </label>
 
@@ -202,7 +204,9 @@
                 <polyline points="7 10 12 5 17 10"/>
                 <line x1="12" y1="5" x2="12" y2="21"/>
               </svg>
-              <span :style="{ letterSpacing: UI.SUBMIT_TRACKING, fontWeight:300, }">Portfolio</span>
+              <span :style="{ letterSpacing: UI.SUBMIT_TRACKING, fontWeight:300, }">
+                {{ locale === 'en' ? 'Portfolio' : '作品集' }}
+              </span>
             </span>
           </label>
         </div>
@@ -216,14 +220,30 @@
 
           <!-- NAME -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <TextField label="First name" v-model="form.firstName" required />
-            <TextField label="Last name" v-model="form.lastName" required />
+            <TextField :label="formLabels.firstName" v-model="form.firstName" required />
+            <TextField :label="formLabels.lastName" v-model="form.lastName" required />
           </div>
 
           <!-- CONTACT -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <TextField label="Mobile" v-model="form.mobile" required />
-            <TextField label="Email address" v-model="form.email" required />
+            <div class="flex flex-col contact-mobile-field">
+              <label class="mb-1 tracking-wider text-sm">{{ formLabels.mobile }}</label>
+              <div class="flex gap-2 contact-mobile-row">
+                <PhoneCodeDropdown
+                  v-model="form.mobileCode"
+                  :options="COUNTRY_CALLING_CODES"
+                  :placeholder="formLabels.mobileCodePlaceholder"
+                  class="contact-code-dropdown"
+                />
+                <input
+                  v-model="form.mobile"
+                  type="tel"
+                  class="flex-1 px-3 py-2 bg-[#FFFFFF] border border-[#E0E0E0] rounded text-[#828282] focus:outline-none contact-mobile-input"
+                  :required="true"
+                />
+              </div>
+            </div>
+            <TextField :label="formLabels.email" v-model="form.email" required />
           </div>
 
           <!-- DROPDOWNS -->
@@ -232,22 +252,22 @@
             :style="{ color: '#8C8C8C', gridTemplateColumns: '1fr 1fr 1.5fr' }"
           >
             <DSADropdown
-              label="Status"
-              :options="STATUS_OPTIONS"
+              :label="formLabels.status"
+              :options="statusOptions"
               v-model="form.status"
               size="compact"
             />
 
             <DSADropdown
-              label="Location"
-              :options="LOCATION_OPTIONS"
+              :label="formLabels.location"
+              :options="locationOptions"
               v-model="form.location"
               size="compact"
             />
 
             <DSADropdown
-              label="Position"
-              :options="POSITION_OPTIONS"
+              :label="formLabels.position"
+              :options="positionOptions"
               v-model="form.position"
               size="compact"
             />
@@ -255,7 +275,7 @@
 
           <!-- MESSAGE -->
           <TextArea
-            label="Your message"
+            :label="formLabels.message"
             v-model="form.message"
             :rows="6"
             required
@@ -275,7 +295,7 @@
               cursor: isSubmitting ? 'not-allowed' : 'pointer'
             }"
           >
-            {{ isSubmitting ? 'Submitting…' : 'Submit' }}
+            {{ isSubmitting ? formLabels.submitting : formLabels.submit }}
           </button>
         </form>
         <div
@@ -301,23 +321,45 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, computed, watch } from "vue";
 import { useLocale } from "~/composables/useLocale";
 import TextField from "~/components/admin/TextField.vue";
 import TextArea from "~/components/admin/TextArea.vue";
 import DSADropdown from "~/components/DSADropdown.vue";
+import PhoneCodeDropdown from "~/components/PhoneCodeDropdown.vue";
 import SubmissionError from "~/components/SubmissionError.vue";
 
 import {
   contactSectionCopy,
-  STATUS_OPTIONS,
-  LOCATION_OPTIONS,
-  POSITION_OPTIONS,
+  contactFormLabels,
+  COUNTRY_CALLING_CODES,
+  STATUS_OPTIONS_EN,
+  STATUS_OPTIONS_ZH,
+  LOCATION_OPTIONS_EN,
+  LOCATION_OPTIONS_ZH,
+  POSITION_OPTIONS_EN,
+  POSITION_OPTIONS_ZH,
   CONTACT_COLORS,
   DSA_PURPLE
 } from "~/content/contact";
 
 const { locale } = useLocale();
+
+const formLabels = computed(() =>
+  locale.value === "en" ? contactFormLabels.en : contactFormLabels.zh
+);
+
+const statusOptions = computed(() =>
+  locale.value === "en" ? STATUS_OPTIONS_EN : STATUS_OPTIONS_ZH
+);
+
+const locationOptions = computed(() =>
+  locale.value === "en" ? LOCATION_OPTIONS_EN : LOCATION_OPTIONS_ZH
+);
+
+const positionOptions = computed(() =>
+  locale.value === "en" ? POSITION_OPTIONS_EN : POSITION_OPTIONS_ZH
+);
 
 //
 // ======================================
@@ -328,6 +370,7 @@ const { locale } = useLocale();
 const form = ref({
   firstName: "",
   lastName: "",
+  mobileCode: "",
   mobile: "",
   email: "",
   status: "",
@@ -335,6 +378,17 @@ const form = ref({
   position: "",
   message: "",
 });
+
+watch(
+  () => locale.value,
+  (nextLocale) => {
+    if (form.value.mobileCode) return;
+    if (nextLocale === "zh") {
+      form.value.mobileCode = "+86";
+    }
+  },
+  { immediate: true }
+);
 
 const resumeFile = ref<File | null>(null);
 const portfolioFile = ref<File | null>(null);
@@ -524,6 +578,20 @@ async function submitForm() {
   padding-left: 32px;
 }
 
+.contact-mobile-row {
+  align-items: center;
+}
+
+.contact-code-dropdown {
+  width: 112px;
+  min-width: 112px;
+  flex-shrink: 0;
+}
+
+.contact-mobile-input {
+  min-width: 0;
+}
+
 @media (min-width: 721px) and (max-width: 1100px) {
   .contact-hero-col {
     padding-left: 56px;
@@ -582,6 +650,11 @@ async function submitForm() {
 
   .contact-neutral-dropdowns > * {
     width: 100%;
+  }
+
+  .contact-code-dropdown {
+    width: 100%;
+    min-width: 0;
   }
 
   .contact-join {

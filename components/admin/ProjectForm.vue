@@ -238,9 +238,11 @@ onMounted(() => {
     });
 
     existingImages.value = props.initialData.images ?? [];
-    heroImageIds.value = existingImages.value
-      .filter((i) => (i.isHero ?? i.isCover))
-      .map((i) => i.id);
+    const heroCandidates = existingImages.value.filter((i) => i.isHero);
+    const heroSource = heroCandidates.length
+      ? heroCandidates
+      : existingImages.value.filter((i) => i.isCover);
+    heroImageIds.value = heroSource.map((i) => i.id);
 
     const existingCover = existingImages.value.find((i) => i.isCover);
     selectedCoverId.value = existingCover?.id || existingImages.value[0]?.id || "";
@@ -314,7 +316,7 @@ function handleFiles(event: Event) {
     ...previewImages.value,
     ...newFiles.map((f) => URL.createObjectURL(f)),
   ];
-  isHeroFlags.value = [...isHeroFlags.value, ...newFiles.map(() => false)];
+  isHeroFlags.value = [...isHeroFlags.value, ...newFiles.map(() => true)];
 }
 
 function handleDropUpload(e: DragEvent) {
@@ -330,7 +332,7 @@ function handleDropUpload(e: DragEvent) {
     ...previewImages.value,
     ...dropped.map((f) => URL.createObjectURL(f)),
   ];
-  isHeroFlags.value = [...isHeroFlags.value, ...dropped.map(() => false)];
+  isHeroFlags.value = [...isHeroFlags.value, ...dropped.map(() => true)];
 }
 
 function startDrag(i: number) {

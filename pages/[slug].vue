@@ -274,7 +274,18 @@ const sortedImages = computed(() => {
   return imgs;
 });
 
+const heroImages = computed(() => {
+  if (!project.value || !Array.isArray(project.value.images)) return [];
+  const imgs = [...project.value.images];
+  const heroes = imgs.filter((img) => img.isHero);
+  if (heroes.length) return heroes;
+  const covers = imgs.filter((img) => img.isCover);
+  if (covers.length) return covers;
+  return imgs;
+});
+
 const hasImages = computed(() => sortedImages.value.length > 0);
+const hasHeroImages = computed(() => heroImages.value.length > 0);
 
 const previewUrl = computed(() => {
   if (!project.value) return "";
@@ -382,31 +393,31 @@ const isMobile = computed(() => {
 
 const currentHeroUrl = computed(() => {
   if (!project.value) return "";
-  if (hasImages.value) {
-    return sortedImages.value[currentImageIndex.value]?.url || project.value.coverImageUrl;
+  if (hasHeroImages.value) {
+    return heroImages.value[currentImageIndex.value]?.url || project.value.coverImageUrl;
   }
   return project.value.coverImageUrl;
 });
 
 const currentHeroAlt = computed(() => {
   if (!project.value) return "";
-  if (hasImages.value) {
-    const img = sortedImages.value[currentImageIndex.value];
+  if (hasHeroImages.value) {
+    const img = heroImages.value[currentImageIndex.value];
     return img?.alt?.[locale] || project.value.title[locale];
   }
   return project.value.title[locale];
 });
 
 function prevImage() {
-  if (!hasImages.value) return;
-  const imgs = sortedImages.value;
+  if (!hasHeroImages.value) return;
+  const imgs = heroImages.value;
   currentImageIndex.value =
     (currentImageIndex.value - 1 + imgs.length) % imgs.length;
 }
 
 function nextImage() {
-  if (!hasImages.value) return;
-  const imgs = sortedImages.value;
+  if (!hasHeroImages.value) return;
+  const imgs = heroImages.value;
   currentImageIndex.value = (currentImageIndex.value + 1) % imgs.length;
 }
 
@@ -531,8 +542,8 @@ onMounted(() => {
   // Auto-rotate hero image every 3 seconds
   if (heroTimer) clearInterval(heroTimer);
   heroTimer = setInterval(() => {
-    if (!hasImages.value) return;
-    const imgs = project.value.images;
+    if (!hasHeroImages.value) return;
+    const imgs = heroImages.value;
     currentImageIndex.value = (currentImageIndex.value + 1) % imgs.length;
   }, 5000);
 
@@ -555,6 +566,13 @@ watch(
   () => {
     currentImageIndex.value = 0;
     previewIndex.value = 0;
+  }
+);
+
+watch(
+  () => heroImages.value.length,
+  () => {
+    currentImageIndex.value = 0;
   }
 );
 </script>
