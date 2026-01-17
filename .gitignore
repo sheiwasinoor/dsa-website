@@ -30,3 +30,10 @@ logs
 public/uploads
 prisma/*.db
 prisma/*.db.*
+
+# Runtime data — never commit
+prisma/**/*.db
+prisma/**/*.db*
+public/uploads/
+uploads/
+*.tar.gz
