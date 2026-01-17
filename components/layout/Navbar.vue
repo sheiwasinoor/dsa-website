@@ -385,7 +385,7 @@ function isRouteActive(to: string) {
 }
 
 function goHome() {
-  router.push("/home");
+  router.push("/");
 }
 
 function goTo(to: string) {

@@ -16,7 +16,7 @@
       <div class="max-w-[420px] contact-hero-col">
         <div>
           <h1
-            class="mb-10"
+            class="mb-10 contact-heading"
             :style="{
               fontSize: '40px',
               letterSpacing: '0.08em',
@@ -44,22 +44,20 @@
             <p class="opacity-75">+86 177 2784 7995</p>
           </template>
           <template v-else>
-            <p class="leading-relaxed mb-4" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-              业务合作 — dayoung@dayoung.work
+            <p class="mb-1" style="font-size: 1.25rem; font-weight: 600;color: #8C8C8C;">
+              业务合作
             </p>
-            <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-              +86 177 2268 4557
+            <p class="mb-2 opacity-90">
+              dayoung@dayoung.work
             </p>
-            <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-              +86 755 88878571
-            </p>
+            <p class="mb-1 opacity-75">+86 177 2268 4557</p>
+            <p class="mb-8 opacity-75">+86 755 88878571</p>
 
-            <p class="leading-relaxed mt-6 mb-4 font-medium" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-              招聘联系 — Job@dayoung.work
+            <p class="mb-1" style="font-size: 1.25rem;font-weight: 600; color: #8C8C8C;">
+              招聘联系
             </p>
-            <p class="leading-relaxed mb-1" :style="{ opacity: UI.DESCRIPTION_OPACITY }">
-              +86 177 2784 7995
-            </p>
+            <p class="mb-2 opacity-90">Job@dayoung.work</p>
+            <p class="opacity-75">+86 177 2784 7995</p>
           </template>
         </div>
       </div>
@@ -69,9 +67,11 @@
             Address
           </h1>
 
-          <p class="uppercase tracking-[0.22em] mb-6 text-sm opacity-80">
-            SHENZHEN | SHANGHAI | SINGAPORE
-          </p>
+          <div class="contact-address-line-wrap">
+            <span class="uppercase tracking-[0.22em] text-sm opacity-80 contact-address-line">
+              SHENZHEN | SHANGHAI | SINGAPORE
+            </span>
+          </div>
 
           <div class="space-y-8 text-sm leading-relaxed opacity-85">
             <template v-if="locale === 'en'">
@@ -115,7 +115,8 @@
     <section
       class="mx-auto grid grid-cols-1 md:grid-cols-[45%_55%] lg:grid-cols-[35%_65%] gap-16 md:gap-20 lg:gap-28 items-start contact-body"
     >
-      <div class="max-w-[420px] contact-join">
+      <div class="contact-join">
+        <div class="contact-join-inner">
         <h1 class="font-semibold mb-6 join-heading" :style="{ color: '#8EB29E', fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
           Join Us
         </h1>
@@ -209,6 +210,7 @@
               </span>
             </span>
           </label>
+        </div>
         </div>
       </div>
 
@@ -574,6 +576,10 @@ async function submitForm() {
   padding-left: 80px;
 }
 
+.contact-join-inner {
+  max-width: 420px;
+}
+
 .contact-form {
   padding-left: 32px;
 }
@@ -622,6 +628,13 @@ async function submitForm() {
   .contact-body {
     gap: 40px !important;
     text-align: center;
+    justify-items: center;
+  }
+
+  .contact-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .contact-hero > div,
@@ -630,9 +643,50 @@ async function submitForm() {
     margin: 0 auto;
   }
 
+  .contact-hero-col-right {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .contact-hero-col-right > div {
+    width: 100%;
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
   .contact-hero h1,
   .contact-body h1 {
     text-align: center;
+  }
+
+
+  .contact-heading {
+    white-space: nowrap;
+    font-size: 28px !important;
+    letter-spacing: 0.04em !important;
+  }
+
+  .contact-address-line {
+    white-space: nowrap;
+    letter-spacing: 0.16em !important;
+    font-size: 0.72rem !important;
+    text-align: center;
+  }
+
+  .contact-address-line-wrap {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1.5rem;
   }
 
   .contact-form {
@@ -653,29 +707,43 @@ async function submitForm() {
   }
 
   .contact-code-dropdown {
-    width: 100%;
-    min-width: 0;
+    width: 72px;
+    min-width: 72px;
+    flex: 0 0 72px;
   }
 
   .contact-join {
-    max-width: 100% !important;
-    padding: 0 12px !important;
+    width: 100%;
+    padding: 0 !important;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+  }
+
+  .contact-join-inner {
+    width: 75vw;
+    min-width: 75vw;
+    max-width: 75vw;
+    margin: 0 auto;
+    text-align: center;
   }
 
   .join-copy {
     text-align: justify !important;
+    text-justify: inter-word !important;
     text-wrap: pretty;
     width: 100% !important;
     max-width: 100% !important;
-    margin-left: 0 !important;
-    margin-right: 0 !important;
-    padding-left: 8px;
-    padding-right: 8px;
+    margin-left: auto !important;
+    margin-right: auto !important;
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .file-buttons {
     flex-direction: column;
     align-items: center;
+    width: 100%;
   }
 
   .file-buttons label {

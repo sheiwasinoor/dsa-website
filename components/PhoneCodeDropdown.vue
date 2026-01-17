@@ -36,7 +36,7 @@
     <transition name="dsadrop">
       <div
         v-if="isOpen"
-        class="absolute left-0 right-0 z-50 rounded-md shadow-lg overflow-hidden"
+        class="absolute left-0 z-50 rounded-md shadow-lg overflow-hidden phone-code-menu"
         :style="{
           marginTop: UI.MENU_OFFSET,
           backgroundColor: UI.MENU_BG,
@@ -261,6 +261,17 @@ function getAcronym(name: string) {
 }
 .option-row {
   white-space: nowrap;
+}
+.phone-code-menu {
+  width: 100%;
+  min-width: 100%;
+}
+@media (max-width: 720px) {
+  .phone-code-menu {
+    width: 70vw;
+    min-width: 220px;
+    max-width: 90vw;
+  }
 }
 .dsadrop-enter-active,
 .dsadrop-leave-active {

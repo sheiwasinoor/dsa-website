@@ -161,10 +161,13 @@ class="uppercase"
       >
         <article
           @click="goTo(p.slug)"
-          v-for="p in filteredProjects"
+          v-for="(p, i) in filteredProjects"
           :key="p.id"
           class="relative group overflow-hidden bg-[#101A14] rounded-md cursor-pointer card-lift"
-          :style="{ height: LIGHTING_GRID_CARD_HEIGHT + 'px' }"
+          :style="{
+            height: LIGHTING_GRID_CARD_HEIGHT + 'px',
+            '--card-delay': `${(i % 6) * 70 + (i % 3) * 25}ms`
+          }"
         >
           <!-- Thumbnail -->
           <img
@@ -374,7 +377,10 @@ onBeforeUnmount(() => {
 
   .hero-content {
     max-width: 92vw !important;
-    padding: 0 12px;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
   .hero-line {
@@ -394,6 +400,8 @@ onBeforeUnmount(() => {
     padding-top: 12px !important;
     padding-bottom: 14px !important;
     text-align: justify !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .search-wrap {
@@ -444,15 +452,24 @@ onBeforeUnmount(() => {
   transform: translateY(0);
 }
 
-.lighting-grid-enter-active,
-.lighting-grid-leave-active,
+.lighting-grid-enter-active {
+  transition:
+    opacity 620ms cubic-bezier(0.16, 1, 0.3, 1),
+    transform 720ms cubic-bezier(0.16, 1, 0.3, 1);
+  transition-delay: var(--card-delay, 0ms);
+}
+.lighting-grid-leave-active {
+  transition:
+    opacity 220ms ease-in,
+    transform 260ms ease-in;
+}
 .lighting-grid-move {
-  transition: all var(--filter-duration) ease-out;
+  transition: transform var(--filter-duration) ease-out;
 }
 .lighting-grid-enter-from,
 .lighting-grid-leave-to {
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(28px) scale(0.98);
 }
 
 /* Reveal primitives */
@@ -471,12 +488,16 @@ onBeforeUnmount(() => {
 /* Card hover */
 .card-lift {
   transition:
-    transform 320ms cubic-bezier(0.33, 1, 0.68, 1),
-    box-shadow 320ms cubic-bezier(0.33, 1, 0.68, 1);
+    transform 630ms cubic-bezier(0.33, 1, 0.68, 1),
+    box-shadow 630ms cubic-bezier(0.33, 1, 0.68, 1);
 }
 .card-lift:hover {
   transform: translateY(-6px);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+}
+.card-lift:active {
+  transform: translateY(2px) scale(0.96);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.22);
 }
 
 @media (prefers-reduced-motion: reduce) {

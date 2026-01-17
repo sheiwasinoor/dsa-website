@@ -1,9 +1,10 @@
 <!-- pages/about.vue -->
 <template>
   <div
-    class="bg-[#000C05] text-[#ECEBC7] min-h-screen"
+    class="bg-[#000C05] text-[#ECEBC7] min-h-screen about-page"
     :style="{ '--footer-margin-top': '0px' }"
   >
+    <div class="about-page-inner">
     <!-- =================================================== -->
     <!-- 1. HERO (TRANSPARENT PNG, FULL-HEIGHT SECTION)      -->
     <!-- =================================================== -->
@@ -77,6 +78,12 @@
           >
             简介 | INTRODUCTION
           </p>
+          <div class="about-intro-hero-image-mobile">
+            <img
+              src="/images/Introduction-Background-Image.jpg"
+              alt="Introduction background"
+            />
+          </div>
           <h3
             class="font-semibold"
             :style="{
@@ -110,7 +117,7 @@
           </div>
         </div>
 
-        <div class="about-intro-hero-image">
+        <div class="about-intro-hero-image about-intro-hero-image-desktop">
             <img
               src="/images/Introduction-Background-Image.jpg"
               alt="Introduction background"
@@ -138,7 +145,13 @@
           columnGap: ABOUT_HOME_ECHO_GAP + 'px'
         }"
       >
-        <div class="about-home-echo-left about-home-echo-anim">
+        <div
+          class="about-home-echo-left about-home-echo-anim"
+          :style="{
+            '--home-headline-cn-size-base': HOME_HEADLINE_CN_SIZE + 'px',
+            '--home-headline-en-size-base': HOME_HEADLINE_EN_SIZE + 'px'
+          }"
+        >
           <img
             :src="HOME_HERO_SRC"
             alt="DSA Home Hero"
@@ -150,7 +163,7 @@
           />
           <h3
             :style="{
-              fontSize: HOME_HEADLINE_CN_SIZE + 'px',
+              fontSize: 'var(--home-headline-cn-size, var(--home-headline-cn-size-base, 0px))',
               letterSpacing: HOME_HEADLINE_CN_SPACING + 'em',
               marginTop: ABOUT_HOME_ECHO_HEADLINE_MARGIN_TOP + 'px',
               color: HOME_TEXT_COLOR
@@ -160,7 +173,7 @@
           </h3>
           <p
             :style="{
-              fontSize: HOME_HEADLINE_EN_SIZE + 'px',
+              fontSize: 'var(--home-headline-en-size, var(--home-headline-en-size-base, 0px))',
               letterSpacing: HOME_HEADLINE_EN_SPACING + 'em',
               marginTop: HOME_HEADLINE_EN_MARGIN_TOP + 'px',
               color: HOME_TEXT_COLOR
@@ -174,7 +187,7 @@
           class="about-home-echo-right about-home-echo-anim"
           :style="{
             maxWidth: HOME_BODY_MAX_WIDTH * 0.85 + 'px',
-            fontSize: HOME_BODY_SIZE + 'px',
+            fontSize: ABOUT_INTRO_HERO_TEXT_SIZE + 'rem',
             lineHeight: HOME_BODY_LINE_HEIGHT,
             color: HOME_TEXT_COLOR_SOFT
           }"
@@ -245,7 +258,7 @@
           <!-- INTRO SECTION -->
           <div>
             <p
-              class="tracking-[0.10em]"
+              class="about-team-label tracking-[0.10em]"
               :style="{
                 fontSize: ABOUT_INTRO_HEADING_SIZE + 'rem',
                 marginBottom: ABOUT_INTRO_HEADING_SPACING + 'px',
@@ -640,7 +653,7 @@
       >
       <!-- LETTER TITLE -->
 <h2
-  class="tracking-[0.02em]"
+  class="about-letter-title tracking-[0.02em]"
   :style="{
     fontSize: ABOUT_LETTER_TITLE_SIZE + 'rem',
     fontWeight: ABOUT_LETTER_TITLE_WEIGHT,
@@ -652,7 +665,7 @@
   {{ locale === 'en' ? ABOUT_LETTER_TITLE_EN : ABOUT_LETTER_TITLE_ZH }}
 </h2>
         <div
-          class="w-full stagger-parent about-letter-flow"
+          class="w-full about-letter-flow"
           :style="{
             minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px',
             fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
@@ -663,10 +676,9 @@
         >
           <div
             :class="[
-              'flex flex-col text-justify stagger-item reveal-block',
+              'flex flex-col text-justify reveal-block',
               { 'reveal-visible': reveals.letter }
             ]"
-            style="--reveal-delay: 120ms;"
           >
             <p
               v-for="(p, i) in letterParagraphsCombined[locale]"
@@ -719,6 +731,7 @@
 
       </div>
     </section>
+    </div>
   </div>
 </template>
 
@@ -757,11 +770,11 @@ const ABOUT_INTRO_HERO_PADDING_RIGHT = 0;
 const ABOUT_INTRO_HERO_PADDING_Y = 0;
 const ABOUT_INTRO_HERO_GAP = 30;
 const ABOUT_INTRO_HERO_TITLE_SIZE = 1.05;
-const ABOUT_INTRO_HERO_TITLE_SPACING = 150;
-const ABOUT_INTRO_HERO_TITLE_PADDING_TOP = 50;
+const ABOUT_INTRO_HERO_TITLE_SPACING = 100;
+const ABOUT_INTRO_HERO_TITLE_PADDING_TOP = 20;
 const ABOUT_INTRO_HERO_TITLE_TRACKING = 0.02;
 const ABOUT_INTRO_HERO_NAME_SIZE = 1.35;
-const ABOUT_INTRO_HERO_NAME_SPACING = 18;
+const ABOUT_INTRO_HERO_NAME_SPACING = 10;
 const ABOUT_INTRO_HERO_TEXT_SIZE = 0.9;
 const ABOUT_INTRO_HERO_LINE_HEIGHT = 1.7;
 const ABOUT_INTRO_HERO_PARAGRAPH_GAP = 18;
@@ -769,7 +782,9 @@ const ABOUT_INTRO_HERO_PARAGRAPH_GAP = 18;
 // HOME ECHO SECTION (BELOW INTRO HERO)
 const ABOUT_HOME_ECHO_MAX_WIDTH = 1400;
 const ABOUT_HOME_ECHO_PADDING_X = 24;
-const ABOUT_HOME_ECHO_PADDING_TOP = 220;
+const ABOUT_HOME_ECHO_PADDING_TOP = computed(() =>
+  (isMobile.value ? 220 : 170)
+);
 const ABOUT_HOME_ECHO_PADDING_BOTTOM = 80;
 const ABOUT_HOME_ECHO_GAP = 90;
 const ABOUT_HOME_ECHO_HEADLINE_MARGIN_TOP = HOME_HEADLINE_MARGIN_TOP * 0.4;
@@ -1146,6 +1161,10 @@ onBeforeUnmount(() => {
   object-fit: cover;
 }
 
+.about-intro-hero-image-mobile {
+  display: none;
+}
+
 .about-home-echo-inner {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
@@ -1167,6 +1186,10 @@ onBeforeUnmount(() => {
 
 .about-letter-flow {
   column-gap: 0;
+}
+
+.about-letter-title {
+  text-align: left;
 }
 
 .about-letter-signature {
@@ -1284,6 +1307,7 @@ onBeforeUnmount(() => {
   animation: slowFloat 9s ease-in-out infinite;
 }
 
+
 @media (prefers-reduced-motion: reduce) {
   .reveal-block,
   .stagger-item,
@@ -1295,45 +1319,7 @@ onBeforeUnmount(() => {
   }
 }
 
-@media (min-width: 701px) and (max-width: 1100px) {
-  .about-hero {
-    padding-top: 88px !important;
-    padding-bottom: 72px !important;
-  }
 
-  .about-hero-inner {
-    max-width: 92vw !important;
-    padding-left: 12px !important;
-    padding-right: 12px !important;
-  }
-
-  .about-hero-video {
-    width: clamp(520px, 68vw, 760px) !important;
-  }
-
-  .about-letter {
-    padding-left: 32px !important;
-    padding-right: 32px !important;
-    padding-top: 72px !important;
-    padding-bottom: 72px !important;
-  }
-
-  .about-letter-grid {
-    column-gap: 1.8rem !important;
-    font-size: 1.05rem !important;
-  }
-
-  .about-main {
-    padding-left: 2rem !important;
-    padding-right: 2rem !important;
-    padding-top: 84px !important;
-    padding-bottom: 96px !important;
-  }
-
-  .about-main-grid {
-    gap: 32px !important;
-  }
-}
 
 @media (min-width: 1024px) {
   .about-letter-flow {
@@ -1343,6 +1329,17 @@ onBeforeUnmount(() => {
 
   .about-letter-signature {
     column-span: all;
+  }
+}
+
+@media (min-width: 901px) {
+  .about-page {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .about-page-inner {
+    min-width: 1200px;
   }
 }
 
@@ -1376,6 +1373,7 @@ onBeforeUnmount(() => {
   }
 }
 
+
 @media (min-width: 1101px) {
   .about-home-echo-left {
     padding-left: 55px;
@@ -1402,12 +1400,75 @@ onBeforeUnmount(() => {
     margin: 0 auto;
   }
 
+  .about-intro-hero-text {
+    order: 1;
+  }
+
+  .about-intro-hero {
+    padding-bottom: 54px !important;
+  }
+
+  .about-intro-hero-image-desktop {
+    display: none;
+  }
+
+  .about-intro-hero-image-mobile {
+    display: block;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 8px 0 50px calc(50% - 50vw);
+  }
+
+  .about-intro-hero-image-mobile img {
+    width: 100%;
+    height: auto;
+  }
+
+  .about-intro-hero-text > .flex {
+    max-width: 80%;
+    margin: 0 auto;
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    text-wrap: pretty !important;
+  }
+
+  .about-intro-hero-text h3 {
+    margin-bottom: 54px !important;
+    text-align: center;
+  }
+
+  .about-intro-hero-text > p {
+    margin-bottom: 50px !important;
+    text-align: center;
+  }
+
+  .about-home-echo-right {
+    margin: 0 auto;
+    width: 70vw;
+    max-width: 70vw;
+  }
+
+  .about-home-echo-right p {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    text-wrap: pretty !important;
+  }
+
+  .about-team-label {
+    text-align: center;
+  }
+
   .about-letter {
     padding-left: 18px !important;
     padding-right: 18px !important;
     padding-top: 40px !important;
     padding-bottom: 40px !important;
     background-size: cover;
+  }
+
+  .about-letter > div {
+    width: 70vw !important;
+    max-width: 70vw !important;
   }
 
   .about-letter-grid {
@@ -1432,6 +1493,135 @@ onBeforeUnmount(() => {
 
   .avatar-circle {
     transform: scale(0.9);
+  }
+}
+
+/*
+@media (min-width: 701px) and (max-width: 1100px) {
+  .about-hero {
+    padding: 72px 0 16px 0 !important;
+    min-height: auto !important;
+  }
+
+  .about-hero-inner {
+    max-width: 100vw !important;
+    width: 100vw !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .about-hero-video {
+    width: 100vw !important;
+    max-width: none !important;
+    min-width: 360px !important;
+    margin: 0 auto;
+  }
+
+  .about-intro-hero-text {
+    order: 1;
+  }
+
+  .about-intro-hero {
+    padding-bottom: 54px !important;
+  }
+
+  .about-intro-hero-image-desktop {
+    display: none;
+  }
+
+  .about-intro-hero-image-mobile {
+    display: block;
+    width: 100vw;
+    max-width: 100vw;
+    margin: 8px 0 50px calc(50% - 50vw);
+  }
+
+  .about-intro-hero-image-mobile img {
+    width: 100%;
+    height: auto;
+  }
+
+  .about-intro-hero-text > .flex {
+    max-width: 80%;
+    margin: 0 auto;
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    text-wrap: pretty !important;
+  }
+
+  .about-intro-hero-text h3 {
+    margin-bottom: 54px !important;
+    text-align: center;
+  }
+
+  .about-intro-hero-text > p {
+    margin-bottom: 50px !important;
+    text-align: center;
+  }
+
+  .about-home-echo-right {
+    margin: 0 auto;
+    width: 70vw;
+    max-width: 70vw;
+  }
+
+  .about-home-echo-right p {
+    text-align: justify !important;
+    text-justify: inter-word !important;
+    text-wrap: pretty !important;
+  }
+
+  .about-team-label {
+    text-align: center;
+  }
+
+  .about-letter {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+    padding-top: 40px !important;
+    padding-bottom: 40px !important;
+    background-size: cover;
+  }
+
+  .about-letter > div {
+    width: 70vw !important;
+    max-width: 70vw !important;
+  }
+
+  .about-letter-grid {
+    font-size: 1rem !important;
+    color: #ecebc7 !important;
+  }
+
+  .about-main {
+    padding-left: 1.2rem !important;
+    padding-right: 1.2rem !important;
+    padding-top: 56px !important;
+    padding-bottom: 56px !important;
+  }
+
+  .about-main-grid {
+    gap: 24px !important;
+  }
+
+  .bio-card {
+    max-width: 100% !important;
+  }
+
+  .avatar-circle {
+    transform: scale(0.9);
+  }
+}
+*/
+
+@media (max-width: 700px) {
+  .about-home-echo-left {
+    --home-headline-cn-size: calc(
+      var(--home-headline-cn-size-base, 0px) * 0.7
+    );
+    --home-headline-en-size: calc(
+      var(--home-headline-en-size-base, 0px) * 0.7
+    );
   }
 }
 </style>

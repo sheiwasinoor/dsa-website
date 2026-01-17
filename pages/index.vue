@@ -1,7 +1,15 @@
 <template>
   <div
     class="min-h-screen flex flex-col items-center justify-center relative overflow-hidden"
-    :style="{ backgroundColor: LANDING_BG_COLOR, color: LANDING_TEXT_COLOR }"
+    :style="{
+      backgroundColor: LANDING_BG_COLOR,
+      color: LANDING_TEXT_COLOR,
+      '--landing-text-mobile-scale': LANDING_TEXT_MOBILE_SCALE,
+      '--landing-letter-spacing-cn-row-mobile-scale': LANDING_TEXT_LETTER_SPACING_CN_ROW_MOBILE_SCALE,
+      '--landing-text-medium-scale': LANDING_TEXT_MEDIUM_SCALE,
+      '--landing-video-mobile-scale': LANDING_VIDEO_MOBILE_SCALE,
+    }"
+    @click="handleLandingClick"
   >
     <main
       class="landing-main flex flex-col items-center justify-center px-4 z-30"
@@ -16,6 +24,7 @@
       <video
         ref="videoEl"
         :src="LANDING_VIDEO_SRC"
+        poster="/videos/alphafinal0.gif"
         :style="{
           '--landing-video-width': LANDING_VIDEO_WIDTH + 'px',
           '--landing-video-max': LANDING_VIDEO_MAX_WIDTH + 'px',
@@ -26,6 +35,7 @@
         autoplay
         muted
         @click="onVideoClick"
+        @error="handleVideoError"
       ></video>
 
       <!-- TEXT BLOCK -->
@@ -35,14 +45,18 @@
         :style="{
           '--landing-text-width': LANDING_TEXT_CONTAINER_WIDTH + 'px',
           '--landing-text-fade-ms': TEXT_FADE_IN_MS + 'ms',
+          '--landing-text-font-cn-base': LANDING_TEXT_FONT_SIZE_CN + 'px',
+          '--landing-text-font-en-base': LANDING_TEXT_FONT_SIZE_EN + 'px',
+          '--landing-letter-spacing-cn-row-base': LANDING_TEXT_LETTER_SPACING_CN_ROW + 'px',
+          '--landing-letter-spacing-en-base': LANDING_TEXT_LETTER_SPACING_EN + 'px',
         }"
-        @click="goHome"
+        @click="handleLandingClick"
       >
         <!-- CN Row -->
         <div
-          class="flex justify-between w-full"
+          class="landing-row landing-cn-row flex justify-between w-full"
           :style="{ 
-            fontSize: LANDING_TEXT_FONT_SIZE_CN + 'px',
+            fontSize: 'var(--landing-text-font-cn)',
             color: LANDING_TEXT_COLOR,
             marginBottom: LANDING_TEXT_ROW_GAP_CN + 'px',
           }"
@@ -50,7 +64,6 @@
           <span
             v-for="(char, i) in spacedCN"
             :key="'cn-' + i"
-            :style="{ letterSpacing: LANDING_TEXT_LETTER_SPACING_CN_ROW + 'px' }"
           >
             {{ char }}
           </span>
@@ -58,9 +71,9 @@
 
         <!-- EN Row -->
         <div
-          class="flex justify-between w-full uppercase tracking-widest"
+          class="landing-row flex justify-between w-full uppercase tracking-widest"
           :style="{ 
-            fontSize: LANDING_TEXT_FONT_SIZE_EN + 'px',
+            fontSize: 'var(--landing-text-font-en)',
             color: LANDING_TEXT_COLOR,
             marginTop: LANDING_TEXT_ROW_GAP_EN + 'px',
           }"
@@ -68,7 +81,7 @@
           <span
             v-for="(char, i) in spacedEN"
             :key="'en-' + i"
-            :style="{ letterSpacing: LANDING_TEXT_LETTER_SPACING_EN + 'px' }"
+            :style="{ letterSpacing: 'var(--landing-letter-spacing-en)' }"
           >
             {{ char }}
           </span>
@@ -91,7 +104,7 @@
         '--landing-location-bottom-tablet': LANDING_LOCATION_BOTTOM_TABLET,
         '--landing-location-bottom-mobile': LANDING_LOCATION_BOTTOM_MOBILE,
       }"
-      @click="goHome"
+      @click="handleLandingClick"
     >
       {{ LOCATION_TEXT }}
     </div>
@@ -118,6 +131,10 @@ import {
   LANDING_TEXT_ROW_GAP_CN,
   LANDING_TEXT_ROW_GAP_EN,
   LANDING_TEXT_LETTER_SPACING_CN_ROW,
+  LANDING_TEXT_MOBILE_SCALE,
+  LANDING_TEXT_LETTER_SPACING_CN_ROW_MOBILE_SCALE,
+  LANDING_TEXT_MEDIUM_SCALE,
+  LANDING_VIDEO_MOBILE_SCALE,
   LANDING_LOCATION_BOTTOM_DESKTOP,
   LANDING_LOCATION_BOTTOM_TABLET,
   LANDING_LOCATION_BOTTOM_MOBILE,
@@ -133,6 +150,8 @@ const router = useRouter();
 const videoEl = ref<HTMLVideoElement | null>(null);
 const isTextVisible = ref(false);
 const isVideoEnded = ref(false);
+const videoStarted = ref(false);
+const clickTimeout = ref<number | null>(null);
 
 const TEXT_FADE_IN_MS = 3000;
 // Split characters
@@ -143,9 +162,27 @@ onMounted(() => {
   if (!videoEl.value) return;
   videoEl.value.currentTime = 0;
 
+  const fallbackTimer = window.setTimeout(() => {
+    if (!videoStarted.value) {
+      isVideoEnded.value = true;
+      isTextVisible.value = true;
+    }
+  }, 4000);
+
+  videoEl.value.onplaying = () => {
+    videoStarted.value = true;
+    window.clearTimeout(fallbackTimer);
+  };
+
   videoEl.value.onended = () => {
     isVideoEnded.value = true;
     isTextVisible.value = true;
+  };
+
+  videoEl.value.onerror = () => {
+    isVideoEnded.value = true;
+    isTextVisible.value = true;
+    window.clearTimeout(fallbackTimer);
   };
 });
 
@@ -154,8 +191,19 @@ function goHome() {
 }
 
 function onVideoClick() {
-  if (!isVideoEnded.value) return;
-  goHome();
+  handleLandingClick();
+}
+
+function handleLandingClick() {
+  if (clickTimeout.value) return;
+  clickTimeout.value = window.setTimeout(() => {
+    router.push("/about");
+  }, 5000);
+}
+
+function handleVideoError() {
+  isVideoEnded.value = true;
+  isTextVisible.value = true;
 }
 
 // Use landing layout
@@ -176,12 +224,32 @@ definePageMeta({
 
 .landing-text {
   width: var(--landing-text-width) !important;
+  --landing-text-font-cn: var(
+    --landing-text-font-cn-base,
+    0px
+  );
+  --landing-text-font-en: var(
+    --landing-text-font-en-base,
+    0px
+  );
+  --landing-letter-spacing-en: var(
+    --landing-letter-spacing-en-base,
+    0px
+  );
+  --landing-letter-spacing-cn-row: var(
+    --landing-letter-spacing-cn-row-base,
+    0px
+  );
   opacity: 0;
   transition:
     opacity var(--landing-text-fade-ms) ease-out,
     transform 920ms cubic-bezier(0.16, 1, 0.3, 1),
     filter 520ms ease;
   cursor: pointer;
+}
+
+.landing-cn-row {
+  gap: var(--landing-letter-spacing-cn-row);
 }
 
 .landing-text.is-text-visible {
@@ -238,28 +306,76 @@ definePageMeta({
 
 @media (max-width: 960px) {
   .landing-video {
-    width: 92vw;
-    max-width: 620px;
+    width: calc(
+      var(--landing-video-width) * var(--landing-text-medium-scale, 1)
+    );
+    max-width: calc(
+      var(--landing-video-max) * var(--landing-text-medium-scale, 1)
+    );
   }
   .landing-text {
-    width: 92vw !important;
+    width: calc(
+      var(--landing-text-width) * var(--landing-text-medium-scale, 1)
+    ) !important;
+    --landing-text-font-en: calc(
+      var(--landing-text-font-en-base, 0px) * var(--landing-text-medium-scale, 1)
+    );
+    --landing-text-font-cn: calc(
+      var(--landing-text-font-cn-base, 0px) * var(--landing-text-medium-scale, 1)
+    );
+    --landing-letter-spacing-cn-row: calc(
+      var(--landing-letter-spacing-cn-row-base, 0px)
+        * var(--landing-text-medium-scale, 1)
+    );
+    --landing-letter-spacing-en: calc(
+      var(--landing-letter-spacing-en-base, 0px)
+        * var(--landing-text-medium-scale, 1)
+    );
   }
   .landing-main {
-    gap: var(--landing-main-gap-mobile);
+    gap: calc(
+      var(--landing-main-gap-desktop) * var(--landing-text-medium-scale, 1)
+    );
   }
   .landing-location {
-    bottom: var(--landing-location-bottom-mobile);
+    bottom: calc(
+      var(--landing-location-bottom-desktop)
+        * var(--landing-text-medium-scale, 1)
+    );
   }
 }
 
 @media (max-width: 640px) {
   .landing-video {
-    width: 60vw;
-    max-width: 360px;
+    width: calc(
+      var(--landing-video-width) * var(--landing-video-mobile-scale, 1)
+    );
+    max-width: calc(
+      var(--landing-video-max) * var(--landing-video-mobile-scale, 1)
+    );
   }
   .landing-text {
-    width: 70vw !important;
+    width: calc(
+      var(--landing-text-width) * var(--landing-text-mobile-scale, 1)
+    ) !important;
     font-size: 0.78em;
+  }
+  .landing-row {
+    justify-content: space-between;
+    gap: 0;
+    text-align: center;
+  }
+  .landing-text {
+    --landing-text-font-en: calc(
+      var(--landing-text-font-en-base, 0px) * var(--landing-text-mobile-scale, 1)
+    );
+    --landing-text-font-cn: calc(
+      var(--landing-text-font-cn-base, 0px) * var(--landing-text-mobile-scale, 1)
+    );
+    --landing-letter-spacing-cn-row: calc(
+      var(--landing-letter-spacing-cn-row-base, 0px)
+        * var(--landing-letter-spacing-cn-row-mobile-scale, 1)
+    );
   }
 }
 </style>

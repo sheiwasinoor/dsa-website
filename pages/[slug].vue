@@ -358,7 +358,7 @@ const TITLE_TRACKING = "0.05em";
 
 // Hero
 const HERO_HEIGHT_REM = computed(() => (isMobile.value ? 22 : 36)); // hero image height
-const HERO_TOP_OFFSET_REM = computed(() => (isMobile.value ? 2.5 : 4.5)); // gap below navbar
+const HERO_TOP_OFFSET_REM = computed(() => (isMobile.value ? 4 : 4.5)); // gap below navbar
 const HERO_NAVBAR_FADE = "rgba(0,0,0,0.45)";
 
 // Content layout
