@@ -68,7 +68,10 @@
           <p
             :style="{
               fontSize: ABOUT_INTRO_HERO_TITLE_SIZE + 'rem',
-              marginBottom: ABOUT_INTRO_HERO_TITLE_SPACING + 'px',
+              marginBottom:
+                ABOUT_INTRO_HERO_TITLE_SPACING +
+                (isMobile ? 0 : ABOUT_INTRO_HERO_TITLE_DESKTOP_EXTRA_SPACING) +
+                'px',
               paddingTop: ABOUT_INTRO_HERO_TITLE_PADDING_TOP + 'px',
               letterSpacing: ABOUT_INTRO_HERO_TITLE_TRACKING + 'em',
               color: '#8C8C8C',
@@ -96,7 +99,7 @@
           </h3>
 
           <div
-            class="flex flex-col text-justify"
+            class="flex flex-col text-justify about-intro-body"
             :style="{
               fontSize: ABOUT_INTRO_HERO_TEXT_SIZE + 'rem',
               lineHeight: ABOUT_INTRO_HERO_LINE_HEIGHT,
@@ -261,7 +264,10 @@
               class="about-team-label tracking-[0.10em]"
               :style="{
                 fontSize: ABOUT_INTRO_HEADING_SIZE + 'rem',
-                marginBottom: ABOUT_INTRO_HEADING_SPACING + 'px',
+                marginBottom:
+                  ABOUT_INTRO_HEADING_SPACING +
+                  (isMobile ? 0 : ABOUT_INTRO_HEADING_DESKTOP_EXTRA_SPACING) +
+                  'px',
                 color: '#8C8C8C',
                 fontWeight: 100,
                 fontStyle: 'italic'
@@ -335,7 +341,7 @@
           ]"
           :style="{
             rowGap: ABOUT_TEAM_SECTION_SPACING + 'px',
-            marginTop: ABOUT_TEAM_TOP_OFFSET + 'px'
+            marginTop: (isMobile ? ABOUT_TEAM_TOP_OFFSET * 0.5 : ABOUT_TEAM_TOP_OFFSET) + 'px'
           }"
         >
           <!-- Chinese Creativity -->
@@ -648,7 +654,8 @@
       }"
     >
       <div
-        class="mx-auto transition-opacity duration-500"
+        class="mx-auto reveal-block"
+        :class="{ 'reveal-visible': reveals.letter }"
         :style="{ maxWidth: ABOUT_LETTER_MAX_WIDTH + 'px' }"
       >
       <!-- LETTER TITLE -->
@@ -676,8 +683,7 @@
         >
           <div
             :class="[
-              'flex flex-col text-justify reveal-block',
-              { 'reveal-visible': reveals.letter }
+              'flex flex-col text-justify'
             ]"
           >
             <p
@@ -771,6 +777,7 @@ const ABOUT_INTRO_HERO_PADDING_Y = 0;
 const ABOUT_INTRO_HERO_GAP = 30;
 const ABOUT_INTRO_HERO_TITLE_SIZE = 1.05;
 const ABOUT_INTRO_HERO_TITLE_SPACING = 100;
+const ABOUT_INTRO_HERO_TITLE_DESKTOP_EXTRA_SPACING = 30;
 const ABOUT_INTRO_HERO_TITLE_PADDING_TOP = 20;
 const ABOUT_INTRO_HERO_TITLE_TRACKING = 0.02;
 const ABOUT_INTRO_HERO_NAME_SIZE = 1.35;
@@ -847,6 +854,7 @@ const ABOUT_LEFT_COLUMN_SECTION_SPACING = 80;
 /* ---------- INTRO ---------- */
 const ABOUT_INTRO_HEADING_SIZE = 1.05;
 const ABOUT_INTRO_HEADING_SPACING = 24;
+const ABOUT_INTRO_HEADING_DESKTOP_EXTRA_SPACING = 50;
 
 /* ---------- BIO CARD ---------- */
 const ABOUT_BIO_MAX_WIDTH = 530;
@@ -1188,6 +1196,10 @@ onBeforeUnmount(() => {
   column-gap: 0;
 }
 
+.about-letter {
+  overflow-x: hidden;
+}
+
 .about-letter-title {
   text-align: left;
 }
@@ -1334,12 +1346,18 @@ onBeforeUnmount(() => {
 
 @media (min-width: 901px) {
   .about-page {
-    overflow-x: auto;
+    overflow-x: hidden;
     -webkit-overflow-scrolling: touch;
   }
 
   .about-page-inner {
     min-width: 1200px;
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .about-intro-body {
+    margin-top: 50px;
   }
 }
 
@@ -1464,11 +1482,12 @@ onBeforeUnmount(() => {
     padding-top: 40px !important;
     padding-bottom: 40px !important;
     background-size: cover;
+    overflow-x: hidden;
   }
 
   .about-letter > div {
-    width: 70vw !important;
-    max-width: 70vw !important;
+    width: 100% !important;
+    max-width: 100% !important;
   }
 
   .about-letter-grid {

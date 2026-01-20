@@ -19,7 +19,10 @@
           :key="post.id"
           class="group cursor-pointer transform transition duration-700 hover:-translate-y-2 hover:scale-[1.04]"
           :data-masonry-id="post.id"
-          :class="{ 'is-visible': visibleMap[post.id] }"
+          :class="{
+            'is-visible': visibleMap[post.id],
+            'is-mobile-hover': hoverMap[post.id]
+          }"
           :style="[
             tileStyle(idx),
             masonryStyle(post.id),
@@ -38,7 +41,8 @@
                 v-if="post.imageUrl"
                 :src="post.imageUrl"
                 :alt="post.title[locale]"
-                class="w-full h-auto object-cover transition duration-700 ease-out group-hover:scale-105"
+                class="w-full h-auto object-cover transition duration-700 ease-out group-hover:scale-105 mobile-hover-scale"
+                :class="{ 'mobile-hover-scale': hoverMap[post.id] }"
                 @load="scheduleMasonry"
               />
               <div
@@ -56,7 +60,7 @@
               </div>
 
               <div
-                :class="{ 'always-show-overlay': activePost?.id === post.id }"
+                :class="{ 'always-show-overlay': activePost?.id === post.id || hoverMap[post.id] }"
                 class="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/75 via-black/35 to-transparent p-5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
               >
                 <p
@@ -184,6 +188,10 @@ const masonryEl = ref<HTMLElement | null>(null);
 const masonrySpans = ref<Record<string, number>>({});
 const visibleMap = ref<Record<string, boolean>>({});
 const observerRef = ref<IntersectionObserver | null>(null);
+const hoverMap = ref<Record<string, boolean>>({});
+const hoverObserverRef = ref<IntersectionObserver | null>(null);
+const isMobile = ref(false);
+let mobileQuery: MediaQueryList | null = null;
 
 // Load posts from API
 onMounted(async () => {
@@ -193,6 +201,7 @@ onMounted(async () => {
     scheduleMasonry();
     nextTick(() => {
       initObserver();
+      setMobileState();
     });
   } catch (err) {
     console.error("Failed to load news posts", err);
@@ -203,6 +212,10 @@ onMounted(async () => {
 onBeforeUnmount(() => {
   window.removeEventListener("resize", scheduleMasonry);
   observerRef.value?.disconnect();
+  hoverObserverRef.value?.disconnect();
+  if (mobileQuery) {
+    mobileQuery.removeEventListener("change", setMobileState);
+  }
 });
 
 function toggleInline(post) {
@@ -275,6 +288,44 @@ function initObserver() {
     .forEach((el) => observer.observe(el));
 
   observerRef.value = observer;
+  initHoverObserver();
+}
+
+function setMobileState() {
+  if (!import.meta.client) return;
+  if (!mobileQuery) {
+    mobileQuery = window.matchMedia("(max-width: 900px)");
+    mobileQuery.addEventListener("change", setMobileState);
+  }
+  isMobile.value = mobileQuery.matches;
+  if (!isMobile.value) {
+    hoverMap.value = {};
+    hoverObserverRef.value?.disconnect();
+    return;
+  }
+  initHoverObserver();
+}
+
+function initHoverObserver() {
+  if (!masonryEl.value || !isMobile.value) return;
+  hoverObserverRef.value?.disconnect();
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = (entry.target as HTMLElement).dataset.masonryId;
+        if (!id) return;
+        hoverMap.value[id] = entry.isIntersecting;
+      });
+    },
+    { threshold: 0.6, rootMargin: "0px 0px -15% 0px" }
+  );
+
+  masonryEl.value
+    .querySelectorAll<HTMLElement>("[data-masonry-id]")
+    .forEach((el) => observer.observe(el));
+
+  hoverObserverRef.value = observer;
 }
 </script>
 
@@ -340,6 +391,12 @@ function initObserver() {
 .group:hover .tile-sheen::after {
   opacity: 1;
   transform: translateX(5%);
+}
+
+@media (max-width: 900px) {
+  .masonry-grid > article.is-mobile-hover .mobile-hover-scale {
+    transform: scale(1.05);
+  }
 }
 
 .modal-pop {

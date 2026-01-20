@@ -162,6 +162,8 @@ class="uppercase"
           v-for="(p, i) in filteredProjects"
           :key="p.id"
           class="relative group overflow-hidden bg-[#101A14] rounded-md cursor-pointer card-lift min-h-[1px]"
+          :class="{ 'is-mobile-hover': hoverMap[p.id] }"
+          :data-project-id="p.id"
           :style="{
             height: LANDSCAPE_GRID_CARD_HEIGHT + 'px',
             '--card-delay': `${(i % 6) * 70 + (i % 3) * 25}ms`
@@ -171,7 +173,7 @@ class="uppercase"
           <img
             :src="resolveThumb(p.thumbnail)"
             :alt="p.title?.[locale] || ''"
-            class="w-full h-full object-cover transition-transform"
+            class="w-full h-full object-cover transition-transform mobile-hover-image"
             :style="{
               transitionDuration: LANDSCAPE_GRID_IMAGE_ZOOM_DURATION + 'ms',
               transitionTimingFunction: 'cubic-bezier(0.33,1,0.68,1)'
@@ -224,15 +226,22 @@ class="uppercase"
 
 
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
+import { ref, computed, onMounted, onBeforeUnmount, nextTick, watch } from 'vue';
 import { useLocale } from '~/composables/useLocale';
 import { heroCopy } from '~/content/landscape';
 
 const { locale } = useLocale();
 const projects = ref([]);
+const hoverMap = ref<Record<string, boolean>>({});
+const hoverObserverRef = ref<IntersectionObserver | null>(null);
+const isMobile = ref(false);
+let mobileQuery: MediaQueryList | null = null;
 
 onMounted(async () => {
   projects.value = await $fetch("/api/projects/list?destination=landscape");
+  nextTick(() => {
+    setMobileState();
+  });
 });
 
 //
@@ -382,7 +391,55 @@ onMounted(() => {
 });
 onBeforeUnmount(() => {
   observerRef.value?.disconnect();
+  hoverObserverRef.value?.disconnect();
+  if (mobileQuery) {
+    mobileQuery.removeEventListener("change", setMobileState);
+  }
 });
+
+watch(filteredProjects, () => {
+  nextTick(() => {
+    if (isMobile.value) {
+      initHoverObserver();
+    }
+  });
+});
+
+function setMobileState() {
+  if (!import.meta.client) return;
+  if (!mobileQuery) {
+    mobileQuery = window.matchMedia("(max-width: 900px)");
+    mobileQuery.addEventListener("change", setMobileState);
+  }
+  isMobile.value = mobileQuery.matches;
+  if (!isMobile.value) {
+    hoverMap.value = {};
+    hoverObserverRef.value?.disconnect();
+    return;
+  }
+  initHoverObserver();
+}
+
+function initHoverObserver() {
+  if (!isMobile.value) return;
+  hoverObserverRef.value?.disconnect();
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        const id = (entry.target as HTMLElement).dataset.projectId;
+        if (!id) return;
+        hoverMap.value[id] = entry.isIntersecting;
+      });
+    },
+    { threshold: 0.6, rootMargin: "0px 0px -15% 0px" }
+  );
+
+  document
+    .querySelectorAll<HTMLElement>("[data-project-id]")
+    .forEach((el) => observer.observe(el));
+
+  hoverObserverRef.value = observer;
+}
 </script>
 
 <style scoped>
@@ -491,6 +548,21 @@ onBeforeUnmount(() => {
 .group:hover .project-title {
   opacity: 1;
   transform: translateY(0);
+}
+
+@media (max-width: 900px) {
+  .is-mobile-hover .project-overlay {
+    height: var(--overlay-height);
+  }
+
+  .is-mobile-hover .project-title {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .is-mobile-hover .mobile-hover-image {
+    transform: scale(1.04);
+  }
 }
 
 .landscape-grid-enter-active {

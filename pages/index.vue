@@ -24,7 +24,6 @@
       <video
         ref="videoEl"
         :src="LANDING_VIDEO_SRC"
-        poster="/videos/alphafinal0.gif"
         :style="{
           '--landing-video-width': LANDING_VIDEO_WIDTH + 'px',
           '--landing-video-max': LANDING_VIDEO_MAX_WIDTH + 'px',

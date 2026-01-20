@@ -208,7 +208,7 @@ export const members: Member[] = [
         "Mr. Julien, a designer with DSA International Group hailing from the United States, holds a Master of Arts degree from the City University of New York. With extensive experience in architectural renovation and spatial transformation, he serves as the exclusive landscape architect and luxury aesthetic designer for numerous internationally renowned European and American brands. In 2019, Julien's team and DSA formally upgraded their project collaboration to a design partnership—marking the sole partnership established since DSA's entry into the Chinese market."
       ],
       zh: [
-        ""
+        "Julien先生来自美国，DSA国际组设计师，毕业于美国纽约城市大学艺术学专业硕士，他在建筑翻新+场景改造中有着丰富的经验，是多个欧美国际知名品牌景观建筑及高奢美学御用设计师。2019年，Julien团队与DSA团队从项目合作正式升级为设计合伙人，是进入中国市场后的唯一合伙人关系。"
       ]
     }
   },

@@ -232,8 +232,8 @@ onMounted(async () => {
 // HERO COLORS + LINES
 const YOUNGART_HERO_TEXT_COLOR = "#ECEBC7";          // main hero title + body color
 const YOUNGART_HERO_TEXT_SOFT_COLOR = "#D8DCDD";   // softer version (body)
-const YOUNGART_HERO_LINE_COLOR = "#40327E"; // top divider
-const YOUNGART_HERO_LINE_COLOR_BOTTOM = "#40327E"; // bottom divider
+const YOUNGART_HERO_LINE_COLOR = "#9A96CC"; // top divider
+const YOUNGART_HERO_LINE_COLOR_BOTTOM = "#9A96CC"; // bottom divider
 
 // HERO
 const YOUNGART_HERO_MIN_HEIGHT = 100;
