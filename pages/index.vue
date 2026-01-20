@@ -29,7 +29,7 @@
           '--landing-video-width': LANDING_VIDEO_WIDTH + 'px',
           '--landing-video-max': LANDING_VIDEO_MAX_WIDTH + 'px',
         }"
-        :class="{ 'is-clickable': isVideoEnded }"
+        :class="{ 'is-clickable': canNavigate }"
         class="h-auto landing-video"
         playsinline
         autoplay
@@ -151,7 +151,9 @@ const videoEl = ref<HTMLVideoElement | null>(null);
 const isTextVisible = ref(false);
 const isVideoEnded = ref(false);
 const videoStarted = ref(false);
-const clickTimeout = ref<number | null>(null);
+const pendingNavigation = ref(false);
+const canNavigate = ref(false);
+const textFadeTimeout = ref<number | null>(null);
 
 const TEXT_FADE_IN_MS = 3000;
 // Split characters
@@ -165,7 +167,7 @@ onMounted(() => {
   const fallbackTimer = window.setTimeout(() => {
     if (!videoStarted.value) {
       isVideoEnded.value = true;
-      isTextVisible.value = true;
+      startTextAnimation();
     }
   }, 4000);
 
@@ -176,12 +178,12 @@ onMounted(() => {
 
   videoEl.value.onended = () => {
     isVideoEnded.value = true;
-    isTextVisible.value = true;
+    startTextAnimation();
   };
 
   videoEl.value.onerror = () => {
     isVideoEnded.value = true;
-    isTextVisible.value = true;
+    startTextAnimation();
     window.clearTimeout(fallbackTimer);
   };
 });
@@ -195,15 +197,39 @@ function onVideoClick() {
 }
 
 function handleLandingClick() {
-  if (clickTimeout.value) return;
-  clickTimeout.value = window.setTimeout(() => {
+  if (canNavigate.value) {
     router.push("/about");
-  }, 5000);
+    return;
+  }
+
+  if (!videoEl.value) {
+    return;
+  }
+
+  pendingNavigation.value = true;
 }
 
 function handleVideoError() {
   isVideoEnded.value = true;
-  isTextVisible.value = true;
+  startTextAnimation();
+}
+
+function startTextAnimation() {
+  if (!isTextVisible.value) {
+    isTextVisible.value = true;
+  }
+
+  if (canNavigate.value) return;
+  if (textFadeTimeout.value) {
+    window.clearTimeout(textFadeTimeout.value);
+  }
+
+  textFadeTimeout.value = window.setTimeout(() => {
+    canNavigate.value = true;
+    if (pendingNavigation.value) {
+      router.push("/about");
+    }
+  }, TEXT_FADE_IN_MS);
 }
 
 // Use landing layout
@@ -217,7 +243,6 @@ definePageMeta({
   width: var(--landing-video-width);
   max-width: var(--landing-video-max);
 }
-
 .landing-video.is-clickable {
   cursor: pointer;
 }
