@@ -1,8 +1,6 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/server/utils/prisma";
 import { readBody, createError, setCookie } from "h3";
 import { verifyPassword } from "~/server/utils/hash";
-
-const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);

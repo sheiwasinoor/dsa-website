@@ -11,6 +11,7 @@
     }"
     @click="handleLandingClick"
   >
+    <div class="landing-page-fade" :class="{ 'is-clicked': isClicked }"></div>
     <main
       class="landing-main flex flex-col items-center justify-center px-4 z-30"
       :style="{
@@ -23,7 +24,6 @@
       <!-- VIDEO -->
       <video
         ref="videoEl"
-        :src="LANDING_VIDEO_SRC"
         :style="{
           '--landing-video-width': LANDING_VIDEO_WIDTH + 'px',
           '--landing-video-max': LANDING_VIDEO_MAX_WIDTH + 'px',
@@ -35,7 +35,10 @@
         muted
         @click="onVideoClick"
         @error="handleVideoError"
-      ></video>
+      >
+        <source :src="LANDING_VIDEO_SRC" type="video/webm" />
+        <source src="/videos/dsa-landing-fallback.mov" type="video/quicktime" />
+      </video>
 
       <!-- TEXT BLOCK -->
       <div
@@ -70,7 +73,7 @@
 
         <!-- EN Row -->
         <div
-          class="landing-row flex justify-between w-full uppercase tracking-widest"
+          class="landing-row landing-en-row flex justify-between w-full uppercase tracking-widest font-en"
           :style="{ 
             fontSize: 'var(--landing-text-font-en)',
             color: LANDING_TEXT_COLOR,
@@ -92,7 +95,7 @@
 
     <!-- LOCATION Row -->
     <div
-      class="landing-location text-center"
+      class="landing-location text-center font-en"
       :class="{ 'is-text-visible': isTextVisible }"
       :style="{ 
         fontSize: LANDING_TEXT_FONT_SIZE_LOC + 'px',
@@ -153,6 +156,8 @@ const videoStarted = ref(false);
 const pendingNavigation = ref(false);
 const canNavigate = ref(false);
 const textFadeTimeout = ref<number | null>(null);
+const playTextTimer = ref<number | null>(null);
+const isClicked = ref(false);
 
 const TEXT_FADE_IN_MS = 3000;
 // Split characters
@@ -173,6 +178,12 @@ onMounted(() => {
   videoEl.value.onplaying = () => {
     videoStarted.value = true;
     window.clearTimeout(fallbackTimer);
+    if (playTextTimer.value) {
+      window.clearTimeout(playTextTimer.value);
+    }
+    playTextTimer.value = window.setTimeout(() => {
+      startTextAnimation();
+    }, 4500);
   };
 
   videoEl.value.onended = () => {
@@ -184,6 +195,9 @@ onMounted(() => {
     isVideoEnded.value = true;
     startTextAnimation();
     window.clearTimeout(fallbackTimer);
+    if (playTextTimer.value) {
+      window.clearTimeout(playTextTimer.value);
+    }
   };
 });
 
@@ -196,12 +210,9 @@ function onVideoClick() {
 }
 
 function handleLandingClick() {
+  if (isClicked.value) return;
   if (canNavigate.value) {
-    router.push("/about");
-    return;
-  }
-
-  if (!videoEl.value) {
+    triggerNavigate();
     return;
   }
 
@@ -226,10 +237,19 @@ function startTextAnimation() {
   textFadeTimeout.value = window.setTimeout(() => {
     canNavigate.value = true;
     if (pendingNavigation.value) {
-      router.push("/about");
+      triggerNavigate();
     }
   }, TEXT_FADE_IN_MS);
 }
+
+function triggerNavigate() {
+  if (isClicked.value) return;
+  isClicked.value = true;
+  window.setTimeout(() => {
+    router.push("/about");
+  }, 150);
+}
+
 
 // Use landing layout
 definePageMeta({
@@ -238,6 +258,17 @@ definePageMeta({
 </script>
 
 <style scoped>
+.landing-page-fade {
+  position: absolute;
+  inset: 0;
+  background: #000C05;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 40;
+}
+.landing-page-fade.is-clicked {
+  animation: landingFadeOut 420ms ease-out forwards;
+}
 .landing-video {
   width: var(--landing-video-width);
   max-width: var(--landing-video-max);
@@ -276,9 +307,12 @@ definePageMeta({
   gap: var(--landing-letter-spacing-cn-row);
 }
 
+.font-en {
+  font-family: var(--font-en);
+}
+
 .landing-text.is-text-visible {
   opacity: 1;
-  animation: landingGlow 2.4s ease-in-out var(--landing-text-fade-ms) infinite;
 }
 
 .landing-text:hover {
@@ -308,23 +342,21 @@ definePageMeta({
 .landing-video {
 }
 
-@keyframes landingGlow {
-  0% {
-    filter: drop-shadow(0 0 0 rgba(236, 235, 199, 0));
-  }
-  50% {
-    filter: drop-shadow(0 0 8px rgba(236, 235, 199, 0.55));
-  }
-  100% {
-    filter: drop-shadow(0 0 0 rgba(236, 235, 199, 0));
-  }
-}
 @media (max-width: 1200px) {
   .landing-main {
     gap: var(--landing-main-gap-tablet);
   }
   .landing-location {
     bottom: var(--landing-location-bottom-tablet);
+  }
+}
+
+@keyframes landingFadeOut {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
   }
 }
 

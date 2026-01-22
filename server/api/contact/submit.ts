@@ -1,5 +1,5 @@
 import { defineEventHandler, readMultipartFormData, createError } from 'h3';
-import { PrismaClient } from '@prisma/client'
+import prisma from "~/server/utils/prisma";
 import fs from 'fs';
 import path from 'path';
 import { Resend } from 'resend';
@@ -72,7 +72,6 @@ export default defineEventHandler(async (event) => {
   const portfolioUrl = saveFile(portfolioFile, 'portfolio');
 
   // Save into database
-  const prisma = new PrismaClient();
   const saved = await prisma.contactSubmission.create({
     data: {
       firstName,

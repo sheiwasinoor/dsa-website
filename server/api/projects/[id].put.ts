@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/server/utils/prisma";
 import {
   readMultipartFormData,
   createError,
@@ -6,8 +6,6 @@ import {
 } from "h3";
 import { join } from "path";
 import { existsSync, mkdirSync, writeFileSync } from "fs";
-
-const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const id = getRouterParam(event, "id");

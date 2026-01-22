@@ -44,7 +44,7 @@ export const introText = {
     "DSA Dayoung is an innovative design platform dedicated to the creation of public environment Spaces, guided by the aesthetics of new ecological culture and art. Through collaborative practice in landscape architecture, dynamic lighting, and public art, we create multi-dimensional, high-value spatial experiences. With Chinese creativity and an international perspective, Danyang systematically reshapes the value of public environmental spaces, providing comprehensive solutions for the entire process, from environmental renewal and lighting environments to environmental art, achieving spatial revitalization, long-term operation, and ecological sustainability.",
   ],
   zh: [
-    "DSA大漾一家以新生态文化艺术美学为导向, 致力于公共环境空间营造的创新设计平台。通过景观建筑, 动态光影, 公共艺术专业共创实践, 创造多维度高价值空间使用体验。大漾以中国创意 + 国际视野, 系统重塑公共环境空间价值, 即可提供从环境更新, 光环境到环境艺术的全过程综合解决方案, 实现空间活化, 长效运营与生态可持续发展。",
+    "DSA大漾一家以新生态文化艺术美学为导向, 致力于公共环境空间营造的创新设计平台。通过景观建筑, 动态光影, 公共艺术专业共创实践, 创造多维度高价值空间使用体验。大漾漾以中国创意 + 国际视野, 系统重塑公共环境空间价值, 即可提供从环境更新, 光环境到环境艺术的全过程综合解决方案, 实现空间活化, 长效运营与生态可持续发展。",
   ]
 };
 
@@ -94,7 +94,7 @@ export const members: Member[] = [
     }
   },
 
-    {
+  {
     id: "dumbass",
     group: "chinese",
     nameEn: "STONE",
@@ -110,7 +110,7 @@ export const members: Member[] = [
       ]
     }
   },
-  
+
   {
     id: "zhong",
     group: "chinese",
@@ -146,22 +146,22 @@ export const members: Member[] = [
     }
   },
 
-  {
-    id: "adrian",
-    group: "chinese",
-    nameEn: "ADRIAN",
-    nameCn: "陈旭佳",
-    role: { en: "Project Director", zh: "项目总监" },
-    avatar: "/images/team/adrian.png",
-    bio: {
-      en: [
-        "Director of Ecological Projects at DSA, he has dedicated himself to the field of new ecological greenery since returning to China after graduating from the University of New South Wales in Australia in 2013. Leading his team in specialized research on artistic greenery design and technological development, he has pioneered boundary-free landscape planting techniques that surpass domestic industry standards by optimizing traditional landscaping construction methods, integrating smart devices, and utilizing innovative materials. This breakthrough breaks down barriers between architecture and natural ecosystems. He provides specialized ecological art implementation solutions to ensure the successful execution of DSA projects.",
-      ],
-      zh: [
-        "DSA生态项目总监，自2013年澳洲University of NSW毕业回国后,便深耕于新生态绿植领域，带领团队专研艺术绿植设计与技术研发，通过优化传统的景观施工技术、智能设备和创新材料运用，打破建筑与自然生态的屏障，率先实现无边界景观种植技术领先国内同行业水平；为DSA项目提供专项生态艺术落地解决方案保障。",
-      ]
-    }
-  },
+  // {
+  //   id: "adrian",
+  //   group: "chinese",
+  //   nameEn: "ADRIAN",
+  //   nameCn: "陈旭佳",
+  //   role: { en: "Project Director", zh: "项目总监" },
+  //   avatar: "/images/team/adrian.png",
+  //   bio: {
+  //     en: [
+  //       "Director of Ecological Projects at DSA, he has dedicated himself to the field of new ecological greenery since returning to China after graduating from the University of New South Wales in Australia in 2013. Leading his team in specialized research on artistic greenery design and technological development, he has pioneered boundary-free landscape planting techniques that surpass domestic industry standards by optimizing traditional landscaping construction methods, integrating smart devices, and utilizing innovative materials. This breakthrough breaks down barriers between architecture and natural ecosystems. He provides specialized ecological art implementation solutions to ensure the successful execution of DSA projects.",
+  //     ],
+  //     zh: [
+  //       "DSA生态项目总监，自2013年澳洲University of NSW毕业回国后,便深耕于新生态绿植领域，带领团队专研艺术绿植设计与技术研发，通过优化传统的景观施工技术、智能设备和创新材料运用，打破建筑与自然生态的屏障，率先实现无边界景观种植技术领先国内同行业水平；为DSA项目提供专项生态艺术落地解决方案保障。",
+  //     ]
+  //   }
+  // },
 
   {
     id: "lunker",

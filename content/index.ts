@@ -40,8 +40,8 @@ export const LANDING_LOCATION_BOTTOM_TABLET = "1.75rem";
 export const LANDING_LOCATION_BOTTOM_MOBILE = "1.5rem";
 
 /* ---------- LOCATION ---------- */
-export const LOCATION_TEXT = "Shenzen | Shanghai | Singapore";
-export const LANDING_TEXT_FONT_SIZE_LOC = LANDING_TEXT_FONT_SIZE_EN - 3;
+export const LOCATION_TEXT = "SHENZEN | SHANGHAI | SINGAPORE";
+export const LANDING_TEXT_FONT_SIZE_LOC = LANDING_TEXT_FONT_SIZE_EN - 4;
 export const LANDING_TEXT_LETTER_SPACING_LOC = 1;
 export const LANDING_TEXT_WEIGHT_LOC = 100;
 

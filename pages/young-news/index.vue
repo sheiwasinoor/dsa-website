@@ -43,6 +43,8 @@
                 :alt="post.title[locale]"
                 class="w-full h-auto object-cover transition duration-700 ease-out group-hover:scale-105 mobile-hover-scale"
                 :class="{ 'mobile-hover-scale': hoverMap[post.id] }"
+                loading="lazy"
+                decoding="async"
                 @load="scheduleMasonry"
               />
               <div

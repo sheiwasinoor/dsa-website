@@ -1,10 +1,8 @@
 // server/api/projects/image/delete.post.ts
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/server/utils/prisma";
 import { readBody, createError } from "h3";
 import { unlinkSync, existsSync } from "fs";
 import { join } from "path";
-
-const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);

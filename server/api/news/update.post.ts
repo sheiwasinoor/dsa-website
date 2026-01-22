@@ -1,10 +1,8 @@
 // server/api/news/update.post.ts
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/server/utils/prisma";
 import { createError, readMultipartFormData } from "h3";
 import fs from "fs";
 import path from "path";
-
-const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event);

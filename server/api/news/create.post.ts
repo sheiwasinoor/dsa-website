@@ -1,9 +1,7 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/server/utils/prisma";
 import { readMultipartFormData, createError } from "h3";
 import { writeFileSync, mkdirSync, existsSync } from "fs";
 import { join } from "path";
-
-const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const form = await readMultipartFormData(event);

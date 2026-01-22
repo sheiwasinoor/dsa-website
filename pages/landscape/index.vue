@@ -178,6 +178,8 @@ class="uppercase"
               transitionDuration: LANDSCAPE_GRID_IMAGE_ZOOM_DURATION + 'ms',
               transitionTimingFunction: 'cubic-bezier(0.33,1,0.68,1)'
             }"
+            loading="lazy"
+            decoding="async"
             @error="(e) => markThumbError(e, p.thumbnail)"
           />
 

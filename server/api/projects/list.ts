@@ -1,7 +1,5 @@
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/server/utils/prisma";
 import { createError, getQuery } from "h3";
-
-const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   try {
@@ -10,8 +8,21 @@ export default defineEventHandler(async (event) => {
 
     const projects = await prisma.project.findMany({
       where: { destination: dest },
-      include: {
-        images: true,
+      select: {
+        id: true,
+        slug: true,
+        titleEn: true,
+        titleZh: true,
+        categoryEn: true,
+        categoryZh: true,
+        keywords: true,
+        coverImageUrl: true,
+        images: {
+          select: {
+            url: true,
+            isCover: true,
+          },
+        },
       },
       orderBy: { createdAt: "desc" },
     });

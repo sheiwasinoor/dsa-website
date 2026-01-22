@@ -1,9 +1,7 @@
 
 
-import { PrismaClient } from "@prisma/client";
+import prisma from "~/server/utils/prisma";
 import { createError, getQuery } from "h3";
-
-const prisma = new PrismaClient();
 
 export default defineEventHandler(async (event) => {
   const { slug } = getQuery(event);

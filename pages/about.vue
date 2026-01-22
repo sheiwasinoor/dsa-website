@@ -30,7 +30,6 @@
         }"
       >
         <video
-          src="/videos/dsa-about-update-update.webm"
           playsinline
           autoplay
           muted
@@ -40,7 +39,10 @@
             width: ABOUT_HERO_VIDEO_WIDTH * ABOUT_HERO_VIDEO_SCALE + 'px',
             maxWidth: '100%',
           }"
-        ></video>
+        >
+          <source src="/videos/aboutoutput.webm" type="video/webm" />
+          <source src="/videos/dsa-about-fallback.mov" type="video/quicktime" />
+        </video>
       </div>
     </section>
 
@@ -79,23 +81,23 @@
               fontStyle: 'italic'
             }"
           >
-            简介 | INTRODUCTION
+            简介 | <span class="font-en">INTRODUCTION</span>
           </p>
           <div class="about-intro-hero-image-mobile">
             <img
-              src="/images/Introduction-Background-Image.jpg"
+              src="/images/DSA-intro-bg.jpg"
               alt="Introduction background"
             />
           </div>
           <h3
-            class="font-semibold"
+            class="font-semibold font-en"
             :style="{
               fontSize: ABOUT_INTRO_HERO_NAME_SIZE + 'rem',
               marginBottom: ABOUT_INTRO_HERO_NAME_SPACING + 'px',
               color: ABOUT_TEXT_COLORS.introHeading[locale]
             }"
           >
-            DSA Dayoung
+            {{ locale === 'zh' ? 'DSA  大漾设计' : 'DSA 大漾设计' }}
           </h3>
 
           <div
@@ -112,9 +114,9 @@
             }"
           >
             <p>
-              DSA大漾一家以新生态文化艺术美学为导向，致力于公共环境空间营造的创新设计平台。通过景观建筑、动态光影、公共艺术专业共创实践，创造多维度高价值空间使用体验。大以中国创意 +国际视野，系统重塑公共环境空间价值，即可提供从环境更新、光环境到环境艺术的全过程综合解决方案，实现空间活化、长效运营与生态可持续发展。
+              DSA大漾一家以新生态文化艺术美学为导向，致力于公共环境空间营造的创新设计平台。通过景观建筑、动态光影、公共艺术专业共创实践，创造多维度高价值空间使用体验。大漾以中国创意 +国际视野，系统重塑公共环境空间价值，即可提供从环境更新、光环境到环境艺术的全过程综合解决方案，实现空间活化、长效运营与生态可持续发展。
             </p>
-            <p>
+            <p class="font-en">
               DSA Dayoung is an innovative design platform guided by a new ecological art aesthetic, dedicated to creating public environmental spaces. Through collaborative practice in landscape architecture, dynamic lighting, and public art, we create multi-dimensional, high-value spatial experiences. With Chinese creativity and an international perspective, Danyang systemically reshapes the value of public environmental spaces, providing comprehensive solutions for the entire process, from environmental renewal and lighting environments to environmental art, achieving spatial revitalization, long-term operation, and ecological sustainability.
             </p>
           </div>
@@ -122,7 +124,7 @@
 
         <div class="about-intro-hero-image about-intro-hero-image-desktop">
             <img
-              src="/images/Introduction-Background-Image.jpg"
+              src="/images/DSA-intro-bg.jpg"
               alt="Introduction background"
             />
         </div>
@@ -273,7 +275,7 @@
                 fontStyle: 'italic'
               }"
             >
-              团队 | TEAM
+              团队 | <span class="font-en">TEAM</span>
             </p>
           </div>
 
@@ -364,6 +366,7 @@
 
   <span
     :style="{ letterSpacing: ABOUT_TEAM_LABEL_KERNING_EN }"
+    class="font-en"
   >
     CHINESE CREATIVITY
   </span>
@@ -371,124 +374,64 @@
           </div>
 
         <!-- TEAM GRID - CHINESE -->
-<div class="flex flex-col items-center">
-  
-  <!-- ROW 1 — 4 columns -->
-  <div
-    class="grid grid-cols-2 md:grid-cols-4 justify-items-center"
-    :style="{ gap: ABOUT_TEAM_GRID_GAP + 'px' }"
-  >
-    <button
-      v-for="m in chineseRowOne"
-      :key="m.id"
-      class="flex flex-col items-center text-center group focus:outline-none"
-      @click="selectMember(m.id)"
-    >
-      <div
-        class="rounded-full transition-all ease-out avatar-circle"
-        :class="avatarClass(m.id)"
-        :style="{
-          width: ABOUT_AVATAR_SIZE + 'px',
-          height: ABOUT_AVATAR_SIZE + 'px'
-        }"
-      >
-        <div class="w-full h-full rounded-full overflow-hidden">
-          <img
-            :src="m.avatar"
-            :alt="m.nameEn"
-            class="w-full h-full object-cover"
-          />
+        <div class="flex justify-center">
+          <div
+            class="grid grid-cols-3 justify-items-center"
+            :style="{ gap: ABOUT_TEAM_GRID_GAP + 'px' }"
+          >
+            <button
+              v-for="m in chineseMembers"
+              :key="m.id"
+              class="flex flex-col items-center text-center group focus:outline-none"
+              @click="selectMember(m.id)"
+            >
+              <div
+                class="rounded-full transition-all ease-out avatar-circle"
+                :class="avatarClass(m.id)"
+                :style="{
+                  width: ABOUT_AVATAR_SIZE + 'px',
+                  height: ABOUT_AVATAR_SIZE + 'px'
+                }"
+              >
+                <div class="w-full h-full rounded-full overflow-hidden">
+                  <img
+                    :src="m.avatar"
+                    :alt="m.nameEn"
+                    class="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+
+              <p
+                class="tracking-[0em]"
+                :class="{
+                  ' opacity-100, text-[#ECEBC7]': activeId === m.id,
+                  'opacity-100': activeId !== m.id
+                }"
+                :style="{
+                  fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
+                  marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
+                  paddingBottom: '3px',
+                  color: activeId === m.id ? '#ECEBC7' : ABOUT_TEXT_COLORS.avatarName[locale]
+                }"
+              >
+                {{ m.nameEn }} | {{ m.nameCn }}
+              </p>
+
+              <p
+                class="text-[#8C8C8C]/100"
+                :style="{
+                  fontWeight: 200,
+                  whiteSpace: 'pre-line',
+                  lineHeight: 14 + 'px',
+                  fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem'
+                }"
+              >
+                {{ m.role[locale] }}
+              </p>
+            </button>
+          </div>
         </div>
-      </div>
-
-      <p
-        class="tracking-[0em]"
-        :class="{
-          ' opacity-100, text-[#ECEBC7]': activeId === m.id,
-          'opacity-100': activeId !== m.id
-        }"
-        :style="{
-          fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
-          marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
-          paddingBottom: '3px',
-          color: activeId === m.id ? '#ECEBC7' : ABOUT_TEXT_COLORS.avatarName[locale]
-        }"
-      >
-        {{ m.nameEn }} | {{ m.nameCn }}
-      </p>
-
-      <p
-        class="text-[#8C8C8C]/100"
-        :style="{ fontWeight: 200,
-        whiteSpace: 'pre-line',
-        lineHeight: 14 + 'px',
-          fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
-      >
-        {{ m.role[locale] }}
-      </p>
-    </button>
-  </div>
-
-  <!-- ROW 2 — centered 3 -->
-<div
-  v-if="chineseRowTwo.length"
-  class="mt-12 grid justify-center"
->
-  <div
-    class="grid grid-cols-3 justify-items-center"
-    :style="{ columnGap: ABOUT_TEAM_ROW_TWO_GAP + 'px' }"
-  >
-    <button
-      v-for="m in chineseRowTwo"
-      :key="m.id"
-      class="flex flex-col items-center text-center group focus:outline-none"
-      @click="selectMember(m.id)"
-    >
-      <div
-        class="rounded-full transition-all ease-out avatar-circle"
-        :class="avatarClass(m.id)"
-        :style="{
-          width: ABOUT_AVATAR_SIZE + 'px',
-          height: ABOUT_AVATAR_SIZE + 'px'
-        }"
-      >
-        <div class="w-full h-full rounded-full overflow-hidden">
-          <img
-            :src="m.avatar"
-            :alt="m.nameEn"
-            class="w-full h-full object-cover"
-          />
-        </div>
-      </div>
-
-      <p
-        class="tracking-[0em]"
-        :class="{
-          ' opacity-100': activeId === m.id,
-          'opacity-100': activeId !== m.id
-        }"
-        :style="{
-          fontSize: ABOUT_AVATAR_NAME_SIZE + 'rem',
-          marginTop: ABOUT_AVATAR_NAME_TOP_MARGIN + 'px',
-          paddingBottom: '3px',
-          color: activeId === m.id ? '#ECEBC7' : ABOUT_TEXT_COLORS.avatarName[locale]
-        }"
-      >
-        {{ m.nameEn }} | {{ m.nameCn }}
-      </p>
-
-      <p
-        class="text-[#8C8C8C]/100"
-        :style="{ fontWeight: 200,
-        lineHeight: 14 + 'px',
-          fontSize: ABOUT_AVATAR_ROLE_SIZE + 'rem' }"
-      >
-        {{ m.role[locale] }}
-      </p>
-    </button>
-  </div>
-</div>
-</div>
           <!-- International Perspective -->
           <div
             class="flex justify-center text-center"
@@ -512,6 +455,7 @@
 
   <span
     :style="{ letterSpacing: ABOUT_TEAM_LABEL_KERNING_EN }"
+    class="font-en"
   >
     INTERNATIONAL PERSPECTIVE
   </span>
@@ -673,6 +617,7 @@
 </h2>
         <div
           class="w-full about-letter-flow"
+          :class="{ 'font-en': locale === 'en' }"
           :style="{
             minHeight: ABOUT_LETTER_MIN_HEIGHT + 'px',
             fontSize: ABOUT_LETTER_FONT_SIZE + 'rem',
@@ -795,7 +740,7 @@ const ABOUT_HOME_ECHO_PADDING_TOP = computed(() =>
 const ABOUT_HOME_ECHO_PADDING_BOTTOM = 80;
 const ABOUT_HOME_ECHO_GAP = 90;
 const ABOUT_HOME_ECHO_HEADLINE_MARGIN_TOP = HOME_HEADLINE_MARGIN_TOP * 0.4;
-const ABOUT_HOME_ECHO_HEADLINE_CN = "系统化营造空间整体氛围";
+const ABOUT_HOME_ECHO_HEADLINE_CN = "系统化的场景营造";
 
 // ===== LETTER TITLE =====
 const ABOUT_LETTER_TITLE_EN = "To My Friends and Partners,";
@@ -822,7 +767,7 @@ const ABOUT_LETTER_PARAGRAPH_GAP = 16;
 const ABOUT_FOOTER_TEXT = {
   en: {
     regards: "",
-    name: "Ouyang Xiaoping",
+    name: "DEMI",
     location: "2026 · Shenzhen",
   },
   zh: {
@@ -869,14 +814,12 @@ const ABOUT_BIO_PARAGRAPH_GAP = 8;
 const ABOUT_BIO_TEXT_TOP_MARGIN = 32;
 
 /* ---------- TEAM ---------- */
-const ABOUT_TEAM_SECTION_SPACING = 40;
+const ABOUT_TEAM_SECTION_SPACING = 20;
 const ABOUT_TEAM_TOP_OFFSET = 100;
 const ABOUT_TEAM_LABEL_EN_SIZE = 1.375;
 const ABOUT_TEAM_GRID_GAP = 14;
 const ABOUT_TEAM_ROW_TWO_GAP = 30; // 👈 NEW, px
 const ABOUT_TEAM_SECOND_LABEL_TOP_PADDING = 20;
-const chineseRowOne = computed(() => chineseMembers.value.slice(0, 4));
-const chineseRowTwo = computed(() => chineseMembers.value.slice(4));
 const ABOUT_TEAM_LABEL_GAP = -2; // px — tweak freely
 
 /* ---------- AVATARS ---------- */
@@ -1196,6 +1139,10 @@ onBeforeUnmount(() => {
   column-gap: 0;
 }
 
+.font-en {
+  font-family: var(--font-en);
+}
+
 .about-letter {
   overflow-x: hidden;
 }
@@ -1486,8 +1433,10 @@ onBeforeUnmount(() => {
   }
 
   .about-letter > div {
-    width: 100% !important;
-    max-width: 100% !important;
+    width: 80% !important;
+    max-width: 80% !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
   }
 
   .about-letter-grid {

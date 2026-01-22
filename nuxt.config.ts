@@ -20,6 +20,31 @@ export default defineNuxtConfig({
       "/api/**": {
         cors: false,
       },
+      "/_nuxt/**": {
+        headers: {
+          "cache-control": "public, max-age=31536000, immutable",
+        },
+      },
+      "/uploads/**": {
+        headers: {
+          "cache-control": "public, max-age=31536000, immutable",
+        },
+      },
+      "/images/**": {
+        headers: {
+          "cache-control": "public, max-age=31536000, immutable",
+        },
+      },
+      "/videos/**": {
+        headers: {
+          "cache-control": "public, max-age=31536000, immutable",
+        },
+      },
+      "/fonts/**": {
+        headers: {
+          "cache-control": "public, max-age=31536000, immutable",
+        },
+      },
     },
     serverAssets: [
       {
