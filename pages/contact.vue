@@ -8,6 +8,7 @@
       paddingBottom: UI.PAGE_BOTTOM_PADDING + 'vh',
       paddingLeft: UI.PAGE_PADDING_X + 'rem',
       paddingRight: UI.PAGE_PADDING_X + 'rem',
+      '--contact-heading-size': UI.HEADER_SIZE,
     }"
   >
     <section
@@ -16,11 +17,10 @@
       <div class="max-w-[420px] contact-hero-col">
         <div>
           <h1
-            class="mb-10 contact-heading"
+            class="font-semibold mb-5 contact-heading"
             :style="{
-              fontSize: '40px',
-              letterSpacing: '0.08em',
-              fontWeight: 500,
+              fontSize: UI.HEADER_SIZE,
+              letterSpacing: UI.HEADER_TRACKING,
               color: '#8EB29E'
             }"
           >
@@ -643,6 +643,10 @@ async function submitForm() {
     margin: 0 auto;
   }
 
+  .contact-hero-col {
+    max-width: 100% !important;
+  }
+
   .contact-hero-col-right {
     width: 100% !important;
     max-width: 100% !important;
@@ -666,14 +670,9 @@ async function submitForm() {
   .contact-hero h1,
   .contact-body h1 {
     text-align: center;
+    font-size: calc(var(--contact-heading-size) * 0.8) !important;
   }
 
-
-  .contact-heading {
-    white-space: nowrap;
-    font-size: 28px !important;
-    letter-spacing: 0.04em !important;
-  }
 
   .contact-address-line {
     white-space: nowrap;

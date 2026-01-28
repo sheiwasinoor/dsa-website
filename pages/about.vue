@@ -40,7 +40,7 @@
             maxWidth: '100%',
           }"
         >
-          <source src="/videos/aboutoutput.webm" type="video/webm" />
+          <source src="/videos/finalabout.webm" type="video/webm" />
           <source src="/videos/dsa-about-fallback.mov" type="video/quicktime" />
         </video>
       </div>
@@ -70,10 +70,11 @@
           <p
             :style="{
               fontSize: ABOUT_INTRO_HERO_TITLE_SIZE + 'rem',
-              marginBottom:
+              '--intro-title-gap-base':
                 ABOUT_INTRO_HERO_TITLE_SPACING +
                 (isMobile ? 0 : ABOUT_INTRO_HERO_TITLE_DESKTOP_EXTRA_SPACING) +
                 'px',
+              marginBottom: 'var(--intro-title-gap, var(--intro-title-gap-base))',
               paddingTop: ABOUT_INTRO_HERO_TITLE_PADDING_TOP + 'px',
               letterSpacing: ABOUT_INTRO_HERO_TITLE_TRACKING + 'em',
               color: '#8C8C8C',
@@ -93,7 +94,8 @@
             class="font-semibold font-en"
             :style="{
               fontSize: ABOUT_INTRO_HERO_NAME_SIZE + 'rem',
-              marginBottom: ABOUT_INTRO_HERO_NAME_SPACING + 'px',
+              '--intro-name-gap-base': ABOUT_INTRO_HERO_NAME_SPACING + 'px',
+              marginBottom: 'var(--intro-name-gap, var(--intro-name-gap-base))',
               color: ABOUT_TEXT_COLORS.introHeading[locale]
             }"
           >
@@ -376,7 +378,7 @@
         <!-- TEAM GRID - CHINESE -->
         <div class="flex justify-center">
           <div
-            class="grid grid-cols-3 justify-items-center"
+            class="grid grid-cols-2 sm:grid-cols-3 justify-items-center"
             :style="{ gap: ABOUT_TEAM_GRID_GAP + 'px' }"
           >
             <button
@@ -1088,7 +1090,7 @@ onBeforeUnmount(() => {
 
 .about-intro-hero-inner {
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   justify-content: space-between;
 }
 
@@ -1103,6 +1105,7 @@ onBeforeUnmount(() => {
   overflow: hidden;
   flex-shrink: 0;
   margin-right: calc(50% - 50vw);
+  align-self: stretch;
 }
 
 .about-intro-hero-image img {
@@ -1335,6 +1338,22 @@ onBeforeUnmount(() => {
   .about-home-echo-inner {
     grid-template-columns: 1fr;
     row-gap: 40px;
+  }
+}
+
+@media (min-width: 701px) and (max-width: 900px) {
+  .about-intro-hero-text > p {
+    --intro-title-gap: calc(var(--intro-title-gap-base) * 0.5);
+  }
+}
+
+@media (min-width: 901px) and (max-width: 1200px) {
+  .about-intro-hero-text > p {
+    --intro-title-gap: calc(var(--intro-title-gap-base) * 0.3);
+  }
+
+  .about-intro-hero-text h3 {
+    --intro-name-gap: calc(var(--intro-name-gap-base) * 0.4);
   }
 }
 

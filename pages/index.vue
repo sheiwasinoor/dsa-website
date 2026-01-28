@@ -159,7 +159,8 @@ const textFadeTimeout = ref<number | null>(null);
 const playTextTimer = ref<number | null>(null);
 const isClicked = ref(false);
 
-const TEXT_FADE_IN_MS = 3000;
+const TEXT_APPEAR_DELAY_MS = 2500;
+const TEXT_FADE_IN_MS = TEXT_APPEAR_DELAY_MS;
 // Split characters
 const spacedCN = computed(() => landingCopy.cn.split(""));
 const spacedEN = computed(() => landingCopy.en.split(""));
@@ -173,7 +174,7 @@ onMounted(() => {
       isVideoEnded.value = true;
       startTextAnimation();
     }
-  }, 4000);
+  }, TEXT_APPEAR_DELAY_MS);
 
   videoEl.value.onplaying = () => {
     videoStarted.value = true;
@@ -183,7 +184,7 @@ onMounted(() => {
     }
     playTextTimer.value = window.setTimeout(() => {
       startTextAnimation();
-    }, 4500);
+    }, TEXT_APPEAR_DELAY_MS);
   };
 
   videoEl.value.onended = () => {
