@@ -21,7 +21,7 @@
             :style="{
               fontSize: UI.HEADER_SIZE,
               letterSpacing: UI.HEADER_TRACKING,
-              color: '#8EB29E'
+              color: 'var(--dsa-yellow)'
             }"
           >
             {{ contactSectionCopy.contactHeading }}
@@ -63,7 +63,7 @@
       </div>
       <div class="max-w-[520px] contact-hero-col-right">
         <div>
-          <h1 class="font-semibold mb-6" :style="{ color: '#8EB29E',fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
+          <h1 class="font-semibold mb-6" :style="{ color: 'var(--dsa-yellow)',fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
             Address
           </h1>
 
@@ -117,7 +117,7 @@
     >
       <div class="contact-join">
         <div class="contact-join-inner">
-        <h1 class="font-semibold mb-6 join-heading" :style="{ color: '#8EB29E', fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
+        <h1 class="font-semibold mb-6 join-heading" :style="{ color: 'var(--dsa-yellow)', fontSize: UI.HEADER_SIZE, letterSpacing: UI.HEADER_TRACKING }">
           Join Us
         </h1>
 
