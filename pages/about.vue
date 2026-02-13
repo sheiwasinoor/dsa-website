@@ -41,7 +41,7 @@
           }"
         >
           <source src="/videos/dsa-update-final.webm" type="video/webm" />
-          <source src="/videos/dsa-about-fallback.mov" type="video/quicktime" />
+          <source src="/videos/dsa-about-fallback2.mp4" type="video/mp4" />
         </video>
       </div>
     </section>
@@ -262,7 +262,8 @@
           ]"
           :style="{ rowGap: ABOUT_LEFT_COLUMN_SECTION_SPACING + 'px', }"
         >
-          <!-- INTRO SECTION -->
+          <!-- INTRO SECTION (commented out) -->
+          <!--
           <div>
             <p
               class="about-team-label tracking-[0.10em]"
@@ -280,6 +281,7 @@
               团队 | <span class="font-en">TEAM</span>
             </p>
           </div>
+          -->
 
           <!-- BIO CARD -->
           <div
@@ -345,7 +347,7 @@
           ]"
           :style="{
             rowGap: ABOUT_TEAM_SECTION_SPACING + 'px',
-            marginTop: (isMobile ? ABOUT_TEAM_TOP_OFFSET * 0.5 : ABOUT_TEAM_TOP_OFFSET) + 'px'
+            marginTop: (isMobile ? ABOUT_TEAM_TOP_OFFSET * 0.5 : ABOUT_TEAM_TOP_OFFSET - 170) + 'px'
           }"
         >
           <!-- Chinese Creativity -->

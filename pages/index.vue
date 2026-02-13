@@ -37,7 +37,7 @@
         @error="handleVideoError"
       >
         <source :src="LANDING_VIDEO_SRC" type="video/webm" />
-        <source src="/videos/dsa-landing-fallback.mov" type="video/quicktime" />
+        <source src="/videos/dsa-landing-fallback2.mp4" type="video/mp4" />
       </video>
 
       <!-- TEXT BLOCK (commented out) -->
