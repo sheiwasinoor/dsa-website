@@ -29,20 +29,32 @@
           paddingRight: ABOUT_HERO_CONTAINER_PADDING_RIGHT + 'px',
         }"
       >
-        <video
-          playsinline
-          autoplay
-          muted
-          class="h-auto reveal-block about-hero-video"
-          :class="{ 'reveal-visible': reveals.hero }"
-          :style="{
-            width: ABOUT_HERO_VIDEO_WIDTH * ABOUT_HERO_VIDEO_SCALE + 'px',
-            maxWidth: '100%',
-          }"
-        >
-          <source src="/videos/dsa-update-final.webm" type="video/webm" />
-          <source src="/videos/dsa-about-fallback2.mp4" type="video/mp4" />
-        </video>
+        <div class="about-hero-video-wrap">
+          <video
+            ref="aboutHeroVideo"
+            playsinline
+            autoplay
+            muted
+            :poster="ABOUT_HERO_VIDEO_POSTER"
+            class="h-auto reveal-block about-hero-video"
+            :class="{ 'reveal-visible': reveals.hero }"
+            :style="{
+              width: ABOUT_HERO_VIDEO_WIDTH * ABOUT_HERO_VIDEO_SCALE + 'px',
+              maxWidth: '100%',
+            }"
+          >
+            <source src="/videos/dsa-update-final.webm" type="video/webm" />
+            <source src="/videos/dsa-about-fallback2.mp4" type="video/mp4" />
+          </video>
+          <button
+            v-if="isWeChat && showWechatOverlay"
+            class="wechat-video-overlay"
+            type="button"
+            @click.stop="handleWechatPlay"
+          >
+            Tap to Play
+          </button>
+        </div>
       </div>
     </section>
 
@@ -717,6 +729,7 @@ const ABOUT_HERO_TEXT_PADDING_RIGHT = 10;    // spacing from center
 const ABOUT_HERO_VIDEO_WIDTH = 1100;          // video width (20% larger)
 const ABOUT_HERO_VIDEO_PADDING_LEFT = 10;    // spacing from center
 const ABOUT_HERO_VIDEO_SCALE = 1; // 👈 THIS is your 20%
+const ABOUT_HERO_VIDEO_POSTER = "/images/about-hero.png";
 
 // INTRO HERO (NEW SECTION BELOW HERO)
 const ABOUT_INTRO_HERO_MAX_WIDTH = 1600;
@@ -916,6 +929,9 @@ const members = ref(membersData);
 const activeId = ref("bitch");
 const isMobile = ref(false);
 const hydrated = ref(false);
+const isWeChat = ref(false);
+const showWechatOverlay = ref(false);
+const aboutHeroVideo = ref<HTMLVideoElement | null>(null);
 
 const active = computed(() =>
   members.value.find((m) => m.id === activeId.value)!
@@ -1017,8 +1033,26 @@ onMounted(() => {
     setMobile(mq);
     mq.addEventListener("change", setMobile);
     onBeforeUnmount(() => mq.removeEventListener("change", setMobile));
+
+    isWeChat.value = /MicroMessenger/i.test(navigator.userAgent);
+    if (isWeChat.value) {
+      showWechatOverlay.value = true;
+      document.addEventListener(
+        "WeixinJSBridgeReady",
+        () => {
+          tryWechatPlay();
+        },
+        { once: true }
+      );
+    }
   }
   hydrated.value = true;
+
+  if (aboutHeroVideo.value && isWeChat.value) {
+    aboutHeroVideo.value.addEventListener("playing", () => {
+      showWechatOverlay.value = false;
+    });
+  }
 
   const observer = new IntersectionObserver(
     (entries) => {
@@ -1050,6 +1084,26 @@ onMounted(() => {
 
   observerRef.value = observer;
 });
+
+function tryWechatPlay() {
+  if (!aboutHeroVideo.value) return;
+  const maybePromise = aboutHeroVideo.value.play();
+  if (maybePromise && typeof maybePromise.catch === "function") {
+    maybePromise
+      .then(() => {
+        showWechatOverlay.value = false;
+      })
+      .catch(() => {
+        showWechatOverlay.value = true;
+      });
+  } else {
+    showWechatOverlay.value = false;
+  }
+}
+
+function handleWechatPlay() {
+  tryWechatPlay();
+}
 
 onBeforeUnmount(() => {
   observerRef.value?.disconnect();
@@ -1088,6 +1142,28 @@ onBeforeUnmount(() => {
 
 .stagger-item {
   transition-delay: var(--reveal-delay, 0ms);
+}
+
+.about-hero-video-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wechat-video-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.35);
+  color: #ecebc7;
+  font-size: 0.9rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: none;
+  cursor: pointer;
 }
 
 .about-intro-hero-inner {

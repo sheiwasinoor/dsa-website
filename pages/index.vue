@@ -22,23 +22,25 @@
     >
       
       <!-- VIDEO -->
-      <video
-        ref="videoEl"
-        :style="{
-          '--landing-video-width': LANDING_VIDEO_WIDTH + 'px',
-          '--landing-video-max': LANDING_VIDEO_MAX_WIDTH + 'px',
-        }"
-        :class="{ 'is-clickable': canNavigate }"
-        class="h-auto landing-video"
-        playsinline
-        autoplay
-        muted
-        @click="onVideoClick"
-        @error="handleVideoError"
-      >
-        <source :src="LANDING_VIDEO_SRC" type="video/webm" />
-        <source src="/videos/dsa-landing-fallback2.mp4" type="video/mp4" />
-      </video>
+      <div class="landing-video-wrap">
+        <video
+          ref="videoEl"
+          :style="{
+            '--landing-video-width': LANDING_VIDEO_WIDTH + 'px',
+            '--landing-video-max': LANDING_VIDEO_MAX_WIDTH + 'px',
+          }"
+          :class="{ 'is-clickable': canNavigate }"
+          class="h-auto landing-video"
+          playsinline
+          autoplay
+          muted
+          @click="onVideoClick"
+          @error="handleVideoError"
+        >
+          <source :src="LANDING_VIDEO_SRC" type="video/webm" />
+          <source src="/videos/dsa-landing-fallback2.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       <!-- TEXT BLOCK (commented out) -->
       <!--
@@ -148,6 +150,7 @@ const canNavigate = ref(false);
 const textFadeTimeout = ref<number | null>(null);
 const playTextTimer = ref<number | null>(null);
 const isClicked = ref(false);
+const isWeChat = ref(false);
 
 const TEXT_APPEAR_DELAY_MS = 2500;
 const TEXT_FADE_IN_MS = TEXT_APPEAR_DELAY_MS;
@@ -155,6 +158,19 @@ onMounted(() => {
   if (!videoEl.value) return;
   videoEl.value.currentTime = 0;
   const videoElement = videoEl.value;
+
+  if (import.meta.client) {
+    isWeChat.value = /MicroMessenger/i.test(navigator.userAgent);
+    if (isWeChat.value) {
+      document.addEventListener(
+        "WeixinJSBridgeReady",
+        () => {
+          tryWechatPlay();
+        },
+        { once: true }
+      );
+    }
+  }
 
   const fallbackTimer = window.setTimeout(() => {
     if (!videoStarted.value) {
@@ -197,6 +213,15 @@ onMounted(() => {
   };
 });
 
+function tryWechatPlay() {
+  if (!videoEl.value) return;
+  const maybePromise = videoEl.value.play();
+  if (maybePromise && typeof maybePromise.catch === "function") {
+    maybePromise.catch(() => {
+    });
+  }
+}
+
 function goHome() {
   router.push("/about");
 }
@@ -206,6 +231,9 @@ function onVideoClick() {
 }
 
 function handleLandingClick() {
+  if (isWeChat.value) {
+    tryWechatPlay();
+  }
   if (isClicked.value) return;
   if (canNavigate.value) {
     triggerNavigate();
@@ -268,10 +296,16 @@ definePageMeta({
 .landing-video {
   width: var(--landing-video-width);
   max-width: var(--landing-video-max);
-  margin-top: -75px;
   transition:
     transform 920ms cubic-bezier(0.16, 1, 0.3, 1),
     filter 520ms ease;
+}
+.landing-video-wrap {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: -75px;
 }
 .landing-video.is-clickable {
   cursor: pointer;
