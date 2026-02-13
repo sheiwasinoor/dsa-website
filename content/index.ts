@@ -8,9 +8,9 @@ export const LANDING_BG_COLOR = "#000C05";
 export const LANDING_TEXT_COLOR = "#ECEBC7";
 
 /* ---------- VIDEO ---------- */
-export const LANDING_VIDEO_SRC = "/videos/landing-alpha.webm";
-export const LANDING_VIDEO_WIDTH = 350;
-export const LANDING_VIDEO_MAX_WIDTH = 350;
+export const LANDING_VIDEO_SRC = "/videos/dsa-landing-absolute.webm";
+export const LANDING_VIDEO_WIDTH = 750;
+export const LANDING_VIDEO_MAX_WIDTH = 750;
 export const LANDING_VIDEO_FADE_OUT_DURATION = 900; // ms
 
 /* ---------- TEXT BLOCK LAYOUT ---------- */

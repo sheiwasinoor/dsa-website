@@ -40,7 +40,8 @@
         <source src="/videos/dsa-landing-fallback.mov" type="video/quicktime" />
       </video>
 
-      <!-- TEXT BLOCK -->
+      <!-- TEXT BLOCK (commented out) -->
+      <!--
       <div
         class="flex flex-col items-center landing-text"
         :class="{ 'is-text-visible': isTextVisible }"
@@ -54,7 +55,6 @@
         }"
         @click="handleLandingClick"
       >
-        <!-- CN Row -->
         <div
           class="landing-row landing-cn-row flex justify-between w-full"
           :style="{ 
@@ -71,7 +71,6 @@
           </span>
         </div>
 
-        <!-- EN Row -->
         <div
           class="landing-row landing-en-row flex justify-between w-full uppercase tracking-widest font-en"
           :style="{ 
@@ -88,8 +87,8 @@
             {{ char }}
           </span>
         </div>
-
       </div>
+      -->
 
     </main>
 
@@ -114,7 +113,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import {
   LANDING_BG_COLOR,
@@ -122,17 +121,9 @@ import {
   LANDING_VIDEO_SRC,
   LANDING_VIDEO_WIDTH,
   LANDING_VIDEO_MAX_WIDTH,
-  LANDING_TEXT_CONTAINER_WIDTH,
-  LANDING_TEXT_FONT_SIZE_CN,
-  LANDING_TEXT_FONT_SIZE_EN,
-  LANDING_TEXT_LETTER_SPACING_CN,
-  LANDING_TEXT_LETTER_SPACING_EN,
   LANDING_MAIN_GAP_DESKTOP,
   LANDING_MAIN_GAP_TABLET,
   LANDING_MAIN_GAP_MOBILE,
-  LANDING_TEXT_ROW_GAP_CN,
-  LANDING_TEXT_ROW_GAP_EN,
-  LANDING_TEXT_LETTER_SPACING_CN_ROW,
   LANDING_TEXT_MOBILE_SCALE,
   LANDING_TEXT_LETTER_SPACING_CN_ROW_MOBILE_SCALE,
   LANDING_TEXT_MEDIUM_SCALE,
@@ -144,7 +135,6 @@ import {
   LANDING_TEXT_FONT_SIZE_LOC,
   LANDING_TEXT_LETTER_SPACING_LOC,
   LANDING_TEXT_WEIGHT_LOC,
-  landingCopy,
 } from "~/content/index";
 
 const router = useRouter();
@@ -161,13 +151,10 @@ const isClicked = ref(false);
 
 const TEXT_APPEAR_DELAY_MS = 2500;
 const TEXT_FADE_IN_MS = TEXT_APPEAR_DELAY_MS;
-// Split characters
-const spacedCN = computed(() => landingCopy.cn.split(""));
-const spacedEN = computed(() => landingCopy.en.split(""));
-
 onMounted(() => {
   if (!videoEl.value) return;
   videoEl.value.currentTime = 0;
+  const videoElement = videoEl.value;
 
   const fallbackTimer = window.setTimeout(() => {
     if (!videoStarted.value) {
@@ -176,7 +163,7 @@ onMounted(() => {
     }
   }, TEXT_APPEAR_DELAY_MS);
 
-  videoEl.value.onplaying = () => {
+  videoElement.onplaying = () => {
     videoStarted.value = true;
     window.clearTimeout(fallbackTimer);
     if (playTextTimer.value) {
@@ -187,17 +174,25 @@ onMounted(() => {
     }, TEXT_APPEAR_DELAY_MS);
   };
 
-  videoEl.value.onended = () => {
+  videoElement.onended = () => {
     isVideoEnded.value = true;
     startTextAnimation();
   };
 
-  videoEl.value.onerror = () => {
+  videoElement.onerror = () => {
     isVideoEnded.value = true;
     startTextAnimation();
     window.clearTimeout(fallbackTimer);
     if (playTextTimer.value) {
       window.clearTimeout(playTextTimer.value);
+    }
+  };
+
+  videoElement.ontimeupdate = () => {
+    const duration = videoElement.duration;
+    if (!Number.isFinite(duration) || canNavigate.value) return;
+    if (duration - videoElement.currentTime <= 2) {
+      canNavigate.value = true;
     }
   };
 });
@@ -273,9 +268,16 @@ definePageMeta({
 .landing-video {
   width: var(--landing-video-width);
   max-width: var(--landing-video-max);
+  margin-top: -75px;
+  transition:
+    transform 920ms cubic-bezier(0.16, 1, 0.3, 1),
+    filter 520ms ease;
 }
 .landing-video.is-clickable {
   cursor: pointer;
+}
+.landing-video.is-clickable:hover {
+  transform: translateY(-6px);
 }
 
 .landing-text {

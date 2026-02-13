@@ -40,7 +40,7 @@
             maxWidth: '100%',
           }"
         >
-          <source src="/videos/finalabout.webm" type="video/webm" />
+          <source src="/videos/dsa-update-final.webm" type="video/webm" />
           <source src="/videos/dsa-about-fallback.mov" type="video/quicktime" />
         </video>
       </div>
@@ -82,7 +82,7 @@
               fontStyle: 'italic'
             }"
           >
-            简介 | <span class="font-en">INTRODUCTION</span>
+               <span class="font-en"> </span>
           </p>
           <div class="about-intro-hero-image-mobile">
             <img
@@ -99,7 +99,7 @@
               color: ABOUT_TEXT_COLORS.introHeading[locale]
             }"
           >
-            {{ locale === 'zh' ? 'DSA  大漾设计' : 'DSA 大漾设计' }}
+            {{ locale === 'zh' ? 'DSA  大漾营造' : 'DSA 大漾营造' }}
           </h3>
 
           <div
@@ -706,13 +706,13 @@ const ABOUT_HERO_IMAGE_OPACITY = 1.0;      // 0–1
 // NEW HERO CONSTANTS FOR ABOUT PAGE
 const ABOUT_HERO_MAX_WIDTH = 3200;          // overall hero container width
 const ABOUT_HERO_COLUMN_GAP = 0;           // gap between text & video
-const ABOUT_HERO_CONTAINER_PADDING_LEFT = 220;   // shift hero block right
+const ABOUT_HERO_CONTAINER_PADDING_LEFT = 360;   // shift hero block right
 const ABOUT_HERO_CONTAINER_PADDING_RIGHT = 220;  // shift hero block left
 
 const ABOUT_HERO_TEXT_WIDTH = 420;           // hero-text.png width (20% smaller)
 const ABOUT_HERO_TEXT_PADDING_RIGHT = 10;    // spacing from center
 
-const ABOUT_HERO_VIDEO_WIDTH = 1000;          // video width (20% larger)
+const ABOUT_HERO_VIDEO_WIDTH = 1100;          // video width (20% larger)
 const ABOUT_HERO_VIDEO_PADDING_LEFT = 10;    // spacing from center
 const ABOUT_HERO_VIDEO_SCALE = 1; // 👈 THIS is your 20%
 
@@ -1385,6 +1385,8 @@ onBeforeUnmount(() => {
   }
 
   .about-intro-hero-text {
+    display: flex;
+    flex-direction: column;
     order: 1;
   }
 
@@ -1400,7 +1402,8 @@ onBeforeUnmount(() => {
     display: block;
     width: 100vw;
     max-width: 100vw;
-    margin: 8px 0 50px calc(50% - 50vw);
+    order: -1;
+    margin: 0 0 50px calc(50% - 50vw);
   }
 
   .about-intro-hero-image-mobile img {
@@ -1480,6 +1483,20 @@ onBeforeUnmount(() => {
 
   .avatar-circle {
     transform: scale(0.9);
+  }
+}
+
+@media (max-width: 1200px) {
+  .about-hero-inner {
+    max-width: 100% !important;
+    width: 100% !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  .about-hero-video {
+    width: 100% !important;
+    max-width: none !important;
   }
 }
 
