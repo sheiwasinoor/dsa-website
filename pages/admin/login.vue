@@ -7,11 +7,12 @@
 
       <form @submit.prevent="handleLogin" class="space-y-6">
         <div>
-          <label class="text-xs text-[#ECEBC7]/70">Email</label>
+          <label class="text-xs text-[#ECEBC7]/70">Username</label>
           <input
-            v-model="email"
-            type="email"
+            v-model="username"
+            type="text"
             class="w-full rounded-md border border-[#334036]/70 bg-[#000C05] px-3 py-2 text-sm outline-none focus:border-[#ECEBC7]"
+            autocomplete="username"
             required
           />
         </div>
@@ -22,6 +23,7 @@
             v-model="password"
             type="password"
             class="w-full rounded-md border border-[#334036]/70 bg-[#000C05] px-3 py-2 text-sm outline-none focus:border-[#ECEBC7]"
+            autocomplete="current-password"
             required
           />
         </div>
@@ -44,7 +46,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const email = ref("");
+const username = ref("");
 const password = ref("");
 const errorMessage = ref("");
 
@@ -52,7 +54,7 @@ async function handleLogin() {
   try {
     const res = await $fetch("/api/auth/login", {
       method: "POST",
-      body: { email: email.value, password: password.value },
+      body: { username: username.value, password: password.value },
 
       // ⭐ THE ONLY REQUIRED FIX ⭐
       credentials: "include",
